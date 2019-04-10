@@ -7,6 +7,44 @@ App assinatura_digital desenvolvido com Xamarin Forms
 - Ferramentas necessárias: Visual Studio ou Visual Studio for Mac, Git, Xamarin
 - Para executar os projetos localmente, configurar emulador do Android e simulador do iOS
 
+## Scripts
+
+Para executar tasks do Cake:
+
+### Windows
+
+```powershell
+./build.ps1 --target="[Nome_da_task]"
+```
+
+### Linux/MacOS
+
+Primeiro é necessário dar permissão para executar scripts bash:
+
+```bash
+chmod +x build.sh
+```
+
+Depois, para executar:
+
+```bash
+./build.sh -target=[Nome_da_task]
+```
+
+## Hot Reloading
+
+Se desejar executar hot reloading para alterações feitas nos arquivos .xaml, deixar a task **HotReload** do cake executando numa instância do terminal e abrir o app no emulador do Android e/ou simulador do iOS:
+
+```bash
+./build.sh -target=HotReload
+```
+
+No MacOS é necessário incluir o PATH para o **adb** no arquivo .zshrc:
+
+```bash
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+```
+
 ## Políticas de Código
 
 - Código escrito em inglês, exceto nomes exclusivos da Língua Portuguesa (Ex.: CPF, CNH, RG, etc.)
