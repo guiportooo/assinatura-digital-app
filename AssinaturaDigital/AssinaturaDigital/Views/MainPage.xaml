@@ -4,9 +4,9 @@
              xmlns:local="clr-namespace:AssinaturaDigital.Views"
              Visual="Material"
              x:Class="AssinaturaDigital.Views.MainPage">
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="{Binding WelcomeMessage}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" />
-        <Button Text="Material Button" />
+    <StackLayout VerticalOptions="CenterAndExpand" 
+                 HorizontalOptions="CenterAndExpand">
+        <Button Text="1º ACESSO" Command="{Binding OpenSignUpCommand}"/>
+        <Button Text="SOU CADASTRADO" />
     </StackLayout>
 </ContentPage>

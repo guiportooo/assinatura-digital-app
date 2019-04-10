@@ -1,15 +1,22 @@
+using AssinaturaDigital.Views;
+using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Navigation;
+
 namespace AssinaturaDigital.ViewModels
 {
     public class MainViewModel : BindableBase
     {
-        private string _welcomeMessage;
-        public string WelcomeMessage
+        private readonly INavigationService _navigation;
+
+        public DelegateCommand OpenSignUpCommand { get; }
+
+        public MainViewModel(INavigationService navigation)
         {
-            get => _welcomeMessage;
-            set => SetProperty(ref _welcomeMessage, value);
+            _navigation = navigation;
+            OpenSignUpCommand = new DelegateCommand(OpenSignUp);
         }
 
-        public MainViewModel() => WelcomeMessage = "Welcome to Xamarin.Forms with Prism!";
+        async void OpenSignUp() => await _navigation.NavigateAsync(nameof(SignUpPage));
     }
 }

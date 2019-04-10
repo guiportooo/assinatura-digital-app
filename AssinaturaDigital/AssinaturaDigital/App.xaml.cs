@@ -17,7 +17,10 @@ namespace AssinaturaDigital
             NavigationService.NavigateAsync(nameof(MainPage));
         }
 
-        protected override void RegisterTypes(IContainerRegistry containerRegistry) 
-            => containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
+            containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();
+        }
     }
 }

@@ -4,5 +4,23 @@
                    xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
                    x:Class="AssinaturaDigital.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="title" TargetType="Label">
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="BorderRadius">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:Int32">
+                            <On Platform="iOS">5</On>
+                            <On Platform="Android">6</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Padding" Value="20,0" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>
+

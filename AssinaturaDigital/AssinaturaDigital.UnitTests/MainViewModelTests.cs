@@ -1,4 +1,6 @@
+using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.ViewModels;
+using AssinaturaDigital.Views;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -6,12 +8,21 @@ namespace AssinaturaDigital.UnitTests
 {
     public class MainViewModelTests
     {
-        [Test]
-        public void ShouldCreateViewModelWithWelcomeMessage()
+        private NavigationServiceMock _navigation;
+        private MainViewModel _mainViewModel;
+
+        [SetUp]
+        public void Setup()
         {
-            const string welcomeMessage = "Welcome to Xamarin.Forms with Prism!";
-            var mainViewModel = new MainViewModel();
-            mainViewModel.WelcomeMessage.Should().Be(welcomeMessage);
+            _navigation = new NavigationServiceMock();
+            _mainViewModel = new MainViewModel(_navigation);
+        }
+
+        [Test]
+        public void ShouldNavigateToSignUpPage()
+        {
+            _mainViewModel.OpenSignUpCommand.Execute();
+            _navigation.Name.Should().Be(nameof(SignUpPage));
         }
     }
 }
