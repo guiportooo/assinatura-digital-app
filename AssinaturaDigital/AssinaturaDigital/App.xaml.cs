@@ -1,8 +1,11 @@
-﻿using AssinaturaDigital.ViewModels;
+﻿using AssinaturaDigital.Services;
+using AssinaturaDigital.Services.Fakes;
+using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Xamarin.Forms;
 
 namespace AssinaturaDigital
 {
@@ -13,14 +16,18 @@ namespace AssinaturaDigital
 
         protected override void OnInitialized()
         {
-            InitializeComponent();
-            NavigationService.NavigateAsync(nameof(MainPage));
+            InitializeComponent(); 
+            NavigationService.NavigateAsync($"NavigationPage/{nameof(MainPage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();
+            containerRegistry.RegisterForNavigation<TokenPage, TokenViewModel>();
+
+            containerRegistry.Register<ISignUpService, SignUpServiceFake>();
         }
     }
 }

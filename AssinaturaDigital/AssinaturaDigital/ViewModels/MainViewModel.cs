@@ -1,22 +1,21 @@
 using AssinaturaDigital.Views;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : ViewModelBase
     {
-        private readonly INavigationService _navigation;
+        private readonly INavigationService _navigationService;
 
         public DelegateCommand OpenSignUpCommand { get; }
 
-        public MainViewModel(INavigationService navigation)
+        public MainViewModel(INavigationService navigationService)
         {
-            _navigation = navigation;
+            _navigationService = navigationService;
             OpenSignUpCommand = new DelegateCommand(OpenSignUp);
         }
 
-        async void OpenSignUp() => await _navigation.NavigateAsync(nameof(SignUpPage));
+        async void OpenSignUp() => await _navigationService.NavigateAsync(nameof(SignUpPage));
     }
 }

@@ -4,25 +4,25 @@ using AssinaturaDigital.Views;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AssinaturaDigital.UnitTests
+namespace AssinaturaDigital.UnitTests.ViewModels
 {
     public class MainViewModelTests
     {
-        private NavigationServiceMock _navigation;
+        private NavigationServiceMock _navigationService;
         private MainViewModel _mainViewModel;
 
         [SetUp]
         public void Setup()
         {
-            _navigation = new NavigationServiceMock();
-            _mainViewModel = new MainViewModel(_navigation);
+            _navigationService = new NavigationServiceMock();
+            _mainViewModel = new MainViewModel(_navigationService);
         }
 
         [Test]
-        public void ShouldNavigateToSignUpPage()
+        public void OnOpenSignUpShouldNavigateToSignUpPage()
         {
             _mainViewModel.OpenSignUpCommand.Execute();
-            _navigation.Name.Should().Be(nameof(SignUpPage));
+            _navigationService.Name.Should().Be(nameof(SignUpPage));
         }
     }
 }

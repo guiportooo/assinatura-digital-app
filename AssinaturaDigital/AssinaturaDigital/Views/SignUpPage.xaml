@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             Visual="Material"
+             Visual="Material" 
              x:Class="AssinaturaDigital.Views.SignUpPage">
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="StartAndExpand">
-            <Label Style="{StaticResource title}" Text="Cadastro"/>
+            <Label Style="{StaticResource title}" Text="{Binding Title}" />
+            <Entry Placeholder="Nome completo" Text="{Binding FullName}" />
+            <Entry Placeholder="Informe o CPF" Text="{Binding CPF}" />
+            <Entry Placeholder="Número de celular" Text="{Binding CellphoneNumber}" />
+            <Entry Placeholder="E-mail" Text="{Binding Email}" />
+            <Button Text="AVANÇAR" Command="{Binding SignUpCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
-

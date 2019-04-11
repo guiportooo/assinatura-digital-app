@@ -20,5 +20,8 @@
   <ItemGroup>
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Services\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\Fakes\" />
   </ItemGroup>
 </Project>
