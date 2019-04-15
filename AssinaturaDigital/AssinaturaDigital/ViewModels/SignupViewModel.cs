@@ -50,10 +50,10 @@ namespace AssinaturaDigital.ViewModels
             _pageDialogService = pageDialogService;
             _signUpService = signUpService;
 
-            Title = "Cadastro";
-
             SignUpCommand = new DelegateCommand(SignUp, CanSignUp)
                 .ObservesProperty(() => IsBusy);
+
+            Title = "Cadastro";
         }
 
         bool CanSignUp() => !IsBusy;
@@ -66,7 +66,7 @@ namespace AssinaturaDigital.ViewModels
                 await _signUpService.SignUp(new SignUpInformation(FullName, CPF, CellphoneNumber, Email));
                 await _navigation.NavigateAsync(nameof(TokenPage));
             }
-            catch (InvalidOperationException ex)
+            catch (Exception ex)
             {
                 await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
             }

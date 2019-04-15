@@ -5,6 +5,9 @@
                    x:Class="AssinaturaDigital.App">
     <Application.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="Small"/>
+            </Style>
             <Style x:Key="title" TargetType="Label">
                 <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="FontAttributes" Value="Bold"/>

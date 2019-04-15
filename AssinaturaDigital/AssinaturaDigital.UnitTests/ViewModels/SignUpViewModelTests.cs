@@ -15,10 +15,10 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         const string cellphoneNumber = "987654321";
         const string email = "test.user@appsign.com";
 
-        private NavigationServiceMock _navigationService;
-        private SignUpServiceFake _signUpService;
         private SignUpViewModel _signUpViewModel;
+        private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
+        private SignUpServiceFake _signUpService;
 
         [SetUp]
         public void Setup()

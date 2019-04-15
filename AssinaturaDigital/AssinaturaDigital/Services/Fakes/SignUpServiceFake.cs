@@ -28,7 +28,7 @@ namespace AssinaturaDigital.Services.Fakes
             SignUpInformation = signUpInformation;
 
             if (_shouldValidateExistingCpf || signUpInformation.CPF == existingCpf)
-                throw new InvalidOperationException("CPF já cadastrado.");
+                throw new Exception("CPF já cadastrado.");
         }
     }
 }

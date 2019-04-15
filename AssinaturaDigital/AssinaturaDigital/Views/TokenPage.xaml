@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Visual="Material"
+             Visual="Material" 
              x:Class="AssinaturaDigital.Views.TokenPage">
     <ContentPage.Content>
         <StackLayout Margin="20" VerticalOptions="StartAndExpand">
-            <Label Style="{StaticResource title}" Text="{Binding Title}" />
+            <Label Style="{StaticResource title}" Text="Vamos começar" />
+            <Label Text="Você receberá um token via SMS para autenticação." />
+            <FlexLayout JustifyContent="SpaceEvenly" 
+                        BindableLayout.ItemsSource="{Binding TokenDigits.Items}"
+                        x:Name="tokenDigits">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Entry Text="{Binding Digit}" 
+                               Keyboard="Numeric" 
+                               TextChanged="TokenDigit_TextChanged"
+                               WidthRequest="40" 
+                               Margin="0,0,10,0" />
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+            <Label Text="Não recebeu o token?" />
+            <Label Text="{Binding SecondsToGenerateToken, Mode=OneWay}" />
+            <Button Text="SOLICITAR REENVIO" Command="{Binding GenerateTokenCommand}" />
+            <Button Text="AVANÇAR" Command="{Binding ValidateTokenCommand}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

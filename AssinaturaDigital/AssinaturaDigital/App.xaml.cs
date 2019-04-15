@@ -26,8 +26,11 @@ namespace AssinaturaDigital
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<TokenPage, TokenViewModel>();
+            containerRegistry.RegisterForNavigation<UserTermsPage, UserTermsViewModel>();
 
             containerRegistry.Register<ISignUpService, SignUpServiceFake>();
+            containerRegistry.Register<ITokenService, TokenServiceFake>();
+            containerRegistry.Register<IDeviceTimer, DeviceTimer>();
         }
     }
 }
