@@ -25,7 +25,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>AssinaturaDigital</string>
 	<key>CFBundleIdentifier</key>
-	<string>br.com.lambda.AssinaturaDigital</string>
+	<string>br.com.tecnobank.AssinaturaDigital</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>

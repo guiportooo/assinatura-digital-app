@@ -69,6 +69,8 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Configuration\IOSConfigurationStreamProvider.cs" />
+    <Compile Include="Configuration\IOSConfigurationStreamProviderFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -139,5 +141,14 @@
       <Project>{C4C04B6B-F072-4944-8B60-74EAD538AF39}</Project>
       <Name>AssinaturaDigital</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\" />
+    <Folder Include="Configuration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Assets\config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
 </Project>

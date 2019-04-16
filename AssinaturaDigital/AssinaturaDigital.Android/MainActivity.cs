@@ -1,8 +1,9 @@
-﻿
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using AssinaturaDigital.Configuration;
+using AssinaturaDigital.Droid.Configuration;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
@@ -22,7 +23,7 @@ namespace AssinaturaDigital.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
-            var xfApplication = new App(new AndroidInitializer());
+            var xfApplication = new Views.App(new AndroidInitializer());
 #if DEBUG
             HotReloader.Current.Start(xfApplication, 8000);
 #endif
@@ -38,8 +39,7 @@ namespace AssinaturaDigital.Droid
         public class AndroidInitializer : IPlatformInitializer
         {
             public void RegisterTypes(IContainerRegistry containerRegistry)
-            {
-            }
+                => containerRegistry.Register<IConfigurationStreamProviderFactory, AndroidConfigurationStreamProviderFactory>();
         }
     }
 }

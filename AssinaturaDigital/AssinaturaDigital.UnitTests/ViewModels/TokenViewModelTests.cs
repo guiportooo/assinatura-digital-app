@@ -20,6 +20,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private TokenViewModel _tokenViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
+        private ConfigurationManagerMock _configurationManager;
         private TokenServiceFake _tokenService;
         private DeviceTimerFake _deviceTimer;
 
@@ -28,6 +29,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
+            _configurationManager = new ConfigurationManagerMock();
             _tokenService = new TokenServiceFake();
             _deviceTimer = new DeviceTimerFake();
 
@@ -35,6 +37,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _tokenViewModel = new TokenViewModel(_navigationService,
                 _pageDialogService,
+                _configurationManager,
                 _tokenService,
                 _deviceTimer);
         }
@@ -65,8 +68,9 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenNavigatingToPageShouldSetSecondsToGenerateTokenAndStartTheTimer()
         {
+            var expectedSecondsToGenerateToken = _configurationManager.Get().SecondsToGenerateToken;
             _tokenViewModel.OnNavigatingTo(new NavigationParameters());
-            _tokenViewModel.SecondsToGenerateToken.Should().Be(AppConstants.secondsToGenerateToken);
+            _tokenViewModel.SecondsToGenerateToken.Should().Be(expectedSecondsToGenerateToken);
             _deviceTimer.Seconds.Should().Be(1);
             _deviceTimer.Callback.Should().NotBeNull();
         }
@@ -92,8 +96,9 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenGeneratingTokenShouldResetSecondsToGenerateTokenAndStartTheTimer()
         {
+            var expectedSecondsToGenerateToken = _configurationManager.Get().SecondsToGenerateToken;
             _tokenViewModel.GenerateTokenCommand.Execute();
-            _tokenViewModel.SecondsToGenerateToken.Should().Be(AppConstants.secondsToGenerateToken);
+            _tokenViewModel.SecondsToGenerateToken.Should().Be(expectedSecondsToGenerateToken);
             _deviceTimer.Seconds.Should().Be(1);
             _deviceTimer.Callback.Should().NotBeNull();
         }
@@ -101,13 +106,15 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void TimerShouldDecrementSecondsToGenerateTokenEverySecond()
         {
-            var expectedSecondsToGenerateToken = AppConstants.secondsToGenerateToken;
+            var secondsToGenerateToken = _configurationManager.Get().SecondsToGenerateToken;
+
+            var expectedSecondsToGenerateToken = secondsToGenerateToken;
 
             _tokenViewModel.GenerateTokenCommand.Execute();
             _tokenViewModel.SecondsToGenerateToken.Should().Be(expectedSecondsToGenerateToken);
 
             _deviceTimer.Callback.Invoke();
-            expectedSecondsToGenerateToken = AppConstants.secondsToGenerateToken - 1;
+            expectedSecondsToGenerateToken = secondsToGenerateToken - 1;
 
             _tokenViewModel.SecondsToGenerateToken.Should().Be(expectedSecondsToGenerateToken);
         }

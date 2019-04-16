@@ -1,16 +1,12 @@
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using AssinaturaDigital.Events;
+using AssinaturaDigital.Services.Fakes;
+using AssinaturaDigital.UnitTests.Mocks;
+using AssinaturaDigital.ViewModels;
 using FluentAssertions;
+using NUnit.Framework;
+using Prism.Events;
 using Prism.Navigation;
 using System.Threading.Tasks;
-using AssinaturaDigital.ViewModels;
-using AssinaturaDigital.Services.Fakes;
-using Prism.Services;
-using AssinaturaDigital.UnitTests.Mocks;
-using Prism.Events;
-using AssinaturaDigital.Events;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
@@ -19,20 +15,17 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private TermsOfUseViewModel _userTermsViewModel;
         private TermsOfUseServiceFake _userTermsServiceFake;
         private NavigationServiceMock _navigationService;
-        private PageDialogServiceMock _pageDialogService;
         private IEventAggregator _eventAggregator;
 
         [SetUp]
         public void Setup()
         {
-            _pageDialogService = new PageDialogServiceMock();
-            _userTermsServiceFake = new TermsOfUseServiceFake();
             _navigationService = new NavigationServiceMock();
+            _userTermsServiceFake = new TermsOfUseServiceFake();
             _eventAggregator = new EventAggregator();
 
             _userTermsViewModel = new TermsOfUseViewModel(
                 _userTermsServiceFake,
-                _pageDialogService,
                 _eventAggregator,
                 _navigationService);
         }
@@ -42,8 +35,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var expectedTerm = await _userTermsServiceFake.GetTermsUse();
             _userTermsViewModel.OnNavigatingTo(new NavigationParameters());
-
-            _userTermsViewModel.TermsUse.Should().Be(expectedTerm);
+            _userTermsViewModel.TermsOfUse.Should().Be(expectedTerm);
         }
 
         [Test]

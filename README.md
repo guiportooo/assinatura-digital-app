@@ -2,6 +2,14 @@
 
 App assinatura_digital desenvolvido com Xamarin Forms
 
+### iOS Build Status (develop)
+
+[![Build status](https://dev.azure.com/tecnobank/assinatura_digital/_apis/build/status/assinatura_digital-iOS%20(develop))](https://dev.azure.com/tecnobank/assinatura_digital/_build/latest?definitionId=4)
+
+### Android Build Status (develop)
+
+[![Build status](https://dev.azure.com/tecnobank/assinatura_digital/_apis/build/status/assinatura_digital-Android%20(develop))](https://dev.azure.com/tecnobank/assinatura_digital/_build/latest?definitionId=6)
+
 ## Setup
 
 - Ferramentas necessárias: Visual Studio ou Visual Studio for Mac, Git, Xamarin

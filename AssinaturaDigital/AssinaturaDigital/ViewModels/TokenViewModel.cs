@@ -1,3 +1,4 @@
+using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services;
 using AssinaturaDigital.Views;
@@ -15,6 +16,7 @@ namespace AssinaturaDigital.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
+        private readonly IConfigurationManager _configurationManager;
         private readonly ITokenService _tokenService;
         private readonly IDeviceTimer _deviceTimer;
 
@@ -37,11 +39,13 @@ namespace AssinaturaDigital.ViewModels
 
         public TokenViewModel(INavigationService navigationService,
              IPageDialogService pageDialogService, 
+             IConfigurationManager configurationManager,
              ITokenService tokenService,
              IDeviceTimer deviceTimer)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
+            _configurationManager = configurationManager;
             _tokenService = tokenService;
             _deviceTimer = deviceTimer;
 
@@ -71,8 +75,12 @@ namespace AssinaturaDigital.ViewModels
         async Task GenerateToken()
         {
             var fakeToken = await _tokenService.GenerateToken();
-            SecondsToGenerateToken = AppConstants.secondsToGenerateToken;
+
+            var config = _configurationManager.Get();
+            SecondsToGenerateToken = config.SecondsToGenerateToken;
+
             StartTimer();
+
             await _pageDialogService.DisplayAlertAsync(Title, fakeToken, "OK");
         }
 

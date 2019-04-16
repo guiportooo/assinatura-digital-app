@@ -8,7 +8,7 @@
             <Label Style="{StaticResource title}"
                    Text="{Binding Title}" />
             <ScrollView Scrolled="ScrollView_Scrolled">
-                <Label Text="{Binding TermsUse}" />
+                <Label Text="{Binding TermsOfUse}" />
             </ScrollView>
             <StackLayout Orientation="Horizontal">
                 <Switch IsEnabled="{Binding ReadTerms}"
