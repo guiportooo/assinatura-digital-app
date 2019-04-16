@@ -18,11 +18,7 @@
     <PackageReference Include="Xamarin.HotReload" Version="1.2.4" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Services\" />
     <Folder Include="Models\" />
-    <Folder Include="Services\Fakes\" />
     <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

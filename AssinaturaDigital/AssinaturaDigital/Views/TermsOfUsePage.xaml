@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Visual="Material"
+             x:Class="AssinaturaDigital.Views.TermsOfUsePage">
+    <ContentPage.Content>
+        <StackLayout Margin="10" VerticalOptions="StartAndExpand">
+            <Label Style="{StaticResource title}"
+                   Text="{Binding Title}" />
+            <ScrollView Scrolled="ScrollView_Scrolled">
+                <Label Text="{Binding TermsUse}" />
+            </ScrollView>
+            <StackLayout Orientation="Horizontal">
+                <Switch IsEnabled="{Binding ReadTerms}"
+                        IsToggled="{Binding AcceptedTerms}"/>
+                <Label Text="ACEITO RECEBER NOTIFICAÇÕES" />
+                <Button Text="AVANÇAR"                        
+                        Command="{Binding AcceptTermsCommand}" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

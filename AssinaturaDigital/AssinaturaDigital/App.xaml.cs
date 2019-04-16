@@ -1,4 +1,4 @@
-﻿using AssinaturaDigital.Services;
+using AssinaturaDigital.Services;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
@@ -26,10 +26,12 @@ namespace AssinaturaDigital
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpViewModel>();
             containerRegistry.RegisterForNavigation<TokenPage, TokenViewModel>();
-            containerRegistry.RegisterForNavigation<UserTermsPage, UserTermsViewModel>();
+            containerRegistry.RegisterForNavigation<TermsOfUsePage, TermsOfUseViewModel>();
+            containerRegistry.RegisterForNavigation<DocumentsPage, DocumentsViewModel>();
 
             containerRegistry.Register<ISignUpService, SignUpServiceFake>();
             containerRegistry.Register<ITokenService, TokenServiceFake>();
+            containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
             containerRegistry.Register<IDeviceTimer, DeviceTimer>();
         }
     }

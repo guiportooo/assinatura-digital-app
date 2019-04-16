@@ -101,7 +101,7 @@ namespace AssinaturaDigital.ViewModels
                     return;
                 }
 
-                await _navigationService.NavigateAsync(nameof(UserTermsPage));
+                await _navigationService.NavigateAsync(nameof(TermsOfUsePage));
             }
             catch (Exception ex)
             {

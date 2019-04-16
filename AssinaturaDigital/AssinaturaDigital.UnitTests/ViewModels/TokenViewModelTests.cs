@@ -203,7 +203,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _tokenViewModel.ValidateTokenCommand.Execute();
 
-            _navigationService.Name.Should().Be(nameof(UserTermsPage));
+            _navigationService.Name.Should().Be(nameof(TermsOfUsePage));
         }
 
         [Test]

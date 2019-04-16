@@ -19,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mocks\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Models\" />
   </ItemGroup>
 </Project>
