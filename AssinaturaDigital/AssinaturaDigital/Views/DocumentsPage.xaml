@@ -6,6 +6,12 @@
         <StackLayout>
             <Label Style="{StaticResource title}"
                    Text="{Binding Title}" />
+            <StackLayout Margin="10" VerticalOptions="CenterAndExpand">
+                <Button Text="ENVIAR FOTO DO RG"
+                        Command="{Binding RGCommand}" />
+                <Button Text="ENVIAR FOTO DA CNH"
+                        Command="{Binding CNHCommand}" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
