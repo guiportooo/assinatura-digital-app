@@ -66,7 +66,6 @@ CoverletSettings ReturnCoverletSettings()
     CoverletOutputDirectory = Directory(@".\CoverageResults\"),
     CoverletOutputName = coverageOutputName,
     ExcludeByAttribute = new List<string> { "Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" },
-    ExcludeByFile = new List<string> { "../AssinaturaDigital/App.xaml.cs" },
     Exclude = new List<string> { "[*Tests?]*", "[*]AssinaturaDigital.Views.*" } 
   };
 }
@@ -78,7 +77,12 @@ void GenerateCoverageReport()
 
   var reportGeneratorSettings = new ReportGeneratorSettings()
   {
-    HistoryDirectory = new DirectoryPath("./CoverageResults/ReportsHistory")
+    HistoryDirectory = new DirectoryPath("./CoverageResults/ReportsHistory"),
+    ReportTypes = new List<ReportGeneratorReportType> 
+    { 
+      ReportGeneratorReportType.HtmlInline_AzurePipelines, 
+      ReportGeneratorReportType.Badges 
+    }
   };
   var coverageResultsName = $"./CoverageResults/{coverageOutputName}.opencover.xml";
   Information($"Generating coverage report for {coverageResultsName}");

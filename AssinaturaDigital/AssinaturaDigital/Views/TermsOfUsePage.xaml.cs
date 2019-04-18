@@ -22,5 +22,7 @@ namespace AssinaturaDigital.Views
             if (scrollingSpace <= e.ScrollY)
                 _eventAggregator.GetEvent<ScrolledToBottomEvent>().Publish();
         }
+
+        bool ScrolledToTheBottom(double scrollingSpace, double scrollPosition) => (int)scrollingSpace <= (int)scrollPosition;
     }
 }
