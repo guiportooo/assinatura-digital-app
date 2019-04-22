@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AssinaturaDigital.Models;
+using AssinaturaDigital.Services.Interfaces;
 
 namespace AssinaturaDigital.Services.Fakes
 {

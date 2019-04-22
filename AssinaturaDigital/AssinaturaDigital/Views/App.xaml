@@ -5,6 +5,43 @@
                    x:Class="AssinaturaDigital.Views.App">
     <Application.Resources>
         <ResourceDictionary>
+            <Style TargetType="Label" x:Key="regularIcon">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Font Awesome 5 Free</On>
+                            <On Platform="Android">Fonts/Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free-Regular-400</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style> 
+            <Style TargetType="Label" x:Key="solidIcon">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Font Awesome 5 Free</On>
+                            <On Platform="Android">Fonts/Font Awesome 5 Free-Solid-900.otf#Font Awesome 5 Free-Solid-900</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style> 
+            <Style TargetType="Label" x:Key="brandIcon">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Font Awesome 5 Brands</On>
+                            <On Platform="Android">Fonts/Font Awesome 5 Brands-Regular-400.otf#Font Awesome 5 Brands-Solid-400</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style TargetType="Label">
                 <Setter Property="FontSize" Value="Small"/>
             </Style>

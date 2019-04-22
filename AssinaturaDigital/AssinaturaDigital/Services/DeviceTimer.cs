@@ -1,3 +1,4 @@
+using AssinaturaDigital.Services.Interfaces;
 using System;
 using Xamarin.Forms;
 

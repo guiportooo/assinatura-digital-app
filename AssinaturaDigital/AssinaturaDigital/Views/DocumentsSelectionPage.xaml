@@ -2,16 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Visual="Material"
-             x:Class="AssinaturaDigital.Views.DocumentsPage">
+             x:Class="AssinaturaDigital.Views.DocumentsSelectionPage">
     <ContentPage.Content>
         <StackLayout>
             <Label Style="{StaticResource title}"
                    Text="{Binding Title}" />
             <StackLayout Margin="10" VerticalOptions="CenterAndExpand">
                 <Button Text="ENVIAR FOTO DO RG"
-                        Command="{Binding RGCommand}" />
+                        Command="{Binding ChooseRGPictureCommand}" />
                 <Button Text="ENVIAR FOTO DA CNH"
-                        Command="{Binding CNHCommand}" />
+                        Command="{Binding ChooseCNHPictureCommand}" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

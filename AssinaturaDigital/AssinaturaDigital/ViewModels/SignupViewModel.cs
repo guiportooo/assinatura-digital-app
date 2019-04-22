@@ -1,5 +1,5 @@
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services;
+using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;

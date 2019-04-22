@@ -9,6 +9,7 @@ namespace AssinaturaDigital.UnitTests.Mocks
         public INavigationParameters Parameters { get; private set; }
         public bool? UseModalNavigation { get; private set; }
         public bool Animated { get; private set; }
+        public bool WentBack { get; private set; }
 
         public NavigationServiceMock() : base(null, null, null, null) { }
 
@@ -25,6 +26,13 @@ namespace AssinaturaDigital.UnitTests.Mocks
             Parameters = parameters;
             UseModalNavigation = useModalNavigation;
             Animated = animated;
+            INavigationResult result = new NavigationResult();
+            return Task.FromResult(result);
+        }
+
+        public override Task<INavigationResult> GoBackAsync()
+        {
+            WentBack = true;
             INavigationResult result = new NavigationResult();
             return Task.FromResult(result);
         }

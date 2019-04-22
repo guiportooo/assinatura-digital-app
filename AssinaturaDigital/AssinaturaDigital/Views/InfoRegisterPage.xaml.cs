@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace AssinaturaDigital.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CNHPage : ContentPage
+	public partial class InfoRegisterPage : ContentPage
 	{
-		public CNHPage ()
+		public InfoRegisterPage ()
 		{
 			InitializeComponent ();
 		}

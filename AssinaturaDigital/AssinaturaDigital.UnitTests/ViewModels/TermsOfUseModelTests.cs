@@ -2,6 +2,7 @@ using AssinaturaDigital.Events;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.ViewModels;
+using AssinaturaDigital.Views;
 using FluentAssertions;
 using NUnit.Framework;
 using Prism.Events;
@@ -13,21 +14,23 @@ namespace AssinaturaDigital.UnitTests.ViewModels
     public class TermsOfUseModelTests
     {
         private TermsOfUseViewModel _userTermsViewModel;
-        private TermsOfUseServiceFake _userTermsServiceFake;
         private NavigationServiceMock _navigationService;
+        private PageDialogServiceMock _pageDialogService;
+        private TermsOfUseServiceFake _userTermsServiceFake;
         private IEventAggregator _eventAggregator;
 
         [SetUp]
         public void Setup()
         {
             _navigationService = new NavigationServiceMock();
+            _pageDialogService = new PageDialogServiceMock();
             _userTermsServiceFake = new TermsOfUseServiceFake();
             _eventAggregator = new EventAggregator();
 
-            _userTermsViewModel = new TermsOfUseViewModel(
+            _userTermsViewModel = new TermsOfUseViewModel(_navigationService,
+                _pageDialogService,
                 _userTermsServiceFake,
-                _eventAggregator,
-                _navigationService);
+                _eventAggregator);
         }
 
         [Test]
@@ -39,7 +42,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenScrollToEndOfPageButtonReadTermsShouldBeTrue()
+        public void WhenScrollingToEndOfPageShouldMarkTermsAsRead()
         {
             _userTermsViewModel.OnNavigatedTo(new NavigationParameters());
             _eventAggregator.GetEvent<ScrolledToBottomEvent>().Publish();
@@ -48,10 +51,18 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
         [TestCase(true)]
         [TestCase(false)]
-        public void OnlyNavigateToNextPageWhenAcceptedTermsShouldBeTrue(bool acceptedTerms)
+        public void ShouldValidateIfTermsWereAccepted(bool acceptedTerms)
         {
             _userTermsViewModel.AcceptedTerms = acceptedTerms;
             _userTermsViewModel.AcceptTermsCommand.CanExecute().Should().Be(acceptedTerms);
+        }
+
+        [Test]
+        public void WhenAcceptingTermsShouldNavigateToDocumentsSelecitonPage()
+        {
+            _userTermsViewModel.AcceptedTerms = true;
+            _userTermsViewModel.AcceptTermsCommand.Execute();
+            _navigationService.Name.Should().Be(nameof(DocumentsSelectionPage));
         }
     }
 }

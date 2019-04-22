@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace AssinaturaDigital.Services
+namespace AssinaturaDigital.Services.Interfaces
 {
     public interface ITermsOfUseServices
     {

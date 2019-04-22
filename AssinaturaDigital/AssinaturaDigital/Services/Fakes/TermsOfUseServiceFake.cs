@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
+using AssinaturaDigital.Services.Interfaces;
 using System.Threading.Tasks;
 
 namespace AssinaturaDigital.Services.Fakes

@@ -3,37 +3,35 @@ using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
 using NUnit.Framework;
-using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
-    public class DocumentsViewModelTests
+    public class DocumentsSelectionViewModelTests
     {
-        private DocumentsViewModel _documentsViewModel;
+        private DocumentsSelectionViewModel _documentsViewModel;
         private NavigationServiceMock _navigationService;
+        private PageDialogServiceMock _pageDialogService;
 
         [SetUp]
         public void Setup()
         {
             _navigationService = new NavigationServiceMock();
-            _documentsViewModel = new DocumentsViewModel(_navigationService);
+            _pageDialogService = new PageDialogServiceMock();
+            _documentsViewModel = new DocumentsSelectionViewModel(_navigationService, _pageDialogService);
         }
 
         [Test]
         public void WhenChooseRGShouldNavigateToRGPage()
         {
             _documentsViewModel.ChooseRGPictureCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(RGPage));
+            _navigationService.Name.Should().Be(nameof(DocumentPage));
         }
 
         [Test]
         public void WhenChooseCNHShouldNavigateToCNHPage()
         {
             _documentsViewModel.ChooseCNHPictureCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(CNHPage));
+            _navigationService.Name.Should().Be(nameof(DocumentPage));
         }
     }
 }

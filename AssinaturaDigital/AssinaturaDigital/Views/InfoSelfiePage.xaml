@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AssinaturaDigital.Views.InfoSelfiePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Orientation="Horizontal"
+                         Margin="10" HorizontalOptions="StartAndExpand">
+                <Label Text="Estamos quase terminando" />
+                <Label Text="&#xf129;" Style="{StaticResource solidIcon}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ShowInfoCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+            <Label Text="Agora vamos tirar uma selfie" />
+            <Button Text="AVANÇAR" Command="{Binding TakeSelfieCommand}" />
+            <Image />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,4 +1,6 @@
+using AssinaturaDigital.Services.Interfaces;
 using System;
+
 namespace AssinaturaDigital.Services.Fakes
 {
     public class DeviceTimerFake : IDeviceTimer

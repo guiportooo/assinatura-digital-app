@@ -1,5 +1,5 @@
 using System;
-namespace AssinaturaDigital.Services
+namespace AssinaturaDigital.Services.Interfaces
 {
     public interface IDeviceTimer
     {

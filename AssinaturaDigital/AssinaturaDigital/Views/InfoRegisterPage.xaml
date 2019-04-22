@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:AssinaturaDigital.Converters"
+             Visual="Material"
+             x:Class="AssinaturaDigital.Views.InfoRegisterPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Title}" />
+            <Label Text="{Binding Message}" />
+            <StackLayout HorizontalOptions="CenterAndExpand" 
+                         Orientation="Horizontal" 
+                         IsVisible="{Binding Approved}">
+                <Button Text="Home" Command="{Binding NavigateToHomeCommand}" />
+                <Button Text="Sair do app" Command="{Binding LogoutCommand}" />
+            </StackLayout>
+            <StackLayout HorizontalOptions="CenterAndExpand"
+                         IsVisible="{Binding Approved, Converter={converters:InverseBoolConverter}}">
+                <Label Text="&#xf057;" Style="{StaticResource regularIcon}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoBackToSelfieCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

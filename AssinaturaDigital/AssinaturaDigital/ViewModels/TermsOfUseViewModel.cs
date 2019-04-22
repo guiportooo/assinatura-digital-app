@@ -1,17 +1,20 @@
 using AssinaturaDigital.Events;
-using AssinaturaDigital.Services;
+using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
+using Prism.Services;
+using System;
 
 namespace AssinaturaDigital.ViewModels
 {
     public class TermsOfUseViewModel : ViewModelBase, INavigatingAware, INavigatedAware
     {
+        private readonly INavigationService _navigationService;
+        private readonly IPageDialogService _pageDialogService;
         private readonly ITermsOfUseServices _userTermsServices;
         private readonly IEventAggregator _eventAggregator;
-        private readonly INavigationService _navigationService;
 
         public DelegateCommand AcceptTermsCommand { get; }
 
@@ -36,24 +39,41 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _acceptedTerms, value);
         }
 
-        public TermsOfUseViewModel(ITermsOfUseServices userTermsServices,
-            IEventAggregator eventAggregator,
-            INavigationService navigationService)
+        public TermsOfUseViewModel(INavigationService navigationService,
+            IPageDialogService pageDialogService,
+            ITermsOfUseServices userTermsServices,
+            IEventAggregator eventAggregator)
         {
             Title = "Termos de uso";
 
+            _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
             _userTermsServices = userTermsServices;
             _eventAggregator = eventAggregator;
-            _navigationService = navigationService;
 
             AcceptTermsCommand = new DelegateCommand(AcceptTerms, CanAcceptTerms)
+                .ObservesProperty(() => IsBusy)
                 .ObservesProperty(() => AcceptedTerms);
         }
 
-        bool CanAcceptTerms() => AcceptedTerms;
+        bool CanAcceptTerms() => !IsBusy && AcceptedTerms;
 
         async void AcceptTerms()
-            => await _navigationService.NavigateAsync(nameof(DocumentsPage));
+        {
+            try
+            {
+                IsBusy = true;
+                await _navigationService.NavigateAsync(nameof(DocumentsSelectionPage));
+            }
+            catch (Exception ex)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
 
         void EndOfScroll() =>
             ReadTerms = true;

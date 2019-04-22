@@ -1,6 +1,6 @@
 using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services;
+using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class TokenViewModel : ViewModelBase, INavigatingAware
+    public class TokenViewModel : ViewModelBase, INavigatedAware
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
@@ -38,7 +38,7 @@ namespace AssinaturaDigital.ViewModels
         }
 
         public TokenViewModel(INavigationService navigationService,
-             IPageDialogService pageDialogService, 
+             IPageDialogService pageDialogService,
              IConfigurationManager configurationManager,
              ITokenService tokenService,
              IDeviceTimer deviceTimer)
@@ -58,7 +58,10 @@ namespace AssinaturaDigital.ViewModels
                 .ObservesProperty(() => TokenDigits);
 
             Title = "Token";
+            ClearTokenDigits();
+        }
 
+        void ClearTokenDigits() =>
             TokenDigits = new NotifyCommandCollectionModel<TokenDigit>(ValidateTokenCommand, new List<TokenDigit>
             {
                 new TokenDigit(string.Empty),
@@ -68,9 +71,18 @@ namespace AssinaturaDigital.ViewModels
                 new TokenDigit(string.Empty),
                 new TokenDigit(string.Empty)
             });
+
+        public async void OnNavigatedTo(INavigationParameters parameters) => await Initialize();
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
         }
 
-        public async void OnNavigatingTo(INavigationParameters parameters) => await GenerateToken();
+        async Task Initialize()
+        {
+            ClearTokenDigits();
+            await GenerateToken();
+        }
 
         async Task GenerateToken()
         {

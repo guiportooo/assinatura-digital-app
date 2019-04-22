@@ -69,7 +69,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenNavigatingToPageShouldSetSecondsToGenerateTokenAndStartTheTimer()
         {
             var expectedSecondsToGenerateToken = _configurationManager.Get().SecondsToGenerateToken;
-            _tokenViewModel.OnNavigatingTo(new NavigationParameters());
+            _tokenViewModel.OnNavigatedTo(new NavigationParameters());
             _tokenViewModel.SecondsToGenerateToken.Should().Be(expectedSecondsToGenerateToken);
             _deviceTimer.Seconds.Should().Be(1);
             _deviceTimer.Callback.Should().NotBeNull();
