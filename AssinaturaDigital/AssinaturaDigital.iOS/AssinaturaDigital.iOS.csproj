@@ -100,6 +100,13 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen-1.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
