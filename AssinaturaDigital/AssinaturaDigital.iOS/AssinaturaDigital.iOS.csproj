@@ -125,9 +125,6 @@
     <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen.png" />
     <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x.png" />
     <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x.png" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen-1.png" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x-1.png" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\logo.png" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%402x.png" />

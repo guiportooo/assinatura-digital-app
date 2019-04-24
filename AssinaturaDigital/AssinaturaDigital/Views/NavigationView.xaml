@@ -6,26 +6,40 @@
         <StackLayout VerticalOptions="End"
                      Margin="20,0,20,20"
                      Orientation="Horizontal">
-            <Label Text="&#xf060;" 
-                   Style="{StaticResource solidIconSpan}"
-                   FontSize="Large"
-                   TextColor="{StaticResource gray}"
-                   HorizontalOptions="StartAndExpand"
-                   IsVisible="{Binding HasBackNavigation}">
-                <Label.GestureRecognizers>
+            <Frame BackgroundColor="Transparent"
+                   HasShadow="false"
+                   BorderColor="Transparent"
+                   Padding="10"
+                   HorizontalOptions="StartAndExpand">
+                <Label Text="&#xf060;" 
+                       Style="{StaticResource solidIconSpan}"
+                       FontSize="Large"
+                       TextColor="{StaticResource gray}"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding HasBackNavigation}">
+                </Label>
+                <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="&#xf061;" 
-                   Style="{StaticResource solidIconSpan}"
-                   FontSize="Large"
-                   TextColor="{StaticResource gray}"
-                   HorizontalOptions="EndAndExpand"
-                   IsVisible="{Binding HasFowardNavigation}">
-                <Label.GestureRecognizers>
+                </Frame.GestureRecognizers>
+            </Frame>
+            <Frame BackgroundColor="Transparent"
+                   HasShadow="false"
+                   BorderColor="Transparent"
+                   Padding="10"
+                   HorizontalOptions="EndAndExpand">
+                <Label Text="&#xf061;" 
+                       Style="{StaticResource solidIconSpan}"
+                       FontSize="Large"
+                       TextColor="{StaticResource gray}"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding HasFowardNavigation}">
+                </Label>
+                <Frame.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoFowardCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
+                </Frame.GestureRecognizers>
+           </Frame> 
         </StackLayout>
     </ContentView.Content>
 </ContentView>

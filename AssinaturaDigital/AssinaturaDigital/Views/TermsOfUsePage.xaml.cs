@@ -19,7 +19,7 @@ namespace AssinaturaDigital.Views
             var scrollView = sender as ScrollView;
             var scrollingSpace = scrollView.ContentSize.Height - scrollView.Height;
 
-            if (scrollingSpace <= e.ScrollY)
+            if (ScrolledToTheBottom(scrollingSpace, e.ScrollY))
                 _eventAggregator.GetEvent<ScrolledToBottomEvent>().Publish();
         }
 

@@ -22,12 +22,10 @@
       "idiom": "iphone"
     },
     {
-      "filename": "splashscreen-1.png",
       "scale": "1x",
       "idiom": "iphone"
     },
     {
-      "filename": "splashscreen@2x-1.png",
       "scale": "2x",
       "idiom": "iphone"
     },
@@ -37,7 +35,6 @@
       "idiom": "iphone"
     },
     {
-      "filename": "splashscreen@3x-1.png",
       "scale": "3x",
       "idiom": "iphone"
     },
