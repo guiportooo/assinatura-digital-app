@@ -66,7 +66,15 @@ CoverletSettings ReturnCoverletSettings()
     CoverletOutputDirectory = Directory(@".\CoverageResults\"),
     CoverletOutputName = coverageOutputName,
     ExcludeByAttribute = new List<string> { "Obsolete,GeneratedCodeAttribute,CompilerGeneratedAttribute" },
-    Exclude = new List<string> { "[*Tests?]*", "[*]AssinaturaDigital.Views.*" } 
+    Exclude = new List<string> 
+    { 
+      "[*Tests?]*", 
+      "[*]AssinaturaDigital.Views.*", 
+      "[*]AssinaturaDigital.Extensions.*",
+      "[*]AssinaturaDigital.Converters.*",
+      "[*]AssinaturaDigital.Utilities.*",
+      "[*]AssinaturaDigital.Services.Fakes.*",
+    },
   };
 }
 

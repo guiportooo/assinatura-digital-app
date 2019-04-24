@@ -5,9 +5,18 @@
              Visual="Material"
              NavigationPage.HasNavigationBar="false"
              x:Class="AssinaturaDigital.Views.MainPage">
-    <StackLayout VerticalOptions="CenterAndExpand" 
+    <StackLayout Margin="20"
+                 VerticalOptions="CenterAndExpand"
                  HorizontalOptions="CenterAndExpand">
-        <Button Text="1º ACESSO" Command="{Binding OpenSignUpCommand}"/>
-        <Button Text="SOU CADASTRADO" />
+        <Image Source="Logo"  
+               Aspect="AspectFit"
+               MinimumWidthRequest="40" 
+               MinimumHeightRequest="40"
+               Margin="10"/>
+        <Button Text="1º ACESSO" 
+                Command="{Binding OpenSignUpCommand}"
+                Style="{StaticResource greenButton}"/>
+        <Button Text="SOU CADASTRADO" 
+                Style="{StaticResource whiteButton}"/>
     </StackLayout>
 </ContentPage>

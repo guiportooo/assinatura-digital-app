@@ -4,7 +4,7 @@ using Plugin.Media.Abstractions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AssinaturaDigital.Services
+namespace AssinaturaDigital.Services.Fakes
 {
     public class DocumentsServiceFake : IDocumentsService
     {

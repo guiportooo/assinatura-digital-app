@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="AssinaturaDigital.Views.NavigationView">
+    <ContentView.Content>
+        <StackLayout VerticalOptions="End"
+                     Margin="20,0,20,20"
+                     Orientation="Horizontal">
+            <Label Text="&#xf060;" 
+                   Style="{StaticResource solidIconSpan}"
+                   FontSize="Large"
+                   TextColor="{StaticResource gray}"
+                   HorizontalOptions="StartAndExpand"
+                   IsVisible="{Binding HasBackNavigation}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="&#xf061;" 
+                   Style="{StaticResource solidIconSpan}"
+                   FontSize="Large"
+                   TextColor="{StaticResource gray}"
+                   HorizontalOptions="EndAndExpand"
+                   IsVisible="{Binding HasFowardNavigation}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoFowardCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
+

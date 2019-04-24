@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class SelfieViewModel : ViewModelBase, INavigatingAware
+    public class SelfieViewModel : ViewModelBase, INavigatedAware
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
@@ -25,7 +25,7 @@ namespace AssinaturaDigital.ViewModels
             IPermissionsService permissionsService,
             ICameraService cameraService,
             IDocumentsService documentsService,
-            IErrorHandler errorHandler)
+            IErrorHandler errorHandler) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
@@ -37,8 +37,11 @@ namespace AssinaturaDigital.ViewModels
             Title = "Selfie";
         }
 
-        public void OnNavigatingTo(INavigationParameters parameters) 
+        public void OnNavigatedTo(INavigationParameters parameters)
             => TakeSelfiePhoto().FireAndForget(_errorHandler);
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+            => _navigationService.RemoveLastViewWithName(nameof(SelfiePage));
 
         async Task TakeSelfiePhoto()
         {
@@ -56,9 +59,7 @@ namespace AssinaturaDigital.ViewModels
                     new NavigationParameters 
                     {
                          { AppConstants.ApprovedSelfie, approvedSelfie }
-                    },
-                    true,
-                    true);
+                    });
             }
             catch (Exception ex)
             {

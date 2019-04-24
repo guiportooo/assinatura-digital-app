@@ -1,9 +1,11 @@
+using AssinaturaDigital.Models;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace AssinaturaDigital.ViewModels
@@ -16,8 +18,22 @@ namespace AssinaturaDigital.ViewModels
         public DelegateCommand ChooseRGPictureCommand { get; }
         public DelegateCommand ChooseCNHPictureCommand { get; }
 
+        private ObservableCollection<Steps> _steps;
+        public ObservableCollection<Steps> StepsList
+        {
+            get => _steps;
+            set => SetProperty(ref _steps, value);
+        }
+
+        private int _currentStep;
+        public int CurrentStep
+        {
+            get => _currentStep;
+            set => SetProperty(ref _currentStep, value);
+        }
+
         public DocumentsSelectionViewModel(INavigationService navigationService,
-            IPageDialogService pageDialogService)
+            IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
@@ -27,7 +43,22 @@ namespace AssinaturaDigital.ViewModels
             ChooseCNHPictureCommand = new DelegateCommand(ChooseCNHPicture, CanChooseDocument)
                 .ObservesProperty(() => IsBusy);
 
-            Title = "Documentos";
+            InitializeSteps();
+
+            Title = "Documento";
+            HasFowardNavigation = false;
+        }
+
+        void InitializeSteps()
+        {
+            CurrentStep = 4;
+            StepsList = new ObservableCollection<Steps> {
+                new Steps(true),
+                new Steps(true),
+                new Steps(true),
+                new Steps(true),
+                new Steps(false),
+            };
         }
 
         bool CanChooseDocument() => !IsBusy;

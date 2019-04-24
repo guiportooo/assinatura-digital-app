@@ -31,24 +31,25 @@ namespace AssinaturaDigital.ViewModels
         }
 
         public InfoRegisterViewModel(INavigationService navigationService,
-            IPageDialogService pageDialogService)
+            IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
+            HasFowardNavigation = false;
 
             NavigateToHomeCommand = new DelegateCommand(NavigateToHome, CanNavigate)
                 .ObservesProperty(() => IsBusy);
             LogoutCommand = new DelegateCommand(Logout, CanNavigate)
                 .ObservesProperty(() => IsBusy);
-            GoBackToSelfieCommand = new DelegateCommand(GoBackToSelfie, CanNavigate)
+            GoBackToSelfieCommand = new DelegateCommand(GoBack, CanNavigate)
                 .ObservesProperty(() => IsBusy);
         }
 
-        public async void OnNavigatingTo(INavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
             if (!ParametersAreValid(parameters))
             {
-                await _navigationService.NavigateAsync(nameof(SelfiePage));
+                GoBack();
                 return;
             }
 
@@ -98,23 +99,6 @@ namespace AssinaturaDigital.ViewModels
             {
                 IsBusy = true;
                 await _navigationService.NavigateAsync(nameof(MainPage));
-            }
-            catch (Exception ex)
-            {
-                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-
-        async void GoBackToSelfie()
-        {
-            try
-            {
-                IsBusy = true;
-                await _navigationService.NavigateAsync(nameof(SelfiePage));
             }
             catch (Exception ex)
             {

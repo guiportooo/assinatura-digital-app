@@ -34,6 +34,20 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
+        public void WhenNavigatingToPageShouldConfigureSteps()
+        {
+            var expectedCurrentStep = 3;
+            var expectedCountListSteps = 5;
+            _userTermsViewModel.CurrentStep.Should().Be(expectedCurrentStep);
+            _userTermsViewModel.StepsList.Count.Should().Be(expectedCountListSteps);
+            _userTermsViewModel.StepsList[0].Done.Should().BeTrue();
+            _userTermsViewModel.StepsList[1].Done.Should().BeTrue();
+            _userTermsViewModel.StepsList[2].Done.Should().BeTrue();
+            _userTermsViewModel.StepsList[3].Done.Should().BeFalse();
+            _userTermsViewModel.StepsList[4].Done.Should().BeFalse();
+        }
+
+        [Test]
         public async Task WhenNavigateToPageShouldGetTermsOfUse()
         {
             var expectedTerm = await _userTermsServiceFake.GetTermsUse();
@@ -54,14 +68,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void ShouldValidateIfTermsWereAccepted(bool acceptedTerms)
         {
             _userTermsViewModel.AcceptedTerms = acceptedTerms;
-            _userTermsViewModel.AcceptTermsCommand.CanExecute().Should().Be(acceptedTerms);
+            _userTermsViewModel.GoFowardCommand.CanExecute().Should().Be(acceptedTerms);
         }
 
         [Test]
         public void WhenAcceptingTermsShouldNavigateToDocumentsSelecitonPage()
         {
             _userTermsViewModel.AcceptedTerms = true;
-            _userTermsViewModel.AcceptTermsCommand.Execute();
+            _userTermsViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(DocumentsSelectionPage));
         }
     }

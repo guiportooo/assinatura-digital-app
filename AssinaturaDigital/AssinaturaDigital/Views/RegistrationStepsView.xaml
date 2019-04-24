@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AssinaturaDigital.Views.RegistrationStepsView">
+    <ContentView.Content>
+        <StackLayout VerticalOptions="End">
+            <Label HorizontalOptions="Center">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="ETAPA "
+                              TextColor="{StaticResource green}"/>
+                        <Span Text="{Binding CurrentStep}"
+                              TextColor="{StaticResource green}"/>
+                        <Span Text="/5"
+                              TextColor="{StaticResource green}"/>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <FlexLayout BindableLayout.ItemsSource="{Binding StepsList}"
+                        JustifyContent="Center"
+                        x:Name="registrationSteps">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <BoxView 
+                         WidthRequest="30"
+                         Margin="5,5"
+                         HeightRequest="8"
+                         CornerRadius="2"
+                         IsEnabled="{Binding Done}"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <VisualState.Setters>
+                                            <Setter Property="Color" Value="{StaticResource green}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <VisualState.Setters>
+                                            <Setter Property="Color" Value="{StaticResource gray}"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                        </BoxView>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

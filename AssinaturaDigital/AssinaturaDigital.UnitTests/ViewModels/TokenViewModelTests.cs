@@ -43,13 +43,27 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         void SetTokenDigits(ObservableCollection<TokenDigit> tokenDigits)
-            => _tokenViewModel.TokenDigits = new NotifyCommandCollectionModel<TokenDigit>(_tokenViewModel.ValidateTokenCommand,
+            => _tokenViewModel.TokenDigits = new NotifyCommandCollectionModel<TokenDigit>(_tokenViewModel.GoFowardCommand,
                 tokenDigits);
+
+        [Test]
+        public void WhenNavigatingToPageShouldConfigureSteps()
+        {
+            var expectedCurrentStep = 2;
+            var expectedCountListSteps = 5;
+            _tokenViewModel.CurrentStep.Should().Be(expectedCurrentStep);
+            _tokenViewModel.StepsList.Count.Should().Be(expectedCountListSteps);
+            _tokenViewModel.StepsList[0].Done.Should().BeTrue();
+            _tokenViewModel.StepsList[1].Done.Should().BeTrue();
+            _tokenViewModel.StepsList[2].Done.Should().BeFalse();
+            _tokenViewModel.StepsList[3].Done.Should().BeFalse();
+            _tokenViewModel.StepsList[4].Done.Should().BeFalse();
+        }
 
         [Test]
         public void WhenCreatingViewModelShouldPopulateTitleAndTokenDigits()
         {
-            var expectedTokenDigits = new NotifyCommandCollectionModel<TokenDigit>(_tokenViewModel.ValidateTokenCommand,
+            var expectedTokenDigits = new NotifyCommandCollectionModel<TokenDigit>(_tokenViewModel.GoFowardCommand,
                 new ObservableCollection<TokenDigit>
                 {
                     new TokenDigit(string.Empty),
@@ -145,7 +159,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 new TokenDigit("6")
             });
 
-            _tokenViewModel.ValidateTokenCommand.CanExecute().Should().Be(true);
+            _tokenViewModel.GoFowardCommand.CanExecute().Should().Be(true);
         }
 
         [Test]
@@ -161,7 +175,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 new TokenDigit("")
             });
 
-            _tokenViewModel.ValidateTokenCommand.CanExecute().Should().Be(false);
+            _tokenViewModel.GoFowardCommand.CanExecute().Should().Be(false);
         }
 
         [TestCase(false, true)]
@@ -179,7 +193,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             });
 
             _tokenViewModel.IsBusy = pageIsBusy;
-            _tokenViewModel.ValidateTokenCommand.CanExecute().Should().Be(canValidateToken);
+            _tokenViewModel.GoFowardCommand.CanExecute().Should().Be(canValidateToken);
         }
 
         [Test]
@@ -195,7 +209,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 new TokenDigit("6")
             });
 
-            _tokenViewModel.ValidateTokenCommand.Execute();
+            _tokenViewModel.GoFowardCommand.Execute();
 
             _tokenService.PassedToken.Should().Be("123456");
         }
@@ -208,7 +222,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 .Select(x => new TokenDigit(x.ToString()))
                 .ToObservableCollection());
 
-            _tokenViewModel.ValidateTokenCommand.Execute();
+            _tokenViewModel.GoFowardCommand.Execute();
 
             _navigationService.Name.Should().Be(nameof(TermsOfUsePage));
         }
@@ -222,7 +236,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 .Select(x => new TokenDigit(x.ToString()))
                 .ToObservableCollection());
 
-            _tokenViewModel.ValidateTokenCommand.Execute();
+            _tokenViewModel.GoFowardCommand.Execute();
 
             _pageDialogService.Title.Should().Be(_tokenViewModel.Title);
             _pageDialogService.Message.Should().Be("Token inválido!");
@@ -235,7 +249,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             const string exceptionMessage = "Invalid token!";
             _tokenService.ShouldRaiseException(new Exception(exceptionMessage));
 
-            _tokenViewModel.ValidateTokenCommand.Execute();
+            _tokenViewModel.GoFowardCommand.Execute();
 
             _pageDialogService.Title.Should().Be(_tokenViewModel.Title);
             _pageDialogService.Message.Should().Be(exceptionMessage);

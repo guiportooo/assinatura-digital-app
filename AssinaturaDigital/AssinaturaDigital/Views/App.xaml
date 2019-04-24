@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms" 
-                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-                   xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
-                   x:Class="AssinaturaDigital.Views.App">
+                        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                        xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms" 
+                        x:Class="AssinaturaDigital.Views.App">
     <Application.Resources>
         <ResourceDictionary>
+            <Color x:Key="white">#FFFFFF</Color>
+            <Color x:Key="black">#000000</Color>
+            <Color x:Key="gray">#575757</Color>
+            <Color x:Key="green">#28BF08</Color>
+            <Color x:Key="lightGreen">#8BF081</Color>
             <Style TargetType="Label" x:Key="regularIcon">
                 <Setter Property="FontSize" Value="Medium"/>
                 <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -16,7 +21,7 @@
                         </OnPlatform>
                     </Setter.Value>
                 </Setter>
-            </Style> 
+            </Style>
             <Style TargetType="Label" x:Key="solidIcon">
                 <Setter Property="FontSize" Value="Medium"/>
                 <Setter Property="FontAttributes" Value="Bold" />
@@ -42,25 +47,143 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style TargetType="Span" x:Key="regularIconSpan">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Font Awesome 5 Free</On>
+                            <On Platform="Android">Fonts/Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free-Regular-400</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Span" x:Key="solidIconSpan">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Font Awesome 5 Free</On>
+                            <On Platform="Android">Fonts/Font Awesome 5 Free-Solid-900.otf#Font Awesome 5 Free-Solid-900</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style> 
+            <Style TargetType="Span" x:Key="brandIconSpan">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Font Awesome 5 Brands</On>
+                            <On Platform="Android">Fonts/Font Awesome 5 Brands-Regular-400.otf#Font Awesome 5 Brands-Solid-400</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style TargetType="Label">
-                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
             </Style>
             <Style x:Key="title" TargetType="Label">
-                <Setter Property="FontSize" Value="Large"/>
-                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="0,20"/>
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource green}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">HurmeGeometricSans3 Bold</On>
+                            <On Platform="Android">Fonts/HurmeGeometricSans3 Bold.otf#HurmeGeometricSans3 Bold</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
             </Style>
-            <Style TargetType="Button">
+            <Style x:Key="smallFont" TargetType="Label">
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="Span">
+                <Setter Property="FontSize" Value="Small" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="titleSpan" TargetType="Span">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource green}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">HurmeGeometricSans3 Bold</On>
+                            <On Platform="Android">Fonts/HurmeGeometricSans3 Bold.otf#HurmeGeometricSans3 Bold</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="baseButton" TargetType="Button">
                 <Setter Property="BorderRadius">
                     <Setter.Value>
                         <OnPlatform x:TypeArguments="x:Int32">
                             <On Platform="iOS">5</On>
-                            <On Platform="Android">6</On>
+                            <On Platform="Android">5</On>
                         </OnPlatform>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="Padding" Value="20,0" />
+                <Setter Property="Padding" Value="30, 10" />
+                <Setter Property="Margin" Value="0,10,0,0" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="whiteButton" TargetType="Button" BasedOn="{StaticResource baseButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource white}" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+            </Style>
+            <Style x:Key="greenButton" TargetType="Button" BasedOn="{StaticResource baseButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource green}" />
+                <Setter Property="TextColor" Value="{StaticResource white}" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="Margin" Value="0,0,0,10"/>
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ResourceDictionary>
     </Application.Resources>
 </prism:PrismApplication>
-

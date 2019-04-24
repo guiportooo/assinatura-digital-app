@@ -1,8 +1,10 @@
+using AssinaturaDigital.Models;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Collections.ObjectModel;
 
 namespace AssinaturaDigital.ViewModels
 {
@@ -11,20 +13,45 @@ namespace AssinaturaDigital.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
 
-        public DelegateCommand TakeSelfieCommand { get; }
         public DelegateCommand ShowInfoCommand { get; }
 
+        private ObservableCollection<Steps> _steps;
+        public ObservableCollection<Steps> StepsList
+        {
+            get => _steps;
+            set => SetProperty(ref _steps, value);
+        }
+
+        private int _currentStep;
+        public int CurrentStep
+        {
+            get => _currentStep;
+            set => SetProperty(ref _currentStep, value);
+        }
+
         public InfoSelfieViewModel(INavigationService navigationService,
-            IPageDialogService pageDialogService)
+            IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
 
             ShowInfoCommand = new DelegateCommand(ShowInfo);
-            TakeSelfieCommand = new DelegateCommand(TakeSelfie, CanTakeSelfie)
-                .ObservesProperty(() => IsBusy);
+
+            InitializeSteps();
 
             Title = "Info Selfie";
+        }
+
+        void InitializeSteps()
+        {
+            CurrentStep = 5;
+            StepsList = new ObservableCollection<Steps> {
+                new Steps(true),
+                new Steps(true),
+                new Steps(true),
+                new Steps(true),
+                new Steps(true),
+            };
         }
 
         async void ShowInfo()
@@ -33,7 +60,7 @@ namespace AssinaturaDigital.ViewModels
             await _pageDialogService.DisplayAlertAsync(Title, info, "OK");
         }
 
-        async void TakeSelfie()
+        protected override async void GoFoward()
         {
             try
             {
@@ -49,7 +76,5 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = false;
             }
         }
-
-        bool CanTakeSelfie() => !IsBusy;
     }
 }

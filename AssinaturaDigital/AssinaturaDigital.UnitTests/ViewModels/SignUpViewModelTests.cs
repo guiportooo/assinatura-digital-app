@@ -31,6 +31,20 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
+        public void WhenNavigatingToPageShouldConfigureSteps()
+        {
+            var expectedCurrentStep = 1;
+            var expectedCountListSteps = 5;
+            _signUpViewModel.CurrentStep.Should().Be(expectedCurrentStep);
+            _signUpViewModel.StepsList.Count.Should().Be(expectedCountListSteps);
+            _signUpViewModel.StepsList[0].Done.Should().BeTrue();
+            _signUpViewModel.StepsList[1].Done.Should().BeFalse();
+            _signUpViewModel.StepsList[2].Done.Should().BeFalse();
+            _signUpViewModel.StepsList[3].Done.Should().BeFalse();
+            _signUpViewModel.StepsList[4].Done.Should().BeFalse();
+        }
+
+        [Test]
         public void WhenCreatingViewModelShouldPopulateTitle() => _signUpViewModel.Title.Should().Be("Cadastro");
 
         [TestCase(false, true)]
@@ -38,7 +52,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenPageIsBusyShouldNotBeAbleToSignUp(bool pageIsBusy, bool canSignUp)
         {
             _signUpViewModel.IsBusy = pageIsBusy;
-            _signUpViewModel.SignUpCommand.CanExecute().Should().Be(canSignUp);
+            _signUpViewModel.GoFowardCommand.CanExecute().Should().Be(canSignUp);
         }
 
         [Test]
@@ -51,7 +65,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             var expectedSignUpInformation = new SignUpInformation(fullName, cpf, cellphoneNumber, email);
 
-            _signUpViewModel.SignUpCommand.Execute();
+            _signUpViewModel.GoFowardCommand.Execute();
 
             _signUpService.SignUpInformation.Should().BeEquivalentTo(expectedSignUpInformation);
         }
@@ -59,7 +73,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenSigningUpShouldNavigateToTokenPage()
         {
-            _signUpViewModel.SignUpCommand.Execute();
+            _signUpViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(TokenPage));
         }
 
@@ -76,7 +90,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _signUpService.ShouldValidateExistingCpf(true);
 
-            _signUpViewModel.SignUpCommand.Execute();
+            _signUpViewModel.GoFowardCommand.Execute();
 
             _pageDialogService.Title.Should().Be(_signUpViewModel.Title);
             _pageDialogService.Message.Should().Be(message);

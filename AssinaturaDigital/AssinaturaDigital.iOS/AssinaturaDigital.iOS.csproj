@@ -80,6 +80,42 @@
     <BundleResource Include="Resources\Fonts\Font Awesome 5 Free-Solid-900.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <BundleResource Include="Resources\Fonts\Roboto-Black_1.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Roboto-Bold_1.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Roboto-Light_1.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Roboto-Medium_1.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\Roboto-Thin_1.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3 Black.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3 Bold.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3 Hairline.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3 Light.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3 SemiBold.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3 Thin.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
+    <BundleResource Include="Resources\Fonts\HurmeGeometricSans3.otf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -116,6 +152,10 @@
     <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen-1.png" />
     <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x-1.png" />
     <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x-1.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%402x.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -151,6 +191,7 @@
   <ItemGroup>
     <Folder Include="Assets\" />
     <Folder Include="Configuration\" />
+    <Folder Include="Assets.xcassets\Logo.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Assets\config.json">

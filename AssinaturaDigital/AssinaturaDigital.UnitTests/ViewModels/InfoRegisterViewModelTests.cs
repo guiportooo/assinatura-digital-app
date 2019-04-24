@@ -28,7 +28,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenNavigatingToPageShouldGoBackToSelfiePageIfParametersAreInvalid()
         {
             _infoRegisterViewModel.OnNavigatingTo(null);
-            _navigationService.Name.Should().Be(nameof(SelfiePage));
+            _navigationService.WentBack.Should().BeTrue();
         }
 
         [Test]
@@ -75,13 +75,6 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _infoRegisterViewModel.LogoutCommand.Execute();
             _navigationService.Name.Should().Be(nameof(MainPage));
-        }
-
-        [Test]
-        public void WhenGoingBackToSelfieShouldNavigateToSelfiePage()
-        {
-            _infoRegisterViewModel.GoBackToSelfieCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(SelfiePage));
         }
     }
 }

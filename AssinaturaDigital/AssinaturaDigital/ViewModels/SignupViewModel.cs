@@ -1,20 +1,18 @@
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Views;
-using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Collections.ObjectModel;
 
 namespace AssinaturaDigital.ViewModels
 {
     public class SignUpViewModel : ViewModelBase
     {
-        private readonly INavigationService _navigation;
+        private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
         private readonly ISignUpService _signUpService;
-
-        public DelegateCommand SignUpCommand { get; }
 
         private string _fullName;
         public string FullName
@@ -44,27 +42,52 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _email, value);
         }
 
-        public SignUpViewModel(INavigationService navigation, IPageDialogService pageDialogService, ISignUpService signUpService)
+        private ObservableCollection<Steps> _steps;
+        public ObservableCollection<Steps> StepsList
         {
-            _navigation = navigation;
+            get => _steps;
+            set => SetProperty(ref _steps, value);
+        }
+
+        private int _currentStep;
+        public int CurrentStep
+        {
+            get => _currentStep;
+            set => SetProperty(ref _currentStep, value);
+        }
+
+        public SignUpViewModel(INavigationService navigationService,
+            IPageDialogService pageDialogService,
+            ISignUpService signUpService) : base(navigationService, pageDialogService)
+        {
+            _navigationService = navigationService;
             _pageDialogService = pageDialogService;
             _signUpService = signUpService;
 
-            SignUpCommand = new DelegateCommand(SignUp, CanSignUp)
-                .ObservesProperty(() => IsBusy);
+            InitializeSteps();
 
             Title = "Cadastro";
         }
 
-        bool CanSignUp() => !IsBusy;
+        void InitializeSteps()
+        {
+            CurrentStep = 1;
+            StepsList = new ObservableCollection<Steps> {
+                new Steps(true),
+                new Steps(false),
+                new Steps(false),
+                new Steps(false),
+                new Steps(false),
+            };
+        }
 
-        async void SignUp()
+        protected override async void GoFoward()
         {
             try
             {
                 IsBusy = true;
                 await _signUpService.SignUp(new SignUpInformation(FullName, CPF, CellphoneNumber, Email));
-                await _navigation.NavigateAsync(nameof(TokenPage));
+                await _navigationService.NavigateAsync(nameof(TokenPage));
             }
             catch (Exception ex)
             {

@@ -9,13 +9,15 @@ namespace AssinaturaDigital.UnitTests.ViewModels
     public class MainViewModelTests
     {
         private NavigationServiceMock _navigationService;
+        private PageDialogServiceMock _pageDialogService;
         private MainViewModel _mainViewModel;
 
         [SetUp]
         public void Setup()
         {
             _navigationService = new NavigationServiceMock();
-            _mainViewModel = new MainViewModel(_navigationService);
+            _pageDialogService = new PageDialogServiceMock();
+            _mainViewModel = new MainViewModel(_navigationService, _pageDialogService);
         }
 
         [Test]

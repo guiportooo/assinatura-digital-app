@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class DocumentViewModel : ViewModelBase, INavigatingAware
+    public class DocumentViewModel : ViewModelBase, INavigatedAware
     {
         private string _documentType;
         private readonly INavigationService _navigationService;
@@ -27,7 +27,7 @@ namespace AssinaturaDigital.ViewModels
             IPermissionsService permissionsService,
             ICameraService cameraService,
             IDocumentsService documentsService,
-            IErrorHandler errorHandler)
+            IErrorHandler errorHandler) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
@@ -37,7 +37,7 @@ namespace AssinaturaDigital.ViewModels
             _errorHandler = errorHandler;
         }
 
-        public async void OnNavigatingTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             if (!ParametersAreValid(parameters))
             {
@@ -46,9 +46,12 @@ namespace AssinaturaDigital.ViewModels
             }
 
             _documentType = parameters[AppConstants.DocumentType].ToString();
-            Title = $"{_documentType}_Frente";
+            Title = _documentType;
             TakeDocumentPhotos().FireAndForget(_errorHandler);
         }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+            => _navigationService.RemoveLastViewWithName(nameof(DocumentPage));
 
         bool ParametersAreValid(INavigationParameters parameters)
             => parameters != null && parameters[AppConstants.DocumentType] != null;
@@ -65,11 +68,7 @@ namespace AssinaturaDigital.ViewModels
                 }
 
                 await SavePhoto($"{_documentType}_Frente", PhotoTypes.Frontal);
-
-                Title = $"{_documentType}_Verso";
-
                 await SavePhoto($"{_documentType}_Verso", PhotoTypes.Back);
-
                 await _navigationService.NavigateAsync(nameof(InfoSelfiePage));
             }
             catch (Exception ex)

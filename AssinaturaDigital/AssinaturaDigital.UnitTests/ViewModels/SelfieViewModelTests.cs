@@ -1,4 +1,4 @@
-using AssinaturaDigital.Services;
+using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
@@ -54,12 +54,10 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _permissionsService.GrantedPermissionBeforeRequest();
             _cameraService.ShouldTakePhoto();
 
-            _selfieViewModel.OnNavigatingTo(null);
+            _selfieViewModel.OnNavigatedTo(null);
 
             _navigationService.Name.Should().Be(nameof(InfoRegisterPage));
             _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
-            _navigationService.UseModalNavigation.Should().BeTrue();
-            _navigationService.Animated.Should().BeTrue();
         }
 
         [Test]
@@ -68,7 +66,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _permissionsService.GrantedPermissionAfterRequest();
             _cameraService.ShouldTakePhoto();
 
-            _selfieViewModel.OnNavigatingTo(null);
+            _selfieViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Permissão necessária para a câmera.");
         }
@@ -76,7 +74,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void ShouldDisplayErrorMessageAndGoBackIfPermissionToCameraIsNotGranted()
         {
-            _selfieViewModel.OnNavigatingTo(null);
+            _selfieViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Câmera negada.");
             _navigationService.WentBack.Should().BeTrue();
@@ -90,7 +88,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _permissionsService.GrantedPermissionBeforeRequest();
             _cameraService.ShouldTakePhoto();
 
-            _selfieViewModel.OnNavigatingTo(null);
+            _selfieViewModel.OnNavigatedTo(null);
 
             _permissionsService.Permission.Should().Be(Permission.Camera);
             _cameraService.Camera.Should().Be(CameraDevice.Front);
@@ -103,7 +101,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _permissionsService.GrantedPermissionBeforeRequest();
             _cameraService.ShouldReturnNullPhoto();
 
-            _selfieViewModel.OnNavigatingTo(null);
+            _selfieViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Não foi possível armazenar a foto.");
             _navigationService.WentBack.Should().BeTrue();
@@ -114,7 +112,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _permissionsService.GrantedPermissionBeforeRequest();
 
-            _selfieViewModel.OnNavigatingTo(null);
+            _selfieViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Nenhuma câmera detectada.");
             _navigationService.WentBack.Should().BeTrue();

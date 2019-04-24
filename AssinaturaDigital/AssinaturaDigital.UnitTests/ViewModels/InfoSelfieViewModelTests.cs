@@ -26,6 +26,20 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenCreatingViewModelShouldPopulateTitle() => _infoSelfieViewModel.Title.Should().Be("Info Selfie");
 
         [Test]
+        public void WhenNavigatingToPageShouldConfigureSteps()
+        {
+            var expectedCurrentStep = 5;
+            var expectedCountListSteps = 5;
+            _infoSelfieViewModel.CurrentStep.Should().Be(expectedCurrentStep);
+            _infoSelfieViewModel.StepsList.Count.Should().Be(expectedCountListSteps);
+            _infoSelfieViewModel.StepsList[0].Done.Should().BeTrue();
+            _infoSelfieViewModel.StepsList[1].Done.Should().BeTrue();
+            _infoSelfieViewModel.StepsList[2].Done.Should().BeTrue();
+            _infoSelfieViewModel.StepsList[3].Done.Should().BeTrue();
+            _infoSelfieViewModel.StepsList[4].Done.Should().BeTrue();
+        }
+
+        [Test]
         public void WhenExecuteInfoSelfieCommandShouldGetInfosSelfie()
         {
             var expectedInfos = "Para tornar a assinatura do contrato mais segura e possibilitar maior praticidade no processo, transformaremos sua foto em um algoritmo biométrico para identificação.";
@@ -36,7 +50,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void SelfieCommandShouldNavigateToSelfiePage()
         {
-            _infoSelfieViewModel.TakeSelfieCommand.Execute();
+            _infoSelfieViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(SelfiePage));
         }
     }

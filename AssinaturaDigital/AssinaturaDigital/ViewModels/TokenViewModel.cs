@@ -7,6 +7,7 @@ using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,8 +21,7 @@ namespace AssinaturaDigital.ViewModels
         private readonly ITokenService _tokenService;
         private readonly IDeviceTimer _deviceTimer;
 
-        public DelegateCommand GenerateTokenCommand { get; set; }
-        public DelegateCommand ValidateTokenCommand { get; }
+        public DelegateCommand GenerateTokenCommand { get; }
 
         private int _secondsToGenerateToken;
         public int SecondsToGenerateToken
@@ -37,11 +37,26 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _tokenDigits, value);
         }
 
+        private ObservableCollection<Steps> _steps;
+        public ObservableCollection<Steps> StepsList
+        {
+            get => _steps;
+            set => SetProperty(ref _steps, value);
+        }
+
+        private int _currentStep;
+        public int CurrentStep
+        {
+            get => _currentStep;
+            set => SetProperty(ref _currentStep, value);
+        }
+
+
         public TokenViewModel(INavigationService navigationService,
              IPageDialogService pageDialogService,
              IConfigurationManager configurationManager,
              ITokenService tokenService,
-             IDeviceTimer deviceTimer)
+             IDeviceTimer deviceTimer) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
@@ -53,16 +68,26 @@ namespace AssinaturaDigital.ViewModels
                 .ObservesProperty(() => IsBusy)
                 .ObservesProperty(() => SecondsToGenerateToken);
 
-            ValidateTokenCommand = new DelegateCommand(ValidateToken, CanValidateToken)
-                .ObservesProperty(() => IsBusy)
-                .ObservesProperty(() => TokenDigits);
-
             Title = "Token";
+
             ClearTokenDigits();
+            InitializeSteps();
+        }
+
+        void InitializeSteps()
+        {
+            CurrentStep = 2;
+            StepsList = new ObservableCollection<Steps> {
+                new Steps(true),
+                new Steps(true),
+                new Steps(false),
+                new Steps(false),
+                new Steps(false),
+            };
         }
 
         void ClearTokenDigits() =>
-            TokenDigits = new NotifyCommandCollectionModel<TokenDigit>(ValidateTokenCommand, new List<TokenDigit>
+            TokenDigits = new NotifyCommandCollectionModel<TokenDigit>(GoFowardCommand, new List<TokenDigit>
             {
                 new TokenDigit(string.Empty),
                 new TokenDigit(string.Empty),
@@ -104,9 +129,9 @@ namespace AssinaturaDigital.ViewModels
 
         bool CanGenerateToken() => !IsBusy && SecondsToGenerateToken == 0;
 
-        bool CanValidateToken() => !IsBusy && !TokenDigits.Items.Any(x => string.IsNullOrEmpty(x.Digit));
+        protected override bool CanGoFoward() => !IsBusy && !TokenDigits.Items.Any(x => string.IsNullOrEmpty(x.Digit));
 
-        async void ValidateToken()
+        protected override async void GoFoward()
         {
             try
             {

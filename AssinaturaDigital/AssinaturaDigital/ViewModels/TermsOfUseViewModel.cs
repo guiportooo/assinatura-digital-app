@@ -1,11 +1,13 @@
 using AssinaturaDigital.Events;
+using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Views;
-using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
 using Prism.Services;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AssinaturaDigital.ViewModels
 {
@@ -15,8 +17,6 @@ namespace AssinaturaDigital.ViewModels
         private readonly IPageDialogService _pageDialogService;
         private readonly ITermsOfUseServices _userTermsServices;
         private readonly IEventAggregator _eventAggregator;
-
-        public DelegateCommand AcceptTermsCommand { get; }
 
         private string _termsOfUse;
         public string TermsOfUse
@@ -39,10 +39,24 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _acceptedTerms, value);
         }
 
+        private ObservableCollection<Steps> _steps;
+        public ObservableCollection<Steps> StepsList
+        {
+            get => _steps;
+            set => SetProperty(ref _steps, value);
+        }
+
+        private int _currentStep;
+        public int CurrentStep
+        {
+            get => _currentStep;
+            set => SetProperty(ref _currentStep, value);
+        }
+
         public TermsOfUseViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
             ITermsOfUseServices userTermsServices,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator) : base(navigationService, pageDialogService)
         {
             Title = "Termos de uso";
 
@@ -51,14 +65,24 @@ namespace AssinaturaDigital.ViewModels
             _userTermsServices = userTermsServices;
             _eventAggregator = eventAggregator;
 
-            AcceptTermsCommand = new DelegateCommand(AcceptTerms, CanAcceptTerms)
-                .ObservesProperty(() => IsBusy)
-                .ObservesProperty(() => AcceptedTerms);
+            InitializeSteps();
         }
 
-        bool CanAcceptTerms() => !IsBusy && AcceptedTerms;
+        void InitializeSteps()
+        {
+            CurrentStep = 3;
+            StepsList = new ObservableCollection<Steps> {
+                new Steps(true),
+                new Steps(true),
+                new Steps(true),
+                new Steps(false),
+                new Steps(false),
+            };
+        }
 
-        async void AcceptTerms()
+        protected override bool CanGoFoward() => !IsBusy && AcceptedTerms;
+
+        protected override async void GoFoward()
         {
             try
             {
