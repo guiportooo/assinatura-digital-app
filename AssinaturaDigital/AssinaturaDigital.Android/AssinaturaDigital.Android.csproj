@@ -40,6 +40,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
+    <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidSupportedAbis>armeabi-v7a;x86;arm64-v8a;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -94,40 +96,16 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml" />
-    <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3 Black.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
     <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3 Bold.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3 Hairline.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3 Light.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3 SemiBold.otf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3 Thin.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
     <AndroidAsset Include="Assets\Fonts\HurmeGeometricSans3.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\Roboto-Black_1.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
     <AndroidAsset Include="Assets\Fonts\Roboto-Bold_1.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\Roboto-Light_1.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
     <AndroidAsset Include="Assets\Fonts\Roboto-Medium_1.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AndroidAsset>
-    <AndroidAsset Include="Assets\Fonts\Roboto-Thin_1.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidAsset>
   </ItemGroup>

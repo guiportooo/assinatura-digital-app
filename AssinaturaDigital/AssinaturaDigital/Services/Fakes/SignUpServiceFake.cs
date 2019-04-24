@@ -14,8 +14,6 @@ namespace AssinaturaDigital.Services.Fakes
 
         public SignUpInformation SignUpInformation { get; private set; }
 
-        public SignUpServiceFake() => _shouldDelay = true;
-
         public void ShouldDelay(bool shouldDelay) => _shouldDelay = shouldDelay;
 
         public void ShouldValidateExistingCpf(bool shouldValidateExistingCpf) 
