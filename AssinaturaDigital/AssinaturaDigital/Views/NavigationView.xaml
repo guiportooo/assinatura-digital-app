@@ -6,11 +6,8 @@
         <StackLayout VerticalOptions="End"
                      Margin="20,0,20,20"
                      Orientation="Horizontal">
-            <Frame BackgroundColor="Transparent"
-                   HasShadow="false"
-                   BorderColor="Transparent"
-                   Padding="10"
-                   HorizontalOptions="StartAndExpand">
+            <StackLayout Padding="10"
+                         HorizontalOptions="StartAndExpand">
                 <Label Text="&#xf060;" 
                        Style="{StaticResource solidIconSpan}"
                        FontSize="Large"
@@ -19,15 +16,12 @@
                        HorizontalTextAlignment="Center"
                        IsVisible="{Binding HasBackNavigation}">
                 </Label>
-                <Frame.GestureRecognizers>
+                <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoBackCommand}" />
-                </Frame.GestureRecognizers>
-            </Frame>
-            <Frame BackgroundColor="Transparent"
-                   HasShadow="false"
-                   BorderColor="Transparent"
-                   Padding="10"
-                   HorizontalOptions="EndAndExpand">
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Padding="10"
+                         HorizontalOptions="EndAndExpand">
                 <Label Text="&#xf061;" 
                        Style="{StaticResource solidIconSpan}"
                        FontSize="Large"
@@ -36,10 +30,10 @@
                        HorizontalTextAlignment="Center"
                        IsVisible="{Binding HasFowardNavigation}">
                 </Label>
-                <Frame.GestureRecognizers>
+                <StackLayout.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding GoFowardCommand}" />
-                </Frame.GestureRecognizers>
-           </Frame> 
+                </StackLayout.GestureRecognizers>
+           </StackLayout> 
         </StackLayout>
     </ContentView.Content>
 </ContentView>

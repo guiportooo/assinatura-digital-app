@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              Visual="Material" 
              NavigationPage.HasNavigationBar="false"
+             xmlns:validators="clr-namespace:AssinaturaDigital.Validations"
+             xmlns:behaviors="clr-namespace:AssinaturaDigital.Validations.Behaviors"
              xmlns:views="clr-namespace:AssinaturaDigital.Views"
              x:Class="AssinaturaDigital.Views.SignUpPage">
     <ContentPage.Content>
@@ -15,10 +17,49 @@
                          VerticalOptions="StartAndExpand" 
                          Margin="20">
                 <Label Style="{StaticResource title}" Text="{Binding Title}" />
-                <Entry Placeholder="Nome completo" Text="{Binding FullName}" />
-                <Entry Placeholder="Informe o CPF" Text="{Binding CPF}" />
-                <Entry Placeholder="Número de celular" Text="{Binding CellphoneNumber}" />
-                <Entry Placeholder="E-mail" Text="{Binding Email}" />
+
+                <Entry Placeholder="Nome completo*" Text="{Binding FullName}" >
+                    <Entry.Behaviors>
+                        <behaviors:ValidationBehavior PropertyName="Text">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
+                                <validators:TextValidator />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry Placeholder="Informe o CPF*" Text="{Binding CPF}" Keyboard="Numeric" >
+                    <Entry.Behaviors>
+                        <behaviors:ValidationBehavior PropertyName="Text">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
+                                <validators:CPFValidator />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                        <behaviors:MaskedBehavior Mask="XXX.XXX.XXX-XX"></behaviors:MaskedBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry Placeholder="Número de celular*" Text="{Binding CellphoneNumber}" Keyboard="Numeric" >
+                    <Entry.Behaviors>
+                        <behaviors:ValidationBehavior PropertyName="Text">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
+                                <validators:PhoneNumberValidator />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                        <behaviors:MaskedBehavior Mask="(XX) XXXXX-XXXX"></behaviors:MaskedBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Entry Placeholder="E-mail*" Text="{Binding Email}">
+                    <Entry.Behaviors>
+                        <behaviors:ValidationBehavior PropertyName="Text">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
+                                <validators:EmailValidator />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
             </StackLayout>
             <StackLayout Grid.Row="1" VerticalOptions="End">
                 <views:RegistrationStepsView />
