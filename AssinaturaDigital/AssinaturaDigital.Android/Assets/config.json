@@ -1,5 +1,7 @@
 {
     "AndroidAppCenterSecret": "07470ad8-b179-4e9f-89e5-15e87b8788c7",
-    "SecondsToGenerateToken": "60"
+    "SecondsToGenerateToken": "60",
+    "UseFakes": false,
+    "UrlApi":  "http://localhost:8080/api/"
 }
 

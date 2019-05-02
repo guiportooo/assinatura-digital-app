@@ -1,6 +1,4 @@
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
+using AssinaturaDigital.Extensions;
 
 namespace AssinaturaDigital.Validations
 {
@@ -8,7 +6,6 @@ namespace AssinaturaDigital.Validations
     {
         public string Message { get; set; } = "Apenas letras são permitidas";
 
-        public bool Check(string value) =>
-             !string.IsNullOrEmpty(value) && value.All(c => Char.IsLetter(c) || c == ' ');
+        public bool Check(string value) => value.IsValidName();
     }
 }

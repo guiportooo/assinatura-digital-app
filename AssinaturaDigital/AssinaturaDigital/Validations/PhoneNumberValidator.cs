@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using AssinaturaDigital.Extensions;
 
 namespace AssinaturaDigital.Validations
 {
@@ -6,10 +6,6 @@ namespace AssinaturaDigital.Validations
     {
         public string Message { get; set; } = "Telefone inválido!";
 
-        public bool Check(string value)
-        {
-            var phoneRule = @"^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$";
-            return !string.IsNullOrEmpty(value) && new Regex(phoneRule).IsMatch(value);
-        }
+        public bool Check(string value) => value.IsValidCellPhoneNumber();
     }
 }

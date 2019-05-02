@@ -39,7 +39,7 @@
                         <behaviors:MaskedBehavior Mask="XXX.XXX.XXX-XX"></behaviors:MaskedBehavior>
                     </Entry.Behaviors>
                 </Entry>
-                <Entry Placeholder="Número de celular*" Text="{Binding CellphoneNumber}" Keyboard="Numeric" >
+                <Entry Placeholder="Número de celular*" Text="{Binding CellPhoneNumber}" Keyboard="Numeric" >
                     <Entry.Behaviors>
                         <behaviors:ValidationBehavior PropertyName="Text">
                             <behaviors:ValidationBehavior.Validators>

@@ -2,6 +2,7 @@ using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Services;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.SignUp;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using Microsoft.AppCenter;
@@ -16,6 +17,8 @@ namespace AssinaturaDigital.Views
 {
     public partial class App : PrismApplication
     {
+        private bool _useFakes;
+
         public App() : this(null) { }
         public App(IPlatformInitializer initializer) : base(initializer) { }
 
@@ -26,6 +29,7 @@ namespace AssinaturaDigital.Views
             var configurationManager = Container.Resolve<IConfigurationManager>();
             var config = configurationManager.Get();
 
+            _useFakes = config.UseFakes;
             var iOSAppCenterSecret = config.IOSAppCenterSecret;
             var androidAppCenterSecret = config.AndroidAppCenterSecret;
 
@@ -56,10 +60,18 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<SelfiePage, SelfieViewModel>();
             containerRegistry.RegisterForNavigation<InfoRegisterPage, InfoRegisterViewModel>();
 
-            containerRegistry.Register<ISignUpService, SignUpServiceFake>();
             containerRegistry.Register<ITokenService, TokenServiceFake>();
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
             containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
+
+            if (_useFakes)
+            {
+                containerRegistry.Register<ISignUpService, SignUpServiceFake>();
+            }
+            else
+            {
+                containerRegistry.Register<ISignUpService, SignUpService>();
+            }
         }
     }
 }

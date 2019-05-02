@@ -11,8 +11,8 @@ namespace AssinaturaDigital.UnitTests.ViewModels
     public class SignUpViewModelTests
     {
         const string fullName = "Test User";
-        const string cpf = "22222222222";
-        const string cellphoneNumber = "987654321";
+        const string cpf = "222.222.222-22";
+        const string cellPhoneNumber = "987654321";
         const string email = "test.user@appsign.com";
 
         private SignUpViewModel _signUpViewModel;
@@ -60,10 +60,10 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _signUpViewModel.FullName = fullName;
             _signUpViewModel.CPF = cpf;
-            _signUpViewModel.CellphoneNumber = cellphoneNumber;
+            _signUpViewModel.CellPhoneNumber = cellPhoneNumber;
             _signUpViewModel.Email = email;
 
-            var expectedSignUpInformation = new SignUpInformation(fullName, cpf, cellphoneNumber, email);
+            var expectedSignUpInformation = new SignUpInformation(fullName, cpf, cellPhoneNumber, email);
 
             _signUpViewModel.GoFowardCommand.Execute();
 
@@ -85,7 +85,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _signUpViewModel.FullName = fullName;
             _signUpViewModel.CPF = cpf;
-            _signUpViewModel.CellphoneNumber = cellphoneNumber;
+            _signUpViewModel.CellPhoneNumber = cellPhoneNumber;
             _signUpViewModel.Email = email;
 
             _signUpService.ShouldValidateExistingCpf(true);

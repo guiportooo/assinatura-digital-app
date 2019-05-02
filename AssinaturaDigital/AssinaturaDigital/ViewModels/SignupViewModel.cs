@@ -1,5 +1,5 @@
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.SignUp;
 using AssinaturaDigital.Views;
 using Prism.Navigation;
 using Prism.Services;
@@ -28,11 +28,11 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _cpf, value);
         }
 
-        private string _cellphoneNumber;
-        public string CellphoneNumber
+        private string _cellPhoneNumber;
+        public string CellPhoneNumber
         {
-            get => _cellphoneNumber;
-            set => SetProperty(ref _cellphoneNumber, value);
+            get => _cellPhoneNumber;
+            set => SetProperty(ref _cellPhoneNumber, value);
         }
 
         private string _email;
@@ -86,12 +86,19 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await _signUpService.SignUp(new SignUpInformation(FullName, CPF, CellphoneNumber, Email));
+                var response = await _signUpService.SignUp(new SignUpInformation(FullName, CPF, CellPhoneNumber, Email));
+
+                if (!response.Succeeded)
+                {
+                    await _pageDialogService.DisplayAlertAsync(Title, string.Join("\n", response.ErrorMessages), "OK");
+                    return;
+                }
+
                 await _navigationService.NavigateAsync(nameof(TokenPage));
             }
-            catch (Exception ex)
+            catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao cadastrar usuário.", "OK");
             }
             finally
             {

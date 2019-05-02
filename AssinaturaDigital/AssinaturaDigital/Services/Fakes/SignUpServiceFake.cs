@@ -1,13 +1,14 @@
-using System;
-using System.Threading.Tasks;
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.SignUp;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AssinaturaDigital.Services.Fakes
 {
     public class SignUpServiceFake : ISignUpService
     {
-        const long existingCpf = 11111111111;
+        const string existingCpf = "111.111.111-11";
 
         private bool _shouldDelay;
         private bool _shouldValidateExistingCpf;
@@ -16,18 +17,29 @@ namespace AssinaturaDigital.Services.Fakes
 
         public void ShouldDelay(bool shouldDelay) => _shouldDelay = shouldDelay;
 
-        public void ShouldValidateExistingCpf(bool shouldValidateExistingCpf) 
+        public void ShouldValidateExistingCpf(bool shouldValidateExistingCpf)
             => _shouldValidateExistingCpf = shouldValidateExistingCpf;
 
-        public async Task SignUp(SignUpInformation signUpInformation)
+        public async Task<SignUpResponse> SignUp(SignUpInformation signUpInformation)
         {
-            if(_shouldDelay)
+            if (_shouldDelay)
                 await Task.Delay(1000);
 
             SignUpInformation = signUpInformation;
 
             if (_shouldValidateExistingCpf || signUpInformation.CPF == existingCpf)
-                throw new Exception("CPF já cadastrado.");
+                return new SignUpResponse()
+                {
+                    Errors = new List<ResponseError>
+                    {
+                        new ResponseError { Field = "CPF", Message = "CPF já cadastrado." }
+                    }
+                };
+
+            return new SignUpResponse(new User(signUpInformation.FullName,
+                signUpInformation.CPF,
+                signUpInformation.CellPhoneNumber,
+                signUpInformation.Email));
         }
     }
 }

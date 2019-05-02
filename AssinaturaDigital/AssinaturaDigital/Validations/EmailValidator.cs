@@ -1,4 +1,4 @@
-using System.Text.RegularExpressions;
+using AssinaturaDigital.Extensions;
 
 namespace AssinaturaDigital.Validations
 {
@@ -6,11 +6,6 @@ namespace AssinaturaDigital.Validations
     {
         public string Message { get; set; } = "Email inválido!";
 
-        public bool Check(string value)
-        {
-            if (!string.IsNullOrEmpty(value))
-                return new Regex(@"^.+@[^\.].*\.[a-z]{2,}$").IsMatch(value);
-            return false;
-        }
+        public bool Check(string value) => value.IsValidEmail();
     }
 }
