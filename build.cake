@@ -14,6 +14,7 @@ var configurationFilePath = Argument("configurationFilePath", "");
 var iOSAppCenterSecret = Argument("iOSAppCenterSecret", "");
 var androidAppCenterSecret = Argument("androidAppCenterSecret", "");
 var secondsToGenerateToken = Argument("secondsToGenerateToken", "60");
+var urlApi = Argument("urlApi", "");
 
 Task("Hot-Reload")
   .Description("Starts hot reloading process")
@@ -166,6 +167,9 @@ void SetConfiguration()
 
   Information($"Seconds to generate token: {secondsToGenerateToken}");
   json["SecondsToGenerateToken"] = secondsToGenerateToken;
+
+  Information($"API's URL: {urlApi}");
+  json["UrlApi"] = urlApi;
 
   Information("Saving configs.json file");
   Information(json);

@@ -2,5 +2,5 @@
     "IOSAppCenterSecret": "c39a198b-f0f5-4c4f-b26a-bf20febf20a4",
     "SecondsToGenerateToken": "60",
     "UseFakes": false,
-    "UrlApi": "http://localhost:8080/api/"
+    "UrlApi": "https://assinatura-digital-api.azurewebsites.net/api/"
 }
