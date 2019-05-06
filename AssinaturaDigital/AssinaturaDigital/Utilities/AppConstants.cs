@@ -6,5 +6,6 @@ namespace AssinaturaDigital.Utilities
         public const string RG = "RG";
         public const string CNH = "CNH";
         public const string ApprovedSelfie = "ApprovedSelfie";
+        public const string IdUser = "IdUser";
     }
 }

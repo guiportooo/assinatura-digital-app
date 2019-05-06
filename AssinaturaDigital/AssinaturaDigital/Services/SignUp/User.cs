@@ -8,8 +8,9 @@ namespace AssinaturaDigital.Services.SignUp
         public string CellPhoneNumber { get; set; }
         public string Email { get; set; }
 
-        public User(string fullName, string cpf, string cellPhoneNumber, string email)
+        public User(int id, string fullName, string cpf, string cellPhoneNumber, string email)
         {
+            Id = id;
             FullName = fullName;
             CPF = cpf;
             CellPhoneNumber = cellPhoneNumber;

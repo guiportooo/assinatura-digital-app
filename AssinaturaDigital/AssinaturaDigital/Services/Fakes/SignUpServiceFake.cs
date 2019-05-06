@@ -36,7 +36,8 @@ namespace AssinaturaDigital.Services.Fakes
                     }
                 };
 
-            return new SignUpResponse(new User(signUpInformation.FullName,
+            return new SignUpResponse(new User(signUpInformation.Id,
+                signUpInformation.FullName,
                 signUpInformation.CPF,
                 signUpInformation.CellPhoneNumber,
                 signUpInformation.Email));

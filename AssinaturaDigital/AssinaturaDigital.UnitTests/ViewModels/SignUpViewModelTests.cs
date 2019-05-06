@@ -4,7 +4,9 @@ using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
@@ -19,6 +21,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
         private SignUpServiceFake _signUpService;
+        private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
         public void Setup()
@@ -27,7 +30,8 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _pageDialogService = new PageDialogServiceMock();
             _signUpService = new SignUpServiceFake();
             _signUpService.ShouldDelay(false);
-            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _signUpService);
+            _preferencesMock = new Mock<IPreferences>();
+            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _signUpService, _preferencesMock.Object);
         }
 
         [Test]

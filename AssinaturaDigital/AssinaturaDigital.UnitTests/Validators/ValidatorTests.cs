@@ -4,6 +4,7 @@ using AssinaturaDigital.Validations;
 using AssinaturaDigital.ViewModels;
 using FluentAssertions;
 using NUnit.Framework;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.Validators
 {
@@ -20,6 +21,8 @@ namespace AssinaturaDigital.UnitTests.Validators
         private RequiredValidator _requiredValidator;
         private TextValidator _textValidator;
 
+        private IPreferences _preferences;
+
         [SetUp]
         public void Setup()
         {
@@ -27,7 +30,7 @@ namespace AssinaturaDigital.UnitTests.Validators
             _pageDialogService = new PageDialogServiceMock();
             _signUpService = new SignUpServiceFake();
             _signUpService.ShouldDelay(false);
-            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _signUpService);
+            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _signUpService, _preferences);
 
             _cpfValidator = new CPFValidator();
             _emailValidator = new EmailValidator();

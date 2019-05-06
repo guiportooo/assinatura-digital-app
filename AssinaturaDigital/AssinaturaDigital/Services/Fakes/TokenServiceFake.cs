@@ -1,4 +1,4 @@
-using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Token;
 using System;
 using System.Threading.Tasks;
 
@@ -9,16 +9,21 @@ namespace AssinaturaDigital.Services.Fakes
         private string _fakeToken;
         private Exception _exception;
 
-        public string PassedToken { get; set; }
+        public int PassedIdUser { get; private set; }
+        public string PassedToken { get; private set; }
 
-        public Task<string> GenerateToken()
+        public void ShouldRaiseException(Exception ex) => _exception = ex;
+
+        public Task<TokenResponse> GenerateToken(int idUser)
         {
             _fakeToken = new Random().Next(100000, 999999).ToString();
-            return Task.FromResult(_fakeToken);
+            TokenResponse response = new TokenResponseFake(_fakeToken);
+            return Task.FromResult(response);
         }
 
-        public Task<bool> ValidateToken(string token)
+        public Task<bool> ValidateToken(int idUser, string token)
         {
+            PassedIdUser = idUser;
             PassedToken = token;
 
             if (_exception != null)
@@ -26,7 +31,5 @@ namespace AssinaturaDigital.Services.Fakes
 
             return Task.FromResult(token.Equals(_fakeToken));
         }
-
-        public void ShouldRaiseException(Exception ex) => _exception = ex;
     }
 }

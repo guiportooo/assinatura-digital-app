@@ -1,10 +1,12 @@
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.SignUp;
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Collections.ObjectModel;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.ViewModels
 {
@@ -13,6 +15,7 @@ namespace AssinaturaDigital.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
         private readonly ISignUpService _signUpService;
+        private readonly IPreferences _preferences;
 
         private string _fullName;
         public string FullName
@@ -58,11 +61,14 @@ namespace AssinaturaDigital.ViewModels
 
         public SignUpViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
-            ISignUpService signUpService) : base(navigationService, pageDialogService)
+            ISignUpService signUpService,
+            IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
             _signUpService = signUpService;
+
+            _preferences = preferences;
 
             InitializeSteps();
 
@@ -93,6 +99,8 @@ namespace AssinaturaDigital.ViewModels
                     await _pageDialogService.DisplayAlertAsync(Title, string.Join("\n", response.ErrorMessages), "OK");
                     return;
                 }
+
+                _preferences.Set(AppConstants.IdUser, response.SignUpInformation.Id);
 
                 await _navigationService.NavigateAsync(nameof(TokenPage));
             }

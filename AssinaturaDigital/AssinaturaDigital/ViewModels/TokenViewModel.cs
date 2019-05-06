@@ -1,15 +1,18 @@
 using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Models;
+using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Token;
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.ViewModels
 {
@@ -20,6 +23,8 @@ namespace AssinaturaDigital.ViewModels
         private readonly IConfigurationManager _configurationManager;
         private readonly ITokenService _tokenService;
         private readonly IDeviceTimer _deviceTimer;
+        private readonly IPreferences _preferences;
+        private int _idUser;
 
         public DelegateCommand GenerateTokenCommand { get; }
 
@@ -56,13 +61,15 @@ namespace AssinaturaDigital.ViewModels
              IPageDialogService pageDialogService,
              IConfigurationManager configurationManager,
              ITokenService tokenService,
-             IDeviceTimer deviceTimer) : base(navigationService, pageDialogService)
+             IDeviceTimer deviceTimer,
+             IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
             _configurationManager = configurationManager;
             _tokenService = tokenService;
             _deviceTimer = deviceTimer;
+            _preferences = preferences;
 
             GenerateTokenCommand = new DelegateCommand(async () => await GenerateToken(), CanGenerateToken)
                 .ObservesProperty(() => IsBusy)
@@ -106,19 +113,37 @@ namespace AssinaturaDigital.ViewModels
         async Task Initialize()
         {
             ClearTokenDigits();
+            _idUser = _preferences.Get(AppConstants.IdUser, 0);
+
+            if (_idUser == 0)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido!", "OK");
+                GoBack();
+                return;
+            }
             await GenerateToken();
         }
 
         async Task GenerateToken()
         {
-            var fakeToken = await _tokenService.GenerateToken();
+            var response = await _tokenService.GenerateToken(_idUser);
+
+            if (!response.Succeeded)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao enviar token.", "OK");
+                GoBack();
+            }
 
             var config = _configurationManager.Get();
             SecondsToGenerateToken = config.SecondsToGenerateToken;
 
             StartTimer();
 
-            await _pageDialogService.DisplayAlertAsync(Title, fakeToken, "OK");
+            if (config.UseFakes)
+            {
+                var fakeToken = ((TokenResponseFake)response).Token;
+                await _pageDialogService.DisplayAlertAsync(Title, fakeToken, "OK");
+            }
         }
 
         void StartTimer() => _deviceTimer.Start(1, () =>
@@ -138,7 +163,7 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = true;
 
                 var token = string.Join(string.Empty, TokenDigits.Items.Select(x => x.Digit));
-                var tokenIsValid = await _tokenService.ValidateToken(token);
+                var tokenIsValid = await _tokenService.ValidateToken(_idUser, token);
 
                 if (!tokenIsValid)
                 {
@@ -148,9 +173,9 @@ namespace AssinaturaDigital.ViewModels
 
                 await _navigationService.NavigateAsync(nameof(TermsOfUsePage));
             }
-            catch (Exception ex)
+            catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao validar token.", "OK");
             }
             finally
             {

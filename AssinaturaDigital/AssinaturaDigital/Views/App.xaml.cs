@@ -3,6 +3,7 @@ using AssinaturaDigital.Services;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Services.SignUp;
+using AssinaturaDigital.Services.Token;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using Microsoft.AppCenter;
@@ -11,6 +12,8 @@ using Microsoft.AppCenter.Crashes;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
+using Xamarin.Essentials.Implementation;
+using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
 
 namespace AssinaturaDigital.Views
@@ -18,6 +21,8 @@ namespace AssinaturaDigital.Views
     public partial class App : PrismApplication
     {
         private bool _useFakes;
+        private string _iOSAppCenterSecret;
+        private string _androidAppCenterSecret;
 
         public App() : this(null) { }
         public App(IPlatformInitializer initializer) : base(initializer) { }
@@ -26,14 +31,7 @@ namespace AssinaturaDigital.Views
         {
             InitializeComponent();
 
-            var configurationManager = Container.Resolve<IConfigurationManager>();
-            var config = configurationManager.Get();
-
-            _useFakes = config.UseFakes;
-            var iOSAppCenterSecret = config.IOSAppCenterSecret;
-            var androidAppCenterSecret = config.AndroidAppCenterSecret;
-
-            AppCenter.Start($"ios={iOSAppCenterSecret};android={androidAppCenterSecret}",
+            AppCenter.Start($"ios={_iOSAppCenterSecret};android={_androidAppCenterSecret}",
                   typeof(Analytics),
                   typeof(Crashes));
 
@@ -44,6 +42,8 @@ namespace AssinaturaDigital.Views
         {
             containerRegistry.Register<IErrorHandler, AppCenterCrashTracker>();
             containerRegistry.Register<IConfigurationManager, ConfigurationManager>();
+
+            GetConfigs();
 
             containerRegistry.Register<IDeviceTimer, DeviceTimer>();
             containerRegistry.Register<IPermissionsService, PermissionsService>();
@@ -60,18 +60,31 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<SelfiePage, SelfieViewModel>();
             containerRegistry.RegisterForNavigation<InfoRegisterPage, InfoRegisterViewModel>();
 
-            containerRegistry.Register<ITokenService, TokenServiceFake>();
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
             containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
+
+            containerRegistry.RegisterInstance<IPreferences> (new PreferencesImplementation());
 
             if (_useFakes)
             {
                 containerRegistry.Register<ISignUpService, SignUpServiceFake>();
+                containerRegistry.Register<ITokenService, TokenServiceFake>();
             }
             else
             {
                 containerRegistry.Register<ISignUpService, SignUpService>();
+                containerRegistry.Register<ITokenService, TokenService>();
             }
+        }
+
+        private void GetConfigs()
+        {
+            var configurationManager = Container.Resolve<IConfigurationManager>();
+            var config = configurationManager.Get();
+
+            _useFakes = config.UseFakes;
+            _iOSAppCenterSecret = config.IOSAppCenterSecret;
+            _androidAppCenterSecret = config.AndroidAppCenterSecret;
         }
     }
 }

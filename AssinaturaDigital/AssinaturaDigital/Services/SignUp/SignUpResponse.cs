@@ -12,7 +12,8 @@ namespace AssinaturaDigital.Services.SignUp
         public SignUpResponse(User user)
         {
             Status = (int)HttpStatusCode.OK;
-            SignUpInformation = new SignUpInformation(user.FullName,
+            SignUpInformation = new SignUpInformation(user.Id,
+                           user.FullName,
                            user.CPF,
                            user.CellPhoneNumber,
                            user.Email);

@@ -2,21 +2,24 @@ using AssinaturaDigital.Extensions;
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.UnitTests.Mocks;
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 using Prism.Navigation;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
     public class TokenViewModelTests
     {
-        private string _validToken;
+        private readonly int _idUser = 1;
         private TokenViewModel _tokenViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
@@ -24,22 +27,26 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private TokenServiceFake _tokenService;
         private DeviceTimerFake _deviceTimer;
 
+        private Mock<IPreferences> _preferencesMock;
+
         [SetUp]
-        public async Task Setup()
+        public void Setup()
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
             _configurationManager = new ConfigurationManagerMock();
             _tokenService = new TokenServiceFake();
             _deviceTimer = new DeviceTimerFake();
+            _preferencesMock = new Mock<IPreferences>();
 
-            _validToken = await _tokenService.GenerateToken();
+            _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
 
             _tokenViewModel = new TokenViewModel(_navigationService,
                 _pageDialogService,
                 _configurationManager,
                 _tokenService,
-                _deviceTimer);
+                _deviceTimer,
+                _preferencesMock.Object);
         }
 
         void SetTokenDigits(ObservableCollection<TokenDigit> tokenDigits)
@@ -215,9 +222,12 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenValidatingWithAValidTokenShouldNavigateToUserTermsPage()
+        public async Task WhenValidatingWithAValidTokenShouldNavigateToUserTermsPage()
         {
-            SetTokenDigits(_validToken
+            var tokenResponse = await _tokenService.GenerateToken(_idUser);
+            var validToken = ((TokenResponseFake)tokenResponse).Token;
+
+            SetTokenDigits(validToken
                 .ToCharArray()
                 .Select(x => new TokenDigit(x.ToString()))
                 .ToObservableCollection());
@@ -246,7 +256,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenRaisingAnExceptionOnValidatingTokenShouldDisplayErrorMessage()
         {
-            const string exceptionMessage = "Invalid token!";
+            const string exceptionMessage = "Falha ao validar token.";
             _tokenService.ShouldRaiseException(new Exception(exceptionMessage));
 
             _tokenViewModel.GoFowardCommand.Execute();
