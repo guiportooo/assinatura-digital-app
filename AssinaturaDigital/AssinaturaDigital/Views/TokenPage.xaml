@@ -48,7 +48,7 @@
                         Style="{StaticResource greenButton}" />
             </StackLayout>
             <StackLayout Grid.Row="1" VerticalOptions="End">
-                <views:RegistrationStepsView />
+                <views:RegistrationStepsView IsVisible="{Binding ShowStep}" />
                 <views:NavigationView />
             </StackLayout>
         </Grid>

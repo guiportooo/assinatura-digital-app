@@ -59,6 +59,7 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<InfoSelfiePage, InfoSelfieViewModel>();
             containerRegistry.RegisterForNavigation<SelfiePage, SelfieViewModel>();
             containerRegistry.RegisterForNavigation<InfoRegisterPage, InfoRegisterViewModel>();
+            containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
 
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
             containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();

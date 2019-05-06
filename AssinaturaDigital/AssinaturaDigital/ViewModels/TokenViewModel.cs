@@ -56,6 +56,19 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _currentStep, value);
         }
 
+        private bool _showStep;
+        public bool ShowStep
+        {
+            get => _showStep;
+            set => SetProperty(ref _showStep, value);
+        }
+
+        private string _cpf;
+        public string CPF
+        {
+            get => _cpf;
+            set => SetProperty(ref _cpf, value);
+        }
 
         public TokenViewModel(INavigationService navigationService,
              IPageDialogService pageDialogService,
@@ -104,7 +117,16 @@ namespace AssinaturaDigital.ViewModels
                 new TokenDigit(string.Empty)
             });
 
-        public async void OnNavigatedTo(INavigationParameters parameters) => await Initialize();
+        public async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            if (parameters.ContainsKey("ShowStep"))
+                ShowStep = parameters.GetValue<bool>("ShowStep");
+
+            if (parameters.ContainsKey("CPF"))
+                CPF = parameters.GetValue<string>("CPF");
+
+            await Initialize();
+        }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {

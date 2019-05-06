@@ -12,14 +12,17 @@ namespace AssinaturaDigital.ViewModels
         private readonly IPageDialogService _pageDialogService;
 
         public DelegateCommand OpenSignUpCommand { get; }
+        public DelegateCommand OpenSignInCommand { get; }
 
         public MainViewModel(INavigationService navigationService,
-            IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
+                    IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
             OpenSignUpCommand = new DelegateCommand(OpenSignUp);
+            OpenSignInCommand = new DelegateCommand(OpenSignIn);
         }
+
 
         private async void OpenSignUp()
         {
@@ -27,6 +30,23 @@ namespace AssinaturaDigital.ViewModels
             {
                 IsBusy = true;
                 await _navigationService.NavigateAsync(nameof(SignUpPage));
+            }
+            catch (Exception ex)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        private async void OpenSignIn()
+        {
+            try
+            {
+                IsBusy = true;
+                await _navigationService.NavigateAsync(nameof(SignInPage));
             }
             catch (Exception ex)
             {

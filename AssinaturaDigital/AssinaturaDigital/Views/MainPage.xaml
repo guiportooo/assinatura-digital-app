@@ -17,6 +17,7 @@
                 Command="{Binding OpenSignUpCommand}"
                 Style="{StaticResource greenButton}"/>
         <Button Text="SOU CADASTRADO" 
-                Style="{StaticResource whiteButton}"/>
+              Style="{StaticResource whiteButton}"
+              Command="{Binding OpenSignInCommand}"/>
     </StackLayout>
 </ContentPage>
