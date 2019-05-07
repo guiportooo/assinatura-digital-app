@@ -15,6 +15,11 @@ namespace AssinaturaDigital.Services.Fakes
 
         public SignUpInformation SignUpInformation { get; private set; }
 
+        public Task<SignUpResponse> GetByCPF(string cpf)
+        {
+            return null;
+        }
+
         public void ShouldDelay(bool shouldDelay) => _shouldDelay = shouldDelay;
 
         public void ShouldValidateExistingCpf(bool shouldValidateExistingCpf)

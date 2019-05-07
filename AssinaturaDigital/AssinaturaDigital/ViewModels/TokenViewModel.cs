@@ -122,9 +122,6 @@ namespace AssinaturaDigital.ViewModels
             if (parameters.ContainsKey(AppConstants.ShowSteps))
                 ShowStep = parameters.GetValue<bool>(AppConstants.ShowSteps);
 
-            if (parameters.ContainsKey(AppConstants.CPF))
-                CPF = parameters.GetValue<string>(AppConstants.CPF);
-
             await Initialize();
         }
 
@@ -140,7 +137,8 @@ namespace AssinaturaDigital.ViewModels
             if (_idUser == 0)
             {
                 await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido!", "OK");
-                GoBack();
+
+                await _navigationService.NavigateAsync(nameof(MainPage));
                 return;
             }
             await GenerateToken();
@@ -205,7 +203,13 @@ namespace AssinaturaDigital.ViewModels
                     return;
                 }
 
-                await _navigationService.NavigateAsync(nameof(TermsOfUsePage));
+                if (ShowStep)
+                {
+                    await _navigationService.NavigateAsync(nameof(TermsOfUsePage));
+                    return;
+                }
+
+                await _navigationService.NavigateAsync(nameof(HomePage));
             }
             catch
             {

@@ -234,7 +234,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _tokenViewModel.GoFowardCommand.Execute();
 
-            _navigationService.Name.Should().Be(nameof(TermsOfUsePage));
+            _navigationService.Name.Should().Be(nameof(HomePage));
         }
 
         [Test]

@@ -112,7 +112,7 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await _navigationService.NavigateAsync(nameof(MainPage));
+                await _navigationService.NavigateAsync(nameof(HomePage));
             }
             catch (Exception ex)
             {

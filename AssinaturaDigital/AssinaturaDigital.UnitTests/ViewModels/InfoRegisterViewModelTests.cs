@@ -79,7 +79,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenNavigatingToHomeShouldNavigateToMainPage()
         {
             _infoRegisterViewModel.NavigateToHomeCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(MainPage));
+            _navigationService.Name.Should().Be(nameof(HomePage));
         }
 
         [Test]

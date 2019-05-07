@@ -33,6 +33,10 @@
                     <Label Text="CONTRATOS" />
                 </StackLayout>
             </StackLayout>
+            <Button HorizontalOptions="CenterAndExpand"
+                    Text="SAIR"
+                    Style="{StaticResource greenButton}"
+                    Command="{Binding LogoutCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
