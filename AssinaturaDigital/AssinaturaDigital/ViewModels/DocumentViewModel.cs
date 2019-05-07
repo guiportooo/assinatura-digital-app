@@ -95,7 +95,7 @@ namespace AssinaturaDigital.ViewModels
         {
             var photo = await TakePhoto(name);
 
-            switch(_documentType)
+            switch (_documentType)
             {
                 case AppConstants.RG:
                     await _documentsService.SaveRG(photo, type);

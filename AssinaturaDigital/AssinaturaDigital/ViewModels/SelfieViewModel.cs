@@ -1,5 +1,6 @@
 using AssinaturaDigital.Extensions;
 using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Selfies;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Plugin.Media.Abstractions;
@@ -8,45 +9,64 @@ using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Threading.Tasks;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.ViewModels
 {
     public class SelfieViewModel : ViewModelBase, INavigatedAware
     {
+        private int _idUser;
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
         private readonly IPermissionsService _permissionsService;
         private readonly ICameraService _cameraService;
-        private readonly IDocumentsService _documentsService;
+        private readonly ISelfiesService _selfiesService;
+        private readonly IPreferences _preferences;
         private readonly IErrorHandler _errorHandler;
 
         public SelfieViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
             IPermissionsService permissionsService,
             ICameraService cameraService,
-            IDocumentsService documentsService,
+            ISelfiesService selfiesService,
+            IPreferences preferences,
             IErrorHandler errorHandler) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
             _permissionsService = permissionsService;
             _cameraService = cameraService;
-            _documentsService = documentsService;
+            _selfiesService = selfiesService;
+            _preferences = preferences;
             _errorHandler = errorHandler;
 
             Title = "Selfie";
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
-            => TakeSelfiePhoto().FireAndForget(_errorHandler);
+        public async void OnNavigatedTo(INavigationParameters parameters) => await Initialize();
 
         public void OnNavigatedFrom(INavigationParameters parameters)
             => _navigationService.RemoveLastViewWithName(nameof(SelfiePage));
+
+        async Task Initialize()
+        {
+            _idUser = _preferences.Get(AppConstants.IdUser, 0);
+
+            if (_idUser == 0)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido!", "OK");
+                GoBack();
+                return;
+            }
+
+            TakeSelfiePhoto().FireAndForget(_errorHandler);
+        }
 
         async Task TakeSelfiePhoto()
         {
             try
             {
+
                 if (!await GrantedCameraPermission())
                 {
                     await _pageDialogService.DisplayAlertAsync(Title, "Câmera negada.", "OK");
@@ -55,10 +75,11 @@ namespace AssinaturaDigital.ViewModels
                 }
 
                 var approvedSelfie = await SavePhoto("Selfie");
-                await _navigationService.NavigateAsync(nameof(InfoRegisterPage), 
-                    new NavigationParameters 
+
+                await _navigationService.NavigateAsync(nameof(InfoRegisterPage),
+                    new NavigationParameters
                     {
-                         { AppConstants.ApprovedSelfie, approvedSelfie }
+                        { AppConstants.ApprovedSelfie, approvedSelfie }
                     });
             }
             catch (Exception ex)
@@ -84,7 +105,7 @@ namespace AssinaturaDigital.ViewModels
         async Task<bool> SavePhoto(string name)
         {
             var photo = await TakePhoto(name);
-            var approvedSelfie = await _documentsService.SaveSelfie(photo);
+            var approvedSelfie = await _selfiesService.SaveSelfie(_idUser, photo);
             return approvedSelfie;
         }
 

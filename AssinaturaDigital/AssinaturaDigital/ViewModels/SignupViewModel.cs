@@ -102,8 +102,10 @@ namespace AssinaturaDigital.ViewModels
 
                 _preferences.Set(AppConstants.IdUser, response.SignUpInformation.Id);
 
-                var parameters = new NavigationParameters();
-                parameters.Add("ShowStep", true);
+                var parameters = new NavigationParameters
+                {
+                    { AppConstants.ShowSteps, true }
+                };
 
                 await _navigationService.NavigateAsync(nameof(TokenPage), parameters);
             }

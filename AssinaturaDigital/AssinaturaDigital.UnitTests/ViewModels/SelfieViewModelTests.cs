@@ -4,39 +4,47 @@ using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 using Plugin.Media.Abstractions;
 using Plugin.Permissions.Abstractions;
 using Prism.Navigation;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
     public class SelfieViewModelTests
     {
+        private readonly int _idUser = 1;
         private const string pageTitle = "Selfie";
         private SelfieViewModel _selfieViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
         private PermissionsServiceMock _permissionsService;
         private CameraServiceMock _cameraService;
-        private DocumentsServiceFake _documentsService;
+        private SelfiesServiceFake _selfiesService;
         private ErrorHandlerMock _errorHandler;
+        private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
         public void Setup()
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
-            _documentsService = new DocumentsServiceFake();
+            _selfiesService = new SelfiesServiceFake();
             _permissionsService = new PermissionsServiceMock();
             _cameraService = new CameraServiceMock();
             _errorHandler = new ErrorHandlerMock();
+            _preferencesMock = new Mock<IPreferences>();
+
+            _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
 
             _selfieViewModel = new SelfieViewModel(_navigationService,
                 _pageDialogService,
                 _permissionsService,
                 _cameraService,
-                _documentsService,
+                _selfiesService,
+                _preferencesMock.Object,
                 _errorHandler);
         }
 
@@ -92,7 +100,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _permissionsService.Permission.Should().Be(Permission.Camera);
             _cameraService.Camera.Should().Be(CameraDevice.Front);
-            _documentsService.Photo.Should().BeEquivalentTo(expectedPhoto);
+            _selfiesService.Photo.Should().BeEquivalentTo(expectedPhoto);
         }
 
         [Test]

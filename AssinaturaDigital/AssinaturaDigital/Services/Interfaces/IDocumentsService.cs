@@ -8,6 +8,5 @@ namespace AssinaturaDigital.Services.Interfaces
     {
         Task SaveRG(MediaFile photo, PhotoTypes type);
         Task SaveCNH(MediaFile photo, PhotoTypes type);
-        Task<bool> SaveSelfie(MediaFile photo);
     }
 }

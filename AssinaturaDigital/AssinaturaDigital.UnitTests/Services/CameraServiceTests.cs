@@ -38,7 +38,9 @@ namespace AssinaturaDigital.UnitTests.Services
                 AllowCropping = true,
                 RotateImage = false,
                 Name = fileName,
-                DefaultCamera = camera
+                DefaultCamera = camera,
+                PhotoSize = PhotoSize.Medium,
+                CompressionQuality = 80
             };
 
             var mediaMock = new MediaMock(true, true);

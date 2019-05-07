@@ -17,7 +17,9 @@ namespace AssinaturaDigital.Services
             {
                 SaveToAlbum = false,
                 AllowCropping = true,
-                RotateImage = false
+                RotateImage = false,
+                PhotoSize = PhotoSize.Medium,
+                CompressionQuality = 80
             };
         }
 

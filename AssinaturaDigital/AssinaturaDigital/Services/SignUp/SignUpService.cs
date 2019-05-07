@@ -24,7 +24,7 @@ namespace AssinaturaDigital.Services.SignUp
         {
             try
             {
-                var user = new User(signUpInformation.Id,
+                var user = new User(0,
                     signUpInformation.FullName,
                     signUpInformation.CPF, 
                     signUpInformation.CellPhoneNumber,

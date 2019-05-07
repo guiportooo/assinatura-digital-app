@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AssinaturaDigital.Services.Fakes
 {
     public class DocumentsServiceFake : IDocumentsService
-    {
+    { 
         public MediaFile Photo { get; private set; }
         public Dictionary<PhotoTypes, MediaFile> Photos { get; private set; }
 
@@ -23,12 +23,6 @@ namespace AssinaturaDigital.Services.Fakes
         {
             Photos.Add(type, photo);
             return Task.CompletedTask;
-        }
-
-        public Task<bool> SaveSelfie(MediaFile photo)
-        {
-            Photo = photo;
-            return Task.FromResult(true);
         }
     }
 }

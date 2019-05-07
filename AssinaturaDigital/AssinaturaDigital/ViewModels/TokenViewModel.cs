@@ -119,11 +119,11 @@ namespace AssinaturaDigital.ViewModels
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey("ShowStep"))
-                ShowStep = parameters.GetValue<bool>("ShowStep");
+            if (parameters.ContainsKey(AppConstants.ShowSteps))
+                ShowStep = parameters.GetValue<bool>(AppConstants.ShowSteps);
 
-            if (parameters.ContainsKey("CPF"))
-                CPF = parameters.GetValue<string>("CPF");
+            if (parameters.ContainsKey(AppConstants.CPF))
+                CPF = parameters.GetValue<string>(AppConstants.CPF);
 
             await Initialize();
         }
@@ -135,7 +135,7 @@ namespace AssinaturaDigital.ViewModels
         async Task Initialize()
         {
             ClearTokenDigits();
-            _idUser = _preferences.Get(AppConstants.IdUser, 0);
+            _idUser = _preferences.Get(AppConstants.IdUser, 0); 
 
             if (_idUser == 0)
             {
@@ -148,23 +148,30 @@ namespace AssinaturaDigital.ViewModels
 
         async Task GenerateToken()
         {
-            var response = await _tokenService.GenerateToken(_idUser);
+            try
+            {
+                var response = await _tokenService.GenerateToken(_idUser);
 
-            if (!response.Succeeded)
+                if (!response.Succeeded)
+                {
+                    await _pageDialogService.DisplayAlertAsync(Title, "Falha ao enviar token.", "OK");
+                    GoBack();
+                }
+
+                var config = _configurationManager.Get();
+                SecondsToGenerateToken = config.SecondsToGenerateToken;
+
+                StartTimer();
+
+                if (config.UseFakes)
+                {
+                    var fakeToken = ((TokenResponseFake)response).Token;
+                    await _pageDialogService.DisplayAlertAsync(Title, fakeToken, "OK");
+                }
+            }
+            catch
             {
                 await _pageDialogService.DisplayAlertAsync(Title, "Falha ao enviar token.", "OK");
-                GoBack();
-            }
-
-            var config = _configurationManager.Get();
-            SecondsToGenerateToken = config.SecondsToGenerateToken;
-
-            StartTimer();
-
-            if (config.UseFakes)
-            {
-                var fakeToken = ((TokenResponseFake)response).Token;
-                await _pageDialogService.DisplayAlertAsync(Title, fakeToken, "OK");
             }
         }
 

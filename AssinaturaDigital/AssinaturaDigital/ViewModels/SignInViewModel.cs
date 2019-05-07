@@ -1,3 +1,4 @@
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Navigation;
 using Prism.Services;
@@ -33,9 +34,11 @@ namespace AssinaturaDigital.ViewModels
             {
                 IsBusy = true;
 
-                var parameters = new NavigationParameters();
-                parameters.Add("ShowStep", false);
-                parameters.Add("CPF", CPF);
+                var parameters = new NavigationParameters
+                {
+                    { AppConstants.ShowSteps, false },
+                    { AppConstants.CPF, CPF }
+                };
 
                 await _navigationService.NavigateAsync(nameof(TokenPage), parameters);
             }

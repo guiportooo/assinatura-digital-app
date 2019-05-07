@@ -2,6 +2,7 @@ using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Services;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Selfies;
 using AssinaturaDigital.Services.SignUp;
 using AssinaturaDigital.Services.Token;
 using AssinaturaDigital.Utilities;
@@ -64,17 +65,19 @@ namespace AssinaturaDigital.Views
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
             containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
 
-            containerRegistry.RegisterInstance<IPreferences> (new PreferencesImplementation());
+            containerRegistry.RegisterInstance<IPreferences>(new PreferencesImplementation());
 
             if (_useFakes)
             {
                 containerRegistry.Register<ISignUpService, SignUpServiceFake>();
                 containerRegistry.Register<ITokenService, TokenServiceFake>();
+                containerRegistry.Register<ISelfiesService, SelfiesServiceFake>();
             }
             else
             {
                 containerRegistry.Register<ISignUpService, SignUpService>();
                 containerRegistry.Register<ITokenService, TokenService>();
+                containerRegistry.Register<ISelfiesService, SelfiesService>();
             }
         }
 
