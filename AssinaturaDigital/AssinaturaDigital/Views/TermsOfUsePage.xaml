@@ -6,13 +6,13 @@
              xmlns:views="clr-namespace:AssinaturaDigital.Views"
              x:Class="AssinaturaDigital.Views.TermsOfUsePage">
     <ContentPage.Content>
-        <Grid>
+        <Grid  VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
                 <StackLayout Grid.Row="0" 
-                             VerticalOptions="StartAndExpand" 
+                             VerticalOptions="FillAndExpand" 
                              Margin="20">
                     <Label Style="{StaticResource title}">
                         <Label.FormattedText>

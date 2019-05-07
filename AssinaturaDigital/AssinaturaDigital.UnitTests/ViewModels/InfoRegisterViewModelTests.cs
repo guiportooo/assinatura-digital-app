@@ -1,27 +1,41 @@
+using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
+using Plugin.Media.Abstractions;
 using Prism.Navigation;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
     public class InfoRegisterViewModelTests
     {
+        private readonly int _idUser = 1;
         private InfoRegisterViewModel _infoRegisterViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
+        private SelfiesServiceFake _selfiesService;
+        private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
         public void Setup()
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
+            _selfiesService = new SelfiesServiceFake();
+            _preferencesMock = new Mock<IPreferences>();
+
+            _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
+
             _infoRegisterViewModel = new InfoRegisterViewModel(
                 _navigationService,
-                _pageDialogService);
+                _pageDialogService,
+                _selfiesService,
+                _preferencesMock.Object);
         }
 
         [Test]
@@ -32,13 +46,11 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldSetApprovedMessage()
+        public void WhenNavigatingToPageShouldSetApprovedMessageIfSelfieIsValid()
         {
-            const bool approved = true;
-
             var parameters = new NavigationParameters
             {
-                { AppConstants.ApprovedSelfie, approved }
+                { AppConstants.Selfie, new MediaFile("Selfie", null) }
             };
 
             _infoRegisterViewModel.OnNavigatingTo(parameters);
@@ -48,14 +60,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldSetNotApprovedMessage()
+        public void WhenNavigatingToPageShouldSetNotApprovedMessageIfSelfieIsNotValid()
         {
-            const bool approved = false;
-
             var parameters = new NavigationParameters
             {
-                { AppConstants.ApprovedSelfie, approved }
+                { AppConstants.Selfie, new MediaFile("Selfie", null) }
             };
+
+            _selfiesService.ShouldNotBeValid();
 
             _infoRegisterViewModel.OnNavigatingTo(parameters);
 

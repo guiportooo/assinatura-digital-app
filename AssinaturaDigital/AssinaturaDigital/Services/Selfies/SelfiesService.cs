@@ -30,7 +30,7 @@ namespace AssinaturaDigital.Services.Selfies
 
                 var response = await _urlApi
                     .AppendPathSegment("selfies")
-                    .AppendPathSegment("validate_user")
+                    .AppendPathSegment("validate-user")
                     .PostJsonAsync(userSelfie);
 
                 return true;

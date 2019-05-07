@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Visual="Material"
+             x:Class="AssinaturaDigital.Views.LoadingView">
+    <ContentView.Content>
+        <StackLayout Opacity="0.8" BackgroundColor="Black">
+            <ActivityIndicator VerticalOptions="CenterAndExpand"
+                               IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}" 
+                               Color="{StaticResource green}"/>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>
+

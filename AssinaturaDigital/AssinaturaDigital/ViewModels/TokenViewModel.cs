@@ -135,7 +135,7 @@ namespace AssinaturaDigital.ViewModels
         async Task Initialize()
         {
             ClearTokenDigits();
-            _idUser = _preferences.Get(AppConstants.IdUser, 0); 
+            _idUser = _preferences.Get(AppConstants.IdUser, 0);
 
             if (_idUser == 0)
             {
@@ -150,6 +150,7 @@ namespace AssinaturaDigital.ViewModels
         {
             try
             {
+                IsBusy = true;
                 var response = await _tokenService.GenerateToken(_idUser);
 
                 if (!response.Succeeded)
@@ -172,6 +173,10 @@ namespace AssinaturaDigital.ViewModels
             catch
             {
                 await _pageDialogService.DisplayAlertAsync(Title, "Falha ao enviar token.", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 

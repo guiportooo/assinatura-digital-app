@@ -26,6 +26,7 @@ namespace AssinaturaDigital.Services.Token
             {
                 var tokenReponse = await _urlApi
                     .AppendPathSegment("tokens")
+                    .AppendPathSegment("send-by-id")
                     .PostJsonAsync(idUser);
 
                 return new TokenResponse();
@@ -43,7 +44,8 @@ namespace AssinaturaDigital.Services.Token
                 var request = new ValidateTokenRequest(idUser, token);
 
                 var response = await _urlApi
-                    .AppendPathSegment("tokens/validate")
+                    .AppendPathSegment("tokens")
+                    .AppendPathSegment("validate")
                     .PostJsonAsync(request);
 
                 return true;

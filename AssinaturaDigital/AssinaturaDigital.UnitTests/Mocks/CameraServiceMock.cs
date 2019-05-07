@@ -10,6 +10,7 @@ namespace AssinaturaDigital.UnitTests.Mocks
         private bool _shouldReturnNullPhoto;
         public string FileName { get; private set; }
         public CameraDevice Camera { get; private set; }
+        public MediaFile Photo { get; set; }
 
         public void ShouldTakePhoto() => _canTakePhoto = true;
 
@@ -26,10 +27,10 @@ namespace AssinaturaDigital.UnitTests.Mocks
             FileName = fileName;
             Camera = camera;
 
-            if (_shouldReturnNullPhoto)
-                return Task.FromResult((MediaFile)null);
+            if (!_shouldReturnNullPhoto)
+                Photo = new MediaFile(fileName, null);
 
-            return Task.FromResult(new MediaFile(fileName, null));
+            return Task.FromResult(Photo);
         }
     }
 }
