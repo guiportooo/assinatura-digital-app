@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Visual="Material" 
+             NavigationPage.HasNavigationBar="false" 
+             x:Class="AssinaturaDigital.Views.HomePage">
+    <ContentPage.Content>
+        <StackLayout Margin="15, 90, 0, 0" Spacing="0">
+            <Label Style="{StaticResource title}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Bem-vindo!" Style="{StaticResource titleSpan}" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Text="Veja seus contratos e assine agora mesmo." />
+            <StackLayout Orientation="Horizontal" Margin="0, 15, 0, 0">
+                <StackLayout>
+                    <Frame CornerRadius="40"
+                           HasShadow="False"
+                           Padding="5"
+                           HeightRequest="70"
+                           WidthRequest="70"
+                           BorderColor="{StaticResource green}"
+                           BackgroundColor="{StaticResource green}">
+                        <Label Text="&#xf15c;" 
+                               Style="{StaticResource regularIconSpan}"
+                               FontSize="30"
+                               TextColor="White"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </Frame>
+                    <Label Text="CONTRATOS" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
