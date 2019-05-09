@@ -56,11 +56,11 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _currentStep, value);
         }
 
-        private bool _showStep;
-        public bool ShowStep
+        private bool _registered;
+        public bool Registered
         {
-            get => _showStep;
-            set => SetProperty(ref _showStep, value);
+            get => _registered;
+            set => SetProperty(ref _registered, value);
         }
 
         private string _cpf;
@@ -119,8 +119,8 @@ namespace AssinaturaDigital.ViewModels
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            if (parameters.ContainsKey(AppConstants.ShowSteps))
-                ShowStep = parameters.GetValue<bool>(AppConstants.ShowSteps);
+            if (parameters.ContainsKey(AppConstants.Registered))
+                Registered = parameters.GetValue<bool>(AppConstants.Registered);
 
             await Initialize();
         }
@@ -203,7 +203,7 @@ namespace AssinaturaDigital.ViewModels
                     return;
                 }
 
-                if (ShowStep)
+                if (!Registered)
                 {
                     await _navigationService.NavigateAsync(nameof(TermsOfUsePage));
                     return;

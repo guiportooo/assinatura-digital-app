@@ -1,11 +1,13 @@
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.UnitTests.Mocks;
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
+using Prism.Navigation;
 using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
@@ -20,7 +22,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private SignUpViewModel _signUpViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
-        private SignUpServiceFake _signUpService;
+        private AuthenticationServiceFake _authenticationService;
         private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
@@ -28,10 +30,10 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
-            _signUpService = new SignUpServiceFake();
-            _signUpService.ShouldDelay(false);
+            _authenticationService = new AuthenticationServiceFake();
+            _authenticationService.ShouldDelay(false);
             _preferencesMock = new Mock<IPreferences>();
-            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _signUpService, _preferencesMock.Object);
+            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _authenticationService, _preferencesMock.Object);
         }
 
         [Test]
@@ -71,14 +73,34 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _signUpViewModel.GoFowardCommand.Execute();
 
-            _signUpService.SignUpInformation.Should().BeEquivalentTo(expectedSignUpInformation);
+            _authenticationService.SignUpInformation.Should().BeEquivalentTo(expectedSignUpInformation);
+        }
+
+        [Test]
+        public void WhenSigningUpShouldSaveIdUserOnPreferences()
+        {
+            _signUpViewModel.GoFowardCommand.Execute();
+            _preferencesMock.Verify(x => x.Set(AppConstants.IdUser, _authenticationService.ReturningUser.Id));
         }
 
         [Test]
         public void WhenSigningUpShouldNavigateToTokenPage()
         {
+            var expectedParameters = new NavigationParameters
+            {
+                { AppConstants.Registered, false }
+            };
+
             _signUpViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(TokenPage));
+            _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
+        }
+
+        [Test]
+        public void AfterSigningUpShouldSetIsBusyToFalse()
+        {
+            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.IsBusy.Should().BeFalse();
         }
 
         [Test]
@@ -92,7 +114,22 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _signUpViewModel.CellPhoneNumber = cellPhoneNumber;
             _signUpViewModel.Email = email;
 
-            _signUpService.ShouldValidateExistingCpf(true);
+            _authenticationService.ShouldValidateExistingCpf(true);
+
+            _signUpViewModel.GoFowardCommand.Execute();
+
+            _pageDialogService.Title.Should().Be(_signUpViewModel.Title);
+            _pageDialogService.Message.Should().Be(message);
+            _pageDialogService.CancelButton.Should().Be(cancelButton);
+        }
+
+        [Test]
+        public void WhenFailingToSigningUpShouldDisplayAlertWithErrorMessage()
+        {
+            const string message = "Falha ao cadastrar usuário.";
+            const string cancelButton = "OK";
+
+            _authenticationService.ShouldFail(true);
 
             _signUpViewModel.GoFowardCommand.Execute();
 

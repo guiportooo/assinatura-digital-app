@@ -89,9 +89,9 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = true;
                 await _navigationService.NavigateAsync(nameof(DocumentsSelectionPage));
             }
-            catch (Exception ex)
+            catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao aceitar termos de uso.", "OK");
             }
             finally
             {

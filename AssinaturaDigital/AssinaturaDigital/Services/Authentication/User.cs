@@ -1,4 +1,4 @@
-namespace AssinaturaDigital.Services.SignUp
+namespace AssinaturaDigital.Services.Authentication
 {
     public class User
     {

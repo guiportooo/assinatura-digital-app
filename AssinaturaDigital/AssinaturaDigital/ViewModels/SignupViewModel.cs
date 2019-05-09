@@ -1,5 +1,5 @@
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services.SignUp;
+using AssinaturaDigital.Services.Authentication;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Navigation;
@@ -14,7 +14,7 @@ namespace AssinaturaDigital.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
-        private readonly ISignUpService _signUpService;
+        private readonly IAuthenticationService _authenticationService;
         private readonly IPreferences _preferences;
 
         private string _fullName;
@@ -61,12 +61,12 @@ namespace AssinaturaDigital.ViewModels
 
         public SignUpViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
-            ISignUpService signUpService,
+            IAuthenticationService authenticationService,
             IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
-            _signUpService = signUpService;
+            _authenticationService = authenticationService;
 
             _preferences = preferences;
 
@@ -92,7 +92,7 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                var response = await _signUpService.SignUp(new SignUpInformation(FullName, CPF, CellPhoneNumber, Email));
+                var response = await _authenticationService.SignUp(new SignUpInformation(FullName, CPF, CellPhoneNumber, Email));
 
                 if (!response.Succeeded)
                 {
@@ -104,7 +104,7 @@ namespace AssinaturaDigital.ViewModels
 
                 var parameters = new NavigationParameters
                 {
-                    { AppConstants.ShowSteps, true }
+                    { AppConstants.Registered, false }
                 };
 
                 await _navigationService.NavigateAsync(nameof(TokenPage), parameters);

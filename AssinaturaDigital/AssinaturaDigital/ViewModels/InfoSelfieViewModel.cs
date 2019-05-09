@@ -67,9 +67,9 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = true;
                 await _navigationService.NavigateAsync(nameof(SelfiePage));
             }
-            catch (Exception ex)
+            catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao avançar para tela de selfie.", "OK");
             }
             finally
             {

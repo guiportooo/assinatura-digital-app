@@ -53,5 +53,20 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _infoSelfieViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(SelfiePage));
         }
+
+        [Test]
+        public void WhenFailingToNavigateToSelfiePageShouldDisplayAlertWithErrorMessage()
+        {
+            const string message = "Falha ao avançar para tela de selfie.";
+            const string cancelButton = "OK";
+
+            _navigationService.ShouldFail(true);
+
+            _infoSelfieViewModel.GoFowardCommand.Execute();
+
+            _pageDialogService.Title.Should().Be(_infoSelfieViewModel.Title);
+            _pageDialogService.Message.Should().Be(message);
+            _pageDialogService.CancelButton.Should().Be(cancelButton);
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AssinaturaDigital.Configuration;
 using AssinaturaDigital.iOS.Configuration;
 using Foundation;
+using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Prism;
 using Prism.Ioc;
 using UIKit;
@@ -20,6 +21,7 @@ namespace AssinaturaDigital.iOS
             HotReloader.Current.Start(xfApplication, 4291);
 #endif
             LoadApplication(xfApplication);
+            KeyboardOverlapRenderer.Init();
             return base.FinishedLaunching(app, options);
         }
     }

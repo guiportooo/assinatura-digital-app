@@ -1,37 +1,20 @@
-using AssinaturaDigital.Services.Fakes;
-using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.Validations;
-using AssinaturaDigital.ViewModels;
 using FluentAssertions;
 using NUnit.Framework;
-using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.Validators
 {
     public class ValidatorTests
     {
-        private SignUpViewModel _signUpViewModel;
-        private NavigationServiceMock _navigationService;
-        private PageDialogServiceMock _pageDialogService;
-        private SignUpServiceFake _signUpService;
-
         private CPFValidator _cpfValidator;
         private EmailValidator _emailValidator;
         private PhoneNumberValidator _phoneNumberValidator;
         private RequiredValidator _requiredValidator;
         private TextValidator _textValidator;
 
-        private IPreferences _preferences;
-
         [SetUp]
         public void Setup()
         {
-            _navigationService = new NavigationServiceMock();
-            _pageDialogService = new PageDialogServiceMock();
-            _signUpService = new SignUpServiceFake();
-            _signUpService.ShouldDelay(false);
-            _signUpViewModel = new SignUpViewModel(_navigationService, _pageDialogService, _signUpService, _preferences);
-
             _cpfValidator = new CPFValidator();
             _emailValidator = new EmailValidator();
             _phoneNumberValidator = new PhoneNumberValidator();

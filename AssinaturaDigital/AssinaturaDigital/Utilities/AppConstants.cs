@@ -7,7 +7,7 @@ namespace AssinaturaDigital.Utilities
         public const string CNH = "CNH";
         public const string Selfie = "Selfie";
         public const string IdUser = "IdUser";
-        public const string ShowSteps = "ShowSteps";
+        public const string Registered = "Registered";
         public const string CPF = "CPF";
     }
 }

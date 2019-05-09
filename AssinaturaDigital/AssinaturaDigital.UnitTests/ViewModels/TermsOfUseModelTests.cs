@@ -63,20 +63,47 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _userTermsViewModel.ReadTerms.Should().BeTrue();
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public void ShouldValidateIfTermsWereAccepted(bool acceptedTerms)
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        public void ShouldNotBeAbleToGoFowardIfPageIsBusy(bool isBusy, bool canGoFoward)
         {
+            _userTermsViewModel.AcceptedTerms = true;
+
+            _userTermsViewModel.IsBusy = isBusy;
+            _userTermsViewModel.GoFowardCommand.CanExecute().Should().Be(canGoFoward);
+        }
+
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        public void ShouldValidateIfTermsWereAccepted(bool acceptedTerms, bool canGoFoward)
+        {
+            _userTermsViewModel.IsBusy = false;
+
             _userTermsViewModel.AcceptedTerms = acceptedTerms;
-            _userTermsViewModel.GoFowardCommand.CanExecute().Should().Be(acceptedTerms);
+            _userTermsViewModel.GoFowardCommand.CanExecute().Should().Be(canGoFoward);
         }
 
         [Test]
-        public void WhenAcceptingTermsShouldNavigateToDocumentsSelecitonPage()
+        public void WhenAcceptingTermsShouldNavigateToDocumentsSelectionPage()
         {
             _userTermsViewModel.AcceptedTerms = true;
             _userTermsViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(DocumentsSelectionPage));
+        }
+
+        [Test]
+        public void WhenFailingToNavigateToDocumentsSelectionPageShouldDisplayAlertWithErrorMessage()
+        {
+            const string message = "Falha ao aceitar termos de uso.";
+            const string cancelButton = "OK";
+
+            _navigationService.ShouldFail(true);
+
+            _userTermsViewModel.GoFowardCommand.Execute();
+
+            _pageDialogService.Title.Should().Be(_userTermsViewModel.Title);
+            _pageDialogService.Message.Should().Be(message);
+            _pageDialogService.CancelButton.Should().Be(cancelButton);
         }
     }
 }

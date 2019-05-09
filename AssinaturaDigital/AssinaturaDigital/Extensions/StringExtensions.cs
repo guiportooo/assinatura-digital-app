@@ -70,6 +70,6 @@ namespace AssinaturaDigital.Extensions
         public static bool IsValidEmail(this string email)
             => !string.IsNullOrEmpty(email)
                 && new Regex(@"^.+@[^\.].*\.[a-z]{2,}$")
-                    .IsMatch(email);
+                    .IsMatch(email.Trim());
     }
 }

@@ -1,4 +1,4 @@
-using AssinaturaDigital.Services.SignUp;
+using AssinaturaDigital.Services.Authentication;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Navigation;
@@ -11,7 +11,7 @@ namespace AssinaturaDigital.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
-        private readonly ISignUpService _signUpService;
+        private readonly IAuthenticationService _authenticationService;
         private readonly IPreferences _preferences;
 
         private string _cpf;
@@ -23,19 +23,17 @@ namespace AssinaturaDigital.ViewModels
 
         public SignInViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
-            ISignUpService signUpService,
+            IAuthenticationService authenticationService,
             IPreferences preferences)
             : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
-            _signUpService = signUpService;
+            _authenticationService = authenticationService;
             _preferences = preferences;
 
-            Title = "Confirmação ";
+            Title = "Confirmação";
         }
-
-        protected override bool CanGoFoward() => !IsBusy;
 
         protected override async void GoFoward()
         {
@@ -43,10 +41,11 @@ namespace AssinaturaDigital.ViewModels
             {
                 IsBusy = true;
 
-                var response = await _signUpService.GetByCPF(CPF);
+                var response = await _authenticationService.GetByCPF(CPF);
+
                 if (!response.Succeeded)
                 {
-                    await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido", "OK");
+                    await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido.", "OK");
                     return;
                 }
 
@@ -54,14 +53,14 @@ namespace AssinaturaDigital.ViewModels
 
                 var parameters = new NavigationParameters
                 {
-                    { AppConstants.ShowSteps, false }
+                    { AppConstants.Registered, true }
                 };
 
                 await _navigationService.NavigateAsync(nameof(TokenPage), parameters);
             }
             catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao encontrar usuário.", "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao validar usuário.", "OK");
             }
             finally
             {
