@@ -2,9 +2,7 @@
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms" 
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
                         xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms" 
-                        x:Class="AssinaturaDigital.Views.App"
-                        xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-                        android:Application.WindowSoftInputModeAdjust="Resize">
+                        x:Class="AssinaturaDigital.Views.App">
     <Application.Resources>
         <ResourceDictionary>
             <Color x:Key="white">#FFFFFF</Color>
