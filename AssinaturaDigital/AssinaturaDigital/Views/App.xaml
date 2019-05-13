@@ -93,6 +93,32 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="contract" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                 <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="contractIdentifier" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style x:Key="title" TargetType="Label">
                 <Setter Property="Margin" Value="0,20"/>
                 <Setter Property="FontSize" Value="Large" />
