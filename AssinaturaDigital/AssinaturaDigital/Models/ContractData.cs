@@ -6,12 +6,14 @@ namespace AssinaturaDigital.Models
         public string Identification { get; private set; }
         public string CPF { get; private set; }
         public bool IsSigned { get; private set; }
+        public string Data { get; private set; }
 
-        public ContractData(string identification, string cpf, bool isSigned)
+        public ContractData(string identification, string cpf, string data, bool isSigned)
         {
             Identification = identification;
             CPF = cpf;
             IsSigned = isSigned;
+            Data = data;
         }
 
         public void SignContract()

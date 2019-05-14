@@ -15,6 +15,9 @@ namespace AssinaturaDigital.ViewModels
         private readonly IPageDialogService _pageDialogService;
 
         public DelegateCommand LogoutCommand { get; }
+        public DelegateCommand GoContractListCommand { get; }
+
+        private int IdUser { get; set; }
 
         public HomeViewModel(IPreferences preferences,
             INavigationService navigationService,
@@ -26,6 +29,11 @@ namespace AssinaturaDigital.ViewModels
 
             LogoutCommand = new DelegateCommand(Logout)
                 .ObservesProperty(()=> IsBusy);
+
+            GoContractListCommand = new DelegateCommand(async () =>
+            {
+                await _navigationService.NavigateAsync(nameof(ContractListPage));
+            });
 
             Title = "Home";
         }
@@ -50,9 +58,9 @@ namespace AssinaturaDigital.ViewModels
 
         public async void OnNavigatingTo(INavigationParameters parameters)
         {
-            var idUser = _preferences.Get(AppConstants.IdUser, 0);
+            IdUser = _preferences.Get(AppConstants.IdUser, 0);
 
-            if (idUser == 0)
+            if (IdUser == 0)
             {
                 await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido!", "OK");
 

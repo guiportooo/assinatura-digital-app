@@ -63,7 +63,7 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
             containerRegistry.RegisterForNavigation<ContractListPage, ContractListViewModel>();
-            containerRegistry.RegisterForNavigation<ContractDetailPage>();
+            containerRegistry.RegisterForNavigation<ContractDetailPage, ContractDetailViewModel>();
 
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
             containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
@@ -81,6 +81,7 @@ namespace AssinaturaDigital.Views
                 containerRegistry.Register<IAuthenticationService, AuthenticationService>();
                 containerRegistry.Register<ITokenService, TokenService>();
                 containerRegistry.Register<ISelfiesService, SelfiesService>();
+                containerRegistry.Register<IContractService, ContractService>();
             }
         }
 
