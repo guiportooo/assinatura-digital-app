@@ -68,7 +68,7 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await NavigateToDocumentPage(AppConstants.CNH);
+                await NavigateToDocumentPage(DocumentType.CNH);
             }
             catch (Exception ex)
             {
@@ -85,7 +85,7 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await NavigateToDocumentPage(AppConstants.RG);
+                await NavigateToDocumentPage(DocumentType.RG);
             }
             catch (Exception ex)
             {
@@ -97,7 +97,7 @@ namespace AssinaturaDigital.ViewModels
             }
         }
 
-        async Task NavigateToDocumentPage(string documentType)
+        async Task NavigateToDocumentPage(DocumentType documentType)
             => await _navigationService.NavigateAsync(nameof(DocumentPage), 
                 new NavigationParameters
                 {

@@ -5,22 +5,26 @@ using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 using Plugin.Media.Abstractions;
 using Plugin.Permissions.Abstractions;
 using Prism.Navigation;
 using System.Collections.Generic;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
     public class DocumentViewModelTests
     {
+        private int _idUser = 1;
         private DocumentViewModel _documentViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
         private PermissionsServiceMock _permissionsService;
         private CameraServiceMock _cameraService;
         private DocumentsServiceFake _documentsService;
+        private Mock<IPreferences> _preferencesMock;
         private ErrorHandlerMock _errorHandler;
 
         [SetUp]
@@ -31,13 +35,17 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _documentsService = new DocumentsServiceFake();
             _permissionsService = new PermissionsServiceMock();
             _cameraService = new CameraServiceMock();
+            _preferencesMock = new Mock<IPreferences>();
             _errorHandler = new ErrorHandlerMock();
+
+            _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
 
             _documentViewModel = new DocumentViewModel(_navigationService,
                 _pageDialogService,
                 _permissionsService,
                 _cameraService,
                 _documentsService,
+                _preferencesMock.Object,
                 _errorHandler);
         }
 
@@ -52,7 +60,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenNavigatingToViewModelShouldPopulateTitle()
         {
-            const string documentType = "CNH";
+            const DocumentType documentType = DocumentType.CNH;
 
             var parameters = new NavigationParameters
             {
@@ -60,7 +68,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             };
 
             _documentViewModel.OnNavigatedTo(parameters);
-            _documentViewModel.Title.Should().Be(documentType);
+            _documentViewModel.Title.Should().Be(documentType.ToString());
         }
 
         [Test]
@@ -68,7 +76,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.DocumentType, AppConstants.RG }
+                { AppConstants.DocumentType, DocumentType.RG }
             };
 
             _permissionsService.GrantedPermissionBeforeRequest();
@@ -84,7 +92,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.DocumentType, AppConstants.RG }
+                { AppConstants.DocumentType, DocumentType.RG }
             };
             _permissionsService.GrantedPermissionAfterRequest();
             _cameraService.ShouldTakePhoto();
@@ -99,7 +107,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.DocumentType, AppConstants.RG }
+                { AppConstants.DocumentType, DocumentType.RG }
             };
 
             _documentViewModel.OnNavigatedTo(parameters);
@@ -108,18 +116,13 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _navigationService.WentBack.Should().BeTrue();
         }
 
-        [TestCase(AppConstants.RG)]
-        [TestCase(AppConstants.CNH)]
-        public void ShouldSavePhotosAndChangeTitleIfCameraPermissionIsGranted(string documentType)
+        [TestCase(DocumentType.RG)]
+        [TestCase(DocumentType.CNH)]
+        public void ShouldSavePhotosAndChangeTitleIfCameraPermissionIsGranted(DocumentType documentType)
         {
             var parameters = new NavigationParameters
             {
                 { AppConstants.DocumentType, documentType }
-            };
-            var expectedPhotos = new Dictionary<PhotoTypes, MediaFile>
-            {
-                { PhotoTypes.Frontal, new MediaFile($"{documentType}_Frente", null) },
-                { PhotoTypes.Back, new MediaFile($"{documentType}_Verso", null) }
             };
 
             _permissionsService.GrantedPermissionBeforeRequest();
@@ -127,10 +130,17 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _documentViewModel.OnNavigatedTo(parameters);
 
-            _documentViewModel.Title.Should().Be(documentType);
-            _cameraService.Camera.Should().Be(CameraDevice.Rear);
+            var expectedDocuments = new List<Document>
+            {
+                new Document(_idUser, documentType, DocumentOrientation.Front, _cameraService.Photos[0]),
+                new Document(_idUser, documentType, DocumentOrientation.Back, _cameraService.Photos[1]),
+            };
+
+            _documentViewModel.Title.Should().Be(documentType.ToString());
+            _cameraService.Cameras[0].Should().Be(CameraDevice.Rear);
+            _cameraService.Cameras[1].Should().Be(CameraDevice.Rear);
             _permissionsService.Permission.Should().Be(Permission.Camera);
-            _documentsService.Photos.Should().BeEquivalentTo(expectedPhotos);
+            _documentsService.Documents.Should().BeEquivalentTo(expectedDocuments);
         }
 
         [Test]
@@ -138,7 +148,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.DocumentType, AppConstants.RG }
+                { AppConstants.DocumentType, DocumentType.RG }
             };
             _permissionsService.GrantedPermissionBeforeRequest();
             _cameraService.ShouldReturnNullPhoto();
@@ -154,7 +164,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.DocumentType, AppConstants.RG }
+                { AppConstants.DocumentType, DocumentType.RG }
             };
             _permissionsService.GrantedPermissionBeforeRequest();
 

@@ -44,7 +44,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void ShouldDisplayErrorMessageWhenCanNotGetUserByCpf()
         {
-            const string message = "Usuário inválido.";
+            const string message = "CPF não cadastrado. Por favor, acesse a página inicial e clique em 1º acesso.";
             const string cancelButton = "OK";
 
             _signInViewModel.GoFowardCommand.Execute();

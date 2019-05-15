@@ -1,16 +1,14 @@
 using AssinaturaDigital.Services.Fakes;
-using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.UnitTests.Mocks;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
+using AssinaturaDigital.Views;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System;
-using Xamarin.Essentials.Interfaces;
-using System.Linq;
-using AssinaturaDigital.Views;
 using Prism.Navigation;
+using System.Linq;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {

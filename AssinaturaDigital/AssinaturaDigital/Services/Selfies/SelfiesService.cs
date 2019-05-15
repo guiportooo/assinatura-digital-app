@@ -1,5 +1,4 @@
 using AssinaturaDigital.Configuration;
-using AssinaturaDigital.Extensions;
 using AssinaturaDigital.Utilities;
 using Flurl;
 using Flurl.Http;
@@ -25,13 +24,14 @@ namespace AssinaturaDigital.Services.Selfies
         {
             try
             {
-                var base64Photo = await photo.GetStream().ToBase64();
-                var userSelfie = new UserSelfie(idUser, base64Photo);
-
-                var response = await _urlApi
+                using (var photoStream = photo.GetStream())
+                {
+                    var response = await _urlApi
+                    .AppendPathSegment("users")
+                    .AppendPathSegment(idUser)
                     .AppendPathSegment("selfies")
-                    .AppendPathSegment("validate-user")
-                    .PostJsonAsync(userSelfie);
+                    .PostMultipartAsync(x => x.AddFile("photo", photoStream, $"{idUser}_Selfie.JPG"));
+                }
 
                 return true;
             }

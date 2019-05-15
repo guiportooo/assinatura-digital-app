@@ -1,5 +1,6 @@
 using AssinaturaDigital.Services.Interfaces;
 using Plugin.Media.Abstractions;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AssinaturaDigital.UnitTests.Mocks
@@ -8,9 +9,16 @@ namespace AssinaturaDigital.UnitTests.Mocks
     {
         private bool _canTakePhoto;
         private bool _shouldReturnNullPhoto;
-        public string FileName { get; private set; }
-        public CameraDevice Camera { get; private set; }
-        public MediaFile Photo { get; set; }
+        public IList<string> FileNames { get; private set; }
+        public IList<CameraDevice> Cameras { get; private set; }
+        public IList<MediaFile> Photos { get; set; }
+
+        public CameraServiceMock()
+        {
+            FileNames = new List<string>();
+            Cameras = new List<CameraDevice>();
+            Photos = new List<MediaFile>();
+        }
 
         public void ShouldTakePhoto() => _canTakePhoto = true;
 
@@ -24,13 +32,17 @@ namespace AssinaturaDigital.UnitTests.Mocks
 
         public Task<MediaFile> TakePhoto(string fileName, CameraDevice camera)
         {
-            FileName = fileName;
-            Camera = camera;
+            FileNames.Add(fileName);
+            Cameras.Add(camera);
+            MediaFile photo = null;
 
             if (!_shouldReturnNullPhoto)
-                Photo = new MediaFile(fileName, null);
+            {
+                photo = new MediaFile(fileName, null);
+                Photos.Add(photo);
+            }
 
-            return Task.FromResult(Photo);
+            return Task.FromResult(photo);
         }
     }
 }

@@ -87,8 +87,8 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _selfieViewModel.OnNavigatedTo(null);
 
             _permissionsService.Permission.Should().Be(Permission.Camera);
-            _cameraService.Camera.Should().Be(CameraDevice.Front);
-            _cameraService.Photo.Should().BeEquivalentTo(expectedPhoto);
+            _cameraService.Cameras[0].Should().Be(CameraDevice.Front);
+            _cameraService.Photos[0].Should().BeEquivalentTo(expectedPhoto);
         }
 
         [Test]

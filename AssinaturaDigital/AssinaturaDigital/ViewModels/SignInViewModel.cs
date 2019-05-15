@@ -45,7 +45,7 @@ namespace AssinaturaDigital.ViewModels
 
                 if (!response.Succeeded)
                 {
-                    await _pageDialogService.DisplayAlertAsync(Title, "Usuário inválido.", "OK");
+                    await _pageDialogService.DisplayAlertAsync(Title, "CPF não cadastrado. Por favor, acesse a página inicial e clique em 1º acesso.", "OK");
                     return;
                 }
 

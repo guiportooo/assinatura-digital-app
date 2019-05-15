@@ -1,9 +1,10 @@
 using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Services;
+using AssinaturaDigital.Services.Authentication;
+using AssinaturaDigital.Services.Documents;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Services.Selfies;
-using AssinaturaDigital.Services.Authentication;
 using AssinaturaDigital.Services.Token;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
@@ -68,7 +69,6 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<FailureSigningContractPage>();
 
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
-            containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
 
             containerRegistry.RegisterInstance<IPreferences>(new PreferencesImplementation());
 
@@ -77,12 +77,14 @@ namespace AssinaturaDigital.Views
                 containerRegistry.Register<IAuthenticationService, AuthenticationServiceFake>();
                 containerRegistry.Register<ITokenService, TokenServiceFake>();
                 containerRegistry.Register<ISelfiesService, SelfiesServiceFake>();
+                containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
             }
             else
             {
                 containerRegistry.Register<IAuthenticationService, AuthenticationService>();
                 containerRegistry.Register<ITokenService, TokenService>();
                 containerRegistry.Register<ISelfiesService, SelfiesService>();
+                containerRegistry.Register<IDocumentsService, DocumentsService>();
                 containerRegistry.Register<IContractService, ContractService>();
             }
         }
