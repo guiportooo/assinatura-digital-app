@@ -1,4 +1,5 @@
 using AssinaturaDigital.Models;
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -8,10 +9,12 @@ using System.Collections.ObjectModel;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class InfoSelfieViewModel : ViewModelBase
+    public class InfoSelfieViewModel : ViewModelBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
+
+        private bool IsSigningContract;
 
         public DelegateCommand ShowInfoCommand { get; }
 
@@ -29,6 +32,27 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _currentStep, value);
         }
 
+        private bool _registred;
+        public bool Registred
+        {
+            get => _registred;
+            set => SetProperty(ref _registred, value);
+        }
+
+        private string _subTitle;
+        public string SubTitle
+        {
+            get => _subTitle;
+            set => SetProperty(ref _subTitle, value);
+        }
+
+        private ContractData _contract;
+        public ContractData Contract
+        {
+            get => _contract;
+            set => SetProperty(ref _contract, value);
+        }
+
         public InfoSelfieViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService) : base(navigationService, pageDialogService)
         {
@@ -38,8 +62,6 @@ namespace AssinaturaDigital.ViewModels
             ShowInfoCommand = new DelegateCommand(ShowInfo);
 
             InitializeSteps();
-
-            Title = "Info Selfie";
         }
 
         void InitializeSteps()
@@ -65,7 +87,16 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await _navigationService.NavigateAsync(nameof(SelfiePage));
+
+                if (IsSigningContract)
+                    await _navigationService.NavigateAsync(nameof(SelfiePage),
+                            new NavigationParameters
+                            {
+                                { AppConstants.Contract, Contract },
+                                { AppConstants.SigningContract, IsSigningContract }
+                            });
+                else
+                    await _navigationService.NavigateAsync(nameof(SelfiePage));
             }
             catch
             {
@@ -74,6 +105,42 @@ namespace AssinaturaDigital.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters)
+        {
+        }
+
+        public void OnNavigatedTo(INavigationParameters parameters)
+        {
+        }
+
+        public void OnNavigatingTo(INavigationParameters parameters)
+        {
+            if (parameters.ContainsKey(AppConstants.SigningContract))
+                IsSigningContract = parameters.GetValue<bool>(AppConstants.SigningContract);
+
+            if (parameters.ContainsKey(AppConstants.Registered))
+                Registred = parameters.GetValue<bool>(AppConstants.Registered);
+
+            if (parameters.ContainsKey(AppConstants.Contract))
+                Contract = parameters.GetValue<ContractData>(AppConstants.Contract);
+
+            SetCorrectTitleAndSubTitle();
+        }
+
+        private void SetCorrectTitleAndSubTitle()
+        {
+            if (IsSigningContract)
+            {
+                Title = "Chegou a hora de assinar";
+                SubTitle = "Sua foto assinará o contrato automaticamente";
+            }
+            else
+            {
+                Title = "Estamos quase terminando";
+                SubTitle = "Agora vamos tirar uma selfie";
             }
         }
     }

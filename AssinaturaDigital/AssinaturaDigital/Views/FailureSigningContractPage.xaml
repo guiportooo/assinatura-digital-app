@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="AssinaturaDigital.Views.FailureSigningContractPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Spacing="20" Margin="15, 20, 15, 0">
+                <Label FontAttributes="Bold"
+                       FontSize="Large"
+                       Text="Alerta"
+                       TextColor="Black" />
+                <Label Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit.                 Nulla convallis ut nunc at ornare. Quisque sed ultrices urna, at pretium turpis.                 Suspendisse ultricies et ex a blandit. Phasellus facilisis sem eget nunc dictum congue." />
+
+                <Button Margin="0,30,0,20"
+                        Style="{StaticResource greenButton}"
+                        WidthRequest="100"
+                        HorizontalOptions="Center"
+                        Text="OK" />
+            </StackLayout>
+            <Frame Padding="0"
+                   HeightRequest="1"
+                   BackgroundColor="Gray"
+                   CornerRadius="0"
+                   HorizontalOptions="FillAndExpand" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+

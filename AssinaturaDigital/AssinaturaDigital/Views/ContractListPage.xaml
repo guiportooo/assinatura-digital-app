@@ -3,9 +3,12 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:AssinaturaDigital.Converters"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:prism="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:views="clr-namespace:AssinaturaDigital.Views"
-             x:Name="contractListPage">
+             x:Name="contractListPage"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -13,12 +16,14 @@
                     <StackLayout Margin="15,30,15,0" Spacing="0">
                         <StackLayout Margin="0,15,0,0" Orientation="Horizontal">
                             <StackLayout>
-                                <Frame Padding="5"
-                                       WidthRequest="70"
-                                       HeightRequest="70"
+                                <Frame Padding="0"
+                                       WidthRequest="60"
+                                       HeightRequest="60"
+                                       MinimumWidthRequest="60"
+                                       MinimumHeightRequest="60"
                                        BackgroundColor="{StaticResource green}"
                                        BorderColor="{StaticResource green}"
-                                       CornerRadius="40"
+                                       CornerRadius="30"
                                        HasShadow="False">
                                     <Label FontSize="30"
                                            HorizontalTextAlignment="Center"
@@ -106,6 +111,7 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
+
             <views:LoadingView AbsoluteLayout.LayoutBounds="0,0,1,1"
                                AbsoluteLayout.LayoutFlags="All"
                                IsVisible="{Binding IsBusy}" />

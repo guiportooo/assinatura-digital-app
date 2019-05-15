@@ -20,5 +20,6 @@ namespace AssinaturaDigital.Models
         {
             IsSigned = true;
         }
-    }
+
+      }
 }

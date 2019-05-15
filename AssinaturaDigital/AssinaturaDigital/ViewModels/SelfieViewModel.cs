@@ -1,4 +1,5 @@
 using AssinaturaDigital.Extensions;
+using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
@@ -19,6 +20,15 @@ namespace AssinaturaDigital.ViewModels
         private readonly ICameraService _cameraService;
         private readonly IErrorHandler _errorHandler;
 
+        private bool IsSigningContract;
+
+        private ContractData _contract;
+        public ContractData Contract
+        {
+            get => _contract;
+            set => SetProperty(ref _contract, value);
+        }
+
         public SelfieViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
             IPermissionsService permissionsService,
@@ -35,8 +45,20 @@ namespace AssinaturaDigital.ViewModels
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
-            => TakeSelfie().FireAndForget(_errorHandler);
+        {
+            TakeSelfie().FireAndForget(_errorHandler);
 
+            if (parameters != null && parameters.ContainsKey(AppConstants.SigningContract))
+            {
+                IsSigningContract = parameters.GetValue<bool>(AppConstants.SigningContract);
+            }
+
+            if (parameters != null && parameters.ContainsKey(AppConstants.Contract))
+            {
+                Contract = parameters.GetValue<ContractData>(AppConstants.Contract);
+            }
+        }
+            
         public void OnNavigatedFrom(INavigationParameters parameters)
             => _navigationService.RemoveLastViewWithName(nameof(SelfiePage));
 
@@ -53,11 +75,23 @@ namespace AssinaturaDigital.ViewModels
 
                 var selfie = await TakePhoto("Selfie");
 
-                await _navigationService.NavigateAsync(nameof(InfoRegisterPage),
-                    new NavigationParameters
-                    {
+                if (IsSigningContract)
+                {
+                    Console.WriteLine("Integração com a gradient");
+                    await _navigationService.NavigateAsync(nameof(SuccessSigningContractPage),
+                        new NavigationParameters
+                        {
+                        { AppConstants.Contract, Contract }
+                        });
+                }
+                else
+                {
+                    await _navigationService.NavigateAsync(nameof(InfoRegisterPage),
+                        new NavigationParameters
+                        {
                         { AppConstants.Selfie, selfie }
-                    });
+                        });
+                }
             }
             catch (Exception ex)
             {

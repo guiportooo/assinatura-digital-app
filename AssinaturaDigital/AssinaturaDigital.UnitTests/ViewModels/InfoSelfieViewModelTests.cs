@@ -1,8 +1,10 @@
 using AssinaturaDigital.UnitTests.Mocks;
+using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using AssinaturaDigital.Views;
 using FluentAssertions;
 using NUnit.Framework;
+using Prism.Navigation;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
@@ -21,9 +23,6 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 _navigationService,
                 _pageDialogService);
         }
-
-        [Test]
-        public void WhenCreatingViewModelShouldPopulateTitle() => _infoSelfieViewModel.Title.Should().Be("Info Selfie");
 
         [Test]
         public void WhenNavigatingToPageShouldConfigureSteps()
@@ -67,6 +66,28 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _pageDialogService.Title.Should().Be(_infoSelfieViewModel.Title);
             _pageDialogService.Message.Should().Be(message);
             _pageDialogService.CancelButton.Should().Be(cancelButton);
+        }
+
+        [Test]
+        public void OnNavigatedToSigningContractShouldSetCorrectTitleAndSubTitle()
+        {
+            var parameters = new NavigationParameters();
+            parameters.Add(AppConstants.SigningContract, true);
+
+            _infoSelfieViewModel.OnNavigatingTo(parameters);
+            _infoSelfieViewModel.Title.Should().Be("Chegou a hora de assinar");
+            _infoSelfieViewModel.SubTitle.Should().Be("Sua foto assinará o contrato automaticamente");
+        }
+
+        [Test]
+        public void OnNavigatedToSignInUserShouldSetCorrectTitleAndSubTitle()
+        {
+            var parameters = new NavigationParameters();
+            parameters.Add(AppConstants.SigningContract, false);
+
+            _infoSelfieViewModel.OnNavigatingTo(parameters);
+            _infoSelfieViewModel.Title.Should().Be("Estamos quase terminando");
+            _infoSelfieViewModel.SubTitle.Should().Be("Agora vamos tirar uma selfie");
         }
     }
 }

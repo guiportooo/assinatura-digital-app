@@ -2,108 +2,115 @@
 <ContentPage x:Class="AssinaturaDigital.Views.ContractDetailPage"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:views="clr-namespace:AssinaturaDigital.Views">
+             xmlns:views="clr-namespace:AssinaturaDigital.Views"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
-                <StackLayout>
-                    <StackLayout Margin="15,30,15,0" Spacing="0">
-                        <StackLayout Margin="0,15,0,0"
-                                     HeightRequest="100"
-                                     Orientation="Horizontal"
-                                     Spacing="20">
-                            <StackLayout>
-                                <Frame Padding="5"
-                                       WidthRequest="60"
-                                       HeightRequest="60"
-                                       BackgroundColor="{StaticResource green}"
-                                       BorderColor="{StaticResource green}"
-                                       CornerRadius="35"
-                                       HasShadow="False">
-                                    <Label FontSize="30"
-                                           HorizontalTextAlignment="Center"
-                                           Style="{StaticResource solidIconSpan}"
-                                           Text="&#xf015;"
-                                           TextColor="White"
-                                           VerticalTextAlignment="Center" />
-                                </Frame>
-                                <Label HorizontalTextAlignment="Center" Text="HOME" />
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoHomeCommand}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
 
-                            <StackLayout>
-                                <Frame Padding="2"
-                                       WidthRequest="70"
-                                       HeightRequest="70"
-                                       BackgroundColor="{StaticResource green}"
-                                       BorderColor="{StaticResource green}"
-                                       CornerRadius="35"
-                                       HasShadow="False"
-                                       HorizontalOptions="Center">
-                                    <Label FontSize="30"
-                                           HorizontalTextAlignment="Center"
-                                           Style="{StaticResource regularIconSpan}"
-                                           Text="&#xf15c;"
-                                           TextColor="White"
-                                           VerticalTextAlignment="Center" />
-                                </Frame>
-                                <Label HorizontalTextAlignment="Center" Text="CONTRATOS" />
-                                <StackLayout.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoContractListCommand}" />
-                                </StackLayout.GestureRecognizers>
-                            </StackLayout>
-                        </StackLayout>
-                        <Label Style="{StaticResource title}">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Style="{StaticResource titleSpan}" Text="Financiamento" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-
-                        <ScrollView HeightRequest="500" VerticalScrollBarVisibility="Always">
-                            <StackLayout>
-                                <StackLayout Margin="0,5,0,5" Orientation="Horizontal">
-                                    <Label FontSize="50"
-                                           HorizontalTextAlignment="Center"
-                                           Style="{StaticResource regularIconSpan}"
-                                           Text="&#xf15c;"
-                                           TextColor="Gray"
-                                           VerticalTextAlignment="Start" />
-                                    <StackLayout Margin="10,0,0,0" HorizontalOptions="FillAndExpand">
-                                        <Label Style="{StaticResource contractIdentifier}" Text="{Binding ContractData.Identification}" />
-                                        <Label Text="{Binding ContractData.CPF}" />
-                                    </StackLayout>
-                                </StackLayout>
-                                <StackLayout Margin="0,10,0,10">
-                                    <Label FontAttributes="Bold"
-                                           FontSize="Medium"
-                                           Text="DADOS DO FINANCIAMENTO"
-                                           TextColor="{StaticResource black}" />
-                                    <Label Style="{StaticResource contract}" Text="{Binding ContractData.Data}" />
-                                </StackLayout>
-                            </StackLayout>
-                        </ScrollView>
-                    </StackLayout>
                     <StackLayout>
-                        <StackLayout IsVisible="true">
-                            <Frame Padding="0"
-                                   HeightRequest="1"
-                                   BackgroundColor="Gray"
-                                   CornerRadius="0"
-                                   HorizontalOptions="FillAndExpand" />
-                            <StackLayout Margin="10"
+                        <StackLayout Margin="15,30,15,0" Spacing="0">
+                            <StackLayout Margin="0,15,0,0"
+                                         HeightRequest="100"
                                          Orientation="Horizontal"
                                          Spacing="20">
-                                <Switch VerticalOptions="Center" />
-                                <Label HorizontalTextAlignment="Start" Text="Aceito os termos descritos neste contrato, condições comerciais e concordo em assinar digitalmente." />
+                                <StackLayout>
+                                    <Frame Padding="0"
+                                           WidthRequest="60"
+                                           HeightRequest="60"
+                                           MinimumWidthRequest="60"
+                                           MinimumHeightRequest="60"
+                                           BackgroundColor="{StaticResource green}"
+                                           BorderColor="{StaticResource green}"
+                                           CornerRadius="30"
+                                           HasShadow="False">
+                                        <Label FontSize="30"
+                                               HorizontalTextAlignment="Center"
+                                               Style="{StaticResource solidIconSpan}"
+                                               Text="&#xf015;"
+                                               TextColor="White"
+                                               VerticalTextAlignment="Center" />
+                                    </Frame>
+                                    <Label HorizontalTextAlignment="Center" Text="HOME" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GoHomeCommand}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+
+                                <StackLayout>
+                                    <Frame Padding="0"
+                                           WidthRequest="60"
+                                           HeightRequest="60"
+                                           BackgroundColor="{StaticResource green}"
+                                           BorderColor="{StaticResource green}"
+                                           CornerRadius="30"
+                                           HasShadow="False"
+                                           HorizontalOptions="Center">
+                                        <Label FontSize="30"
+                                               HorizontalTextAlignment="Center"
+                                               Style="{StaticResource regularIconSpan}"
+                                               Text="&#xf15c;"
+                                               TextColor="White"
+                                               VerticalTextAlignment="Center" />
+                                    </Frame>
+                                    <Label HorizontalTextAlignment="Center" Text="CONTRATOS" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GoContractListCommand}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
                             </StackLayout>
+                            <Label Style="{StaticResource title}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Style="{StaticResource titleSpan}" Text="Financiamento" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <ScrollView HeightRequest="500" VerticalScrollBarVisibility="Always">
+                                <StackLayout>
+                                    <StackLayout Margin="0,5,0,5" Orientation="Horizontal">
+                                        <Label FontSize="50"
+                                               HorizontalTextAlignment="Center"
+                                               Style="{StaticResource regularIconSpan}"
+                                               Text="&#xf15c;"
+                                               TextColor="Gray"
+                                               VerticalTextAlignment="Start" />
+                                        <StackLayout Margin="10,0,0,0" HorizontalOptions="FillAndExpand">
+                                            <Label Style="{StaticResource contractIdentifier}" Text="{Binding Contract.Identification}" />
+                                            <Label Text="{Binding Contract.CPF}" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <StackLayout Margin="0,10,0,10">
+                                        <Label FontAttributes="Bold"
+                                               FontSize="Medium"
+                                               Text="DADOS DO FINANCIAMENTO"
+                                               TextColor="{StaticResource black}" />
+                                        <Label Style="{StaticResource contract}" Text="{Binding Contract.Data}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </ScrollView>
                         </StackLayout>
-                        <views:NavigationView Margin="0,0,0,30" VerticalOptions="EndAndExpand" />
+                        <StackLayout>
+                            <StackLayout IsVisible="true">
+                                <Frame Padding="0"
+                                       HeightRequest="1"
+                                       BackgroundColor="Gray"
+                                       CornerRadius="0"
+                                       HorizontalOptions="FillAndExpand" />
+                                <StackLayout Margin="10"
+                                             Orientation="Horizontal"
+                                             Spacing="20">
+                                    <Switch IsToggled="{Binding AgreeContract}" VerticalOptions="Center" />
+                                    <Label HorizontalTextAlignment="Start" Text="Aceito os termos descritos neste contrato, condições comerciais e concordo em assinar digitalmente." />
+                                </StackLayout>
+                            </StackLayout>
+                            <views:NavigationView Margin="0,0,0,30" VerticalOptions="EndAndExpand" />
+                        </StackLayout>
                     </StackLayout>
-                </StackLayout>
+          
             </StackLayout>
             <views:LoadingView AbsoluteLayout.LayoutBounds="0,0,1,1"
                                AbsoluteLayout.LayoutFlags="All"

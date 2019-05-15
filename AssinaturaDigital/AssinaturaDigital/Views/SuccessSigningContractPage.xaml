@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="AssinaturaDigital.Views.SuccessSigningContractPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Margin="15,20,15,10">
+                <Label FontAttributes="Bold"
+                       FontSize="Large"
+                       Text="Contrato assinado!"
+                       TextColor="Black" />
+                <StackLayout Margin="0,10,0,5" Orientation="Horizontal">
+                    <Label FontSize="50"
+                           HorizontalTextAlignment="Center"
+                           Style="{StaticResource regularIconSpan}"
+                           Text="&#xf15c;"
+                           TextColor="Gray"
+                           VerticalTextAlignment="Start" />
+                    <StackLayout Margin="10,0,0,0" HorizontalOptions="FillAndExpand">
+                        <Label FontAttributes="Bold"
+                               FontSize="Medium"
+                               Text="{Binding Contract.Identification}"
+                               TextColor="Gray" />
+                        <Label Text="{Binding Contract.CPF}" />
+
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <Button Padding="5"
+                            BackgroundColor="White"
+                            BorderColor="Gray"
+                            BorderWidth="1"
+                            FontSize="Small"
+                            Text="VISUALIZAR CONTRATO"
+                            TextColor="Gray"
+                            Command="{Binding GoContractDetailCommand}"/>
+                    <Button Style="{StaticResource greenButton}"
+                            Text="ASSINAR CONTRATOS"
+                            Command="{Binding GoContractListCommand}"/>
+                    <Button Style="{StaticResource greenButton}"
+                            Text="IR PARA HOME"
+                            Command="{Binding GoHomeCommand}"/>
+                </StackLayout>
+            </StackLayout>
+            <Frame Padding="0"
+                   HeightRequest="1"
+                   BackgroundColor="Gray"
+                   CornerRadius="0"
+                   HorizontalOptions="FillAndExpand" />
+            <StackLayout Margin="15,20,15,0"
+                         Orientation="Horizontal"
+                         Spacing="20">
+                <StackLayout>
+                    <Frame Padding="5"
+                           WidthRequest="70"
+                           HeightRequest="70"
+                           BackgroundColor="{StaticResource green}"
+                           BorderColor="{StaticResource green}"
+                           CornerRadius="40"
+                           HasShadow="False">
+                        <Label FontSize="30"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource regularIconSpan}"
+                               Text="&#xf15C;"
+                               TextColor="White"
+                               VerticalTextAlignment="Center" />
+                    </Frame>
+                    <Label HorizontalTextAlignment="Center" Text="CONTRATOS" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoContractListCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <StackLayout>
+                    <Frame Padding="5"
+                           WidthRequest="70"
+                           HeightRequest="70"
+                           BackgroundColor="{StaticResource green}"
+                           BorderColor="{StaticResource green}"
+                           CornerRadius="40"
+                           HasShadow="False">
+                        <Label FontSize="30"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource regularIconSpan}"
+                               Text="&#xf007;"
+                               TextColor="White"
+                               VerticalTextAlignment="Center" />
+                    </Frame>
+                    <Label HorizontalTextAlignment="Center" Text="PERFIL" />
+                </StackLayout>
+
+                <StackLayout>
+                    <Frame Padding="5"
+                           WidthRequest="70"
+                           HeightRequest="70"
+                           BackgroundColor="{StaticResource green}"
+                           BorderColor="{StaticResource green}"
+                           CornerRadius="40"
+                           HasShadow="False">
+                        <Label FontSize="30"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource regularIconSpan}"
+                               Text="&#xf27a;"
+                               TextColor="White"
+                               VerticalTextAlignment="Center" />
+                    </Frame>
+                    <Label HorizontalTextAlignment="Center" Text="AJUDA" />
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
+
