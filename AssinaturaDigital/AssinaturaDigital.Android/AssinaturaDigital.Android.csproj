@@ -74,6 +74,9 @@
     <PackageReference Include="Xamarin.HotReload">
       <Version>1.2.4</Version>
     </PackageReference>
+    <PackageReference Include="Plugin.CurrentActivity">
+      <Version>2.1.0.4</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -82,6 +85,7 @@
     <Compile Include="Configuration\AndroidConfigurationStreamProvider.cs" />
     <Compile Include="Configuration\AndroidConfigurationStreamProviderFactory.cs" />
     <Compile Include="SplashActivity.cs" />
+    <Compile Include="MainApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\Font Awesome 5 Brands-Regular-400.otf">
