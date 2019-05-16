@@ -4,7 +4,13 @@
              Visual="Material" 
              NavigationPage.HasNavigationBar="false" 
              xmlns:views="clr-namespace:AssinaturaDigital.Views" 
+             xmlns:converters="clr-namespace:AssinaturaDigital.Converters"
              x:Class="AssinaturaDigital.Views.TokenPage">
+     <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="inverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
@@ -50,7 +56,7 @@
                                 Style="{StaticResource greenButton}" />
                     </StackLayout>
                     <StackLayout Grid.Row="1" VerticalOptions="End">
-                        <views:RegistrationStepsView IsVisible="{Binding ShowStep}" />
+                        <views:RegistrationStepsView IsVisible="{Binding Registered, Converter={StaticResource inverseBoolConverter}}" />
                         <views:NavigationView />
                     </StackLayout>
                 </Grid>

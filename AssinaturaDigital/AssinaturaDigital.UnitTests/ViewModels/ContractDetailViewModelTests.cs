@@ -41,7 +41,6 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             var contractIdentifier = "Identificação 01";
             var expectedContract = _contractService.Contracts.FirstOrDefault(x => x.Identification == contractIdentifier);
-
             var parameters = new NavigationParameters
             {
                 { AppConstants.Contract, expectedContract }

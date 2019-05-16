@@ -13,7 +13,7 @@
                 </Label.FormattedText>
             </Label>
             <Label Text="Veja seus contratos e assine agora mesmo." />
-            <StackLayout Orientation="Horizontal" Margin="0, 15, 0, 0">
+            <StackLayout Orientation="Horizontal" Margin="0, 15, 0, 0" Spacing="20">
                 <StackLayout>
                     <Frame CornerRadius="40"
                            HasShadow="False"
@@ -34,9 +34,46 @@
                             <TapGestureRecognizer Command="{Binding GoContractListCommand}" />
                         </StackLayout.GestureRecognizers>
                 </StackLayout>
+                <StackLayout>
+                    <Frame Padding="5"
+                           WidthRequest="70"
+                           HeightRequest="70"
+                           BackgroundColor="{StaticResource green}"
+                           BorderColor="{StaticResource green}"
+                           CornerRadius="40"
+                           HasShadow="False">
+                        <Label FontSize="30"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource regularIconSpan}"
+                               Text="&#xf007;"
+                               TextColor="White"
+                               VerticalTextAlignment="Center" />
+                    </Frame>
+                    <Label HorizontalTextAlignment="Center" Text="PERFIL" />
+                </StackLayout>
+
+                <StackLayout>
+                    <Frame Padding="5"
+                           WidthRequest="70"
+                           HeightRequest="70"
+                           BackgroundColor="{StaticResource green}"
+                           BorderColor="{StaticResource green}"
+                           CornerRadius="40"
+                           HasShadow="False">
+                        <Label FontSize="30"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource regularIconSpan}"
+                               Text="&#xf27a;"
+                               TextColor="White"
+                               VerticalTextAlignment="Center" />
+                    </Frame>
+                    <Label HorizontalTextAlignment="Center" Text="AJUDA" />
+                </StackLayout>
             </StackLayout>
             <Button HorizontalOptions="CenterAndExpand"
                     Text="SAIR"
+                    Margin="0,0,0,10"
+                    VerticalOptions="EndAndExpand"
                     Style="{StaticResource greenButton}"
                     Command="{Binding LogoutCommand}"/>
         </StackLayout>

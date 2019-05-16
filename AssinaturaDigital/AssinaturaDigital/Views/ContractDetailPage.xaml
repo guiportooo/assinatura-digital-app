@@ -7,6 +7,11 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
              NavigationPage.HasNavigationBar="false">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="inverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <AbsoluteLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
@@ -16,6 +21,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackLayout Grid.Row="0">
+
                         <StackLayout Margin="15,30,15,0" Spacing="0">
                             <StackLayout Margin="0,15,0,0"
                                          HeightRequest="100"
@@ -109,7 +115,8 @@
                                        HorizontalOptions="FillAndExpand" />
                                 <StackLayout Margin="10"
                                              Orientation="Horizontal"
-                                             Spacing="20">
+                                             Spacing="20"
+                                             IsVisible="{Binding Contract.IsSigned, Converter={StaticResource inverseBoolConverter}}">
                                     <Switch IsToggled="{Binding AgreeContract}" VerticalOptions="Center" />
                                     <Label HorizontalTextAlignment="Start" Text="Aceito os termos descritos neste contrato, condições comerciais e concordo em assinar digitalmente." />
                                 </StackLayout>
