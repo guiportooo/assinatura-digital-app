@@ -14,20 +14,14 @@ namespace AssinaturaDigital.ViewModels
 {
     public class SelfieViewModel : ViewModelBase, INavigatedAware
     {
+        private bool _isSigningContract;
+        private ContractData _contract;
+
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
         private readonly IPermissionsService _permissionsService;
         private readonly ICameraService _cameraService;
         private readonly IErrorHandler _errorHandler;
-
-        private bool IsSigningContract;
-
-        private ContractData _contract;
-        public ContractData Contract
-        {
-            get => _contract;
-            set => SetProperty(ref _contract, value);
-        }
 
         public SelfieViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
@@ -46,19 +40,18 @@ namespace AssinaturaDigital.ViewModels
 
         public void OnNavigatedTo(INavigationParameters parameters)
         {
+            if (parameters != null)
+            {
+                if (parameters.ContainsKey(AppConstants.SigningContract))
+                    _isSigningContract = parameters.GetValue<bool>(AppConstants.SigningContract);
+
+                if (parameters.ContainsKey(AppConstants.Contract))
+                    _contract = parameters.GetValue<ContractData>(AppConstants.Contract);
+            }
+
             TakeSelfie().FireAndForget(_errorHandler);
-
-            if (parameters != null && parameters.ContainsKey(AppConstants.SigningContract))
-            {
-                IsSigningContract = parameters.GetValue<bool>(AppConstants.SigningContract);
-            }
-
-            if (parameters != null && parameters.ContainsKey(AppConstants.Contract))
-            {
-                Contract = parameters.GetValue<ContractData>(AppConstants.Contract);
-            }
         }
-            
+
         public void OnNavigatedFrom(INavigationParameters parameters)
             => _navigationService.RemoveLastViewWithName(nameof(SelfiePage));
 
@@ -74,24 +67,7 @@ namespace AssinaturaDigital.ViewModels
                 }
 
                 var selfie = await TakePhoto("Selfie");
-
-                if (IsSigningContract)
-                {
-                    Console.WriteLine("Integração com a gradient");
-                    await _navigationService.NavigateAsync(nameof(SuccessSigningContractPage),
-                        new NavigationParameters
-                        {
-                        { AppConstants.Contract, Contract }
-                        });
-                }
-                else
-                {
-                    await _navigationService.NavigateAsync(nameof(InfoRegisterPage),
-                        new NavigationParameters
-                        {
-                        { AppConstants.Selfie, selfie }
-                        });
-                }
+                await NavigateToNextPage(selfie);
             }
             catch (Exception ex)
             {
@@ -124,6 +100,27 @@ namespace AssinaturaDigital.ViewModels
                 throw new NullReferenceException("Não foi possível armazenar a foto.");
 
             return photo;
+        }
+
+        async Task NavigateToNextPage(MediaFile selfie)
+        {
+            if (_isSigningContract)
+            {
+                await _navigationService.NavigateAsync(nameof(InfoSigningContractPage),
+                    new NavigationParameters
+                    {
+                        { AppConstants.Contract, _contract },
+                        { AppConstants.Selfie, selfie }
+                    });
+            }
+            else
+            {
+                await _navigationService.NavigateAsync(nameof(InfoRegisterPage),
+                    new NavigationParameters
+                    {
+                        { AppConstants.Selfie, selfie }
+                    });
+            }
         }
     }
 }

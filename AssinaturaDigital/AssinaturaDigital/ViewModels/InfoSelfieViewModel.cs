@@ -4,17 +4,16 @@ using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using System.Collections.ObjectModel;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class InfoSelfieViewModel : ViewModelBase, INavigationAware
+    public class InfoSelfieViewModel : ViewModelBase, INavigatingAware
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
 
-        private bool IsSigningContract;
+        private bool _isSigningContract;
 
         public DelegateCommand ShowInfoCommand { get; }
 
@@ -76,50 +75,10 @@ namespace AssinaturaDigital.ViewModels
             };
         }
 
-        async void ShowInfo()
-        {
-            var info = "Para tornar a assinatura do contrato mais segura e possibilitar maior praticidade no processo, transformaremos sua foto em um algoritmo biométrico para identificação.";
-            await _pageDialogService.DisplayAlertAsync(Title, info, "OK");
-        }
-
-        protected override async void GoFoward()
-        {
-            try
-            {
-                IsBusy = true;
-
-                if (IsSigningContract)
-                    await _navigationService.NavigateAsync(nameof(SelfiePage),
-                            new NavigationParameters
-                            {
-                                { AppConstants.Contract, Contract },
-                                { AppConstants.SigningContract, IsSigningContract }
-                            });
-                else
-                    await _navigationService.NavigateAsync(nameof(SelfiePage));
-            }
-            catch
-            {
-                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao avançar para tela de selfie.", "OK");
-            }
-            finally
-            {
-                IsBusy = false;
-            }
-        }
-
-        public void OnNavigatedFrom(INavigationParameters parameters)
-        {
-        }
-
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-        }
-
         public void OnNavigatingTo(INavigationParameters parameters)
         {
             if (parameters.ContainsKey(AppConstants.SigningContract))
-                IsSigningContract = parameters.GetValue<bool>(AppConstants.SigningContract);
+                _isSigningContract = parameters.GetValue<bool>(AppConstants.SigningContract);
 
             if (parameters.ContainsKey(AppConstants.Registered))
                 Registred = parameters.GetValue<bool>(AppConstants.Registered);
@@ -132,7 +91,7 @@ namespace AssinaturaDigital.ViewModels
 
         private void SetCorrectTitleAndSubTitle()
         {
-            if (IsSigningContract)
+            if (_isSigningContract)
             {
                 Title = "Chegou a hora de assinar";
                 SubTitle = "Sua foto assinará o contrato automaticamente";
@@ -141,6 +100,38 @@ namespace AssinaturaDigital.ViewModels
             {
                 Title = "Estamos quase terminando";
                 SubTitle = "Agora vamos tirar uma selfie";
+            }
+        }
+
+        async void ShowInfo()
+        {
+            var info = "Para tornar a assinatura do contrato mais segura e possibilitar maior praticidade no processo, transformaremos sua foto em um algoritmo biométrico para identificação.";
+            await _pageDialogService.DisplayAlertAsync(Title, info, "OK");
+        }
+
+        protected override async void GoFoward()
+        {
+            try
+            {
+                IsBusy = true;
+
+                if (_isSigningContract)
+                    await _navigationService.NavigateAsync(nameof(SelfiePage),
+                        new NavigationParameters
+                        {
+                            { AppConstants.Contract, Contract },
+                            { AppConstants.SigningContract, _isSigningContract }
+                        });
+                else
+                    await _navigationService.NavigateAsync(nameof(SelfiePage));
+            }
+            catch
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao avançar para tela de selfie.", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
     }

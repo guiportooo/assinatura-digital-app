@@ -1,12 +1,10 @@
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Contracts;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
-using Microsoft.AppCenter.Crashes;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,7 +17,8 @@ namespace AssinaturaDigital.ViewModels
         private int _idUser;
         private List<ContractData> _contractList;
         private readonly INavigationService _navigationService;
-        private readonly IContractService _contractService;
+        private readonly IPageDialogService _pageDialogService;
+        private readonly IContractsService _contractsService;
         private readonly IPreferences _preferences;
 
         public DelegateCommand GoHomeCommand { get; }
@@ -35,11 +34,12 @@ namespace AssinaturaDigital.ViewModels
 
         public ContractListViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
-            IContractService contractService,
+            IContractsService contractsService,
             IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
-            _contractService = contractService;
+            _pageDialogService = pageDialogService;
+            _contractsService = contractsService;
             _preferences = preferences;
 
             Title = "Contratos";
@@ -47,24 +47,54 @@ namespace AssinaturaDigital.ViewModels
             Contracts = new ObservableCollection<ContractData>();
             _contractList = new List<ContractData>();
 
-            GoHomeCommand = new DelegateCommand(async () =>
-            {
-                await _navigationService.NavigateAsync(nameof(HomePage));
-            });
+            GoHomeCommand = new DelegateCommand(GoHome).ObservesProperty(() => IsBusy);
             SearchContractCommand = new DelegateCommand<string>(SearchContract);
             OpenContractDetailsCommand = new DelegateCommand<string>(OpenContractDetails).ObservesProperty(() => IsBusy);
         }
 
-        private void OpenContractDetails(string identifier)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             try
             {
                 IsBusy = true;
+
+                _idUser = _preferences.Get(AppConstants.IdUser, 0);
+
+                var contracts = await _contractsService.GetContracts(_idUser);
+
+                if (contracts != null)
+                {
+                    Contracts = new ObservableCollection<ContractData>();
+                    _contractList = contracts.ToList();
+                    _contractList.ForEach(Contracts.Add);
+                }
+            }
+            catch
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao carregar contratos", "OK");
+                GoBack();
+                return;
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        public void OnNavigatedFrom(INavigationParameters parameters) { }
+
+        private async void OpenContractDetails(string identifier)
+        {
+            try
+            {
+                IsBusy = true;
+                var contract = Contracts.FirstOrDefault(x => x.Identification.Equals(identifier));
+
                 var parameters = new NavigationParameters
                 {
-                    { AppConstants.ContractIdentification, identifier }
+                    { AppConstants.Contract, contract }
                 };
-                _navigationService.NavigateAsync(nameof(ContractDetailPage), parameters);
+                await _navigationService.NavigateAsync(nameof(ContractDetailPage), parameters);
             }
             finally
             {
@@ -105,28 +135,6 @@ namespace AssinaturaDigital.ViewModels
             var filtred = _contractList?.Where(x => x.IsSigned == false)?.ToList();
             if (filtred != null)
                 filtred.ForEach(Contracts.Add);
-        }
-
-        public void OnNavigatedFrom(INavigationParameters parameters) { }
-
-        public async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            try
-            {
-                IsBusy = true;
-                _idUser = _preferences.Get(AppConstants.IdUser, 0);
-                _contractList = await _contractService.GetContracts(_idUser);
-                if (_contractService != null)
-                    _contractList.ForEach(Contracts.Add);
-            }
-            catch (Exception e)
-            {
-                Crashes.TrackError(e);
-            }
-            finally
-            {
-                IsBusy = false;
-            }
         }
     }
 }

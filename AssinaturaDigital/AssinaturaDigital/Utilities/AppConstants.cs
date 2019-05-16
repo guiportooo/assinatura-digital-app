@@ -7,7 +7,6 @@ namespace AssinaturaDigital.Utilities
         public const string IdUser = "IdUser";
         public const string Registered = "Registered";
         public const string CPF = "CPF";
-        public const string ContractIdentification = "ContractIdentification";
         public const string SigningContract = "SigningContract";
         public const string Contract = "Contract";
     }

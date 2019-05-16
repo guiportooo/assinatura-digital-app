@@ -46,6 +46,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             const string message = "CPF não cadastrado. Por favor, acesse a página inicial e clique em 1º acesso.";
             const string cancelButton = "OK";
+            _authenticationService.ShouldNotReturnUserWithCpf();
 
             _signInViewModel.GoFowardCommand.Execute();
 
@@ -58,7 +59,6 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenSigningInShouldSaveIdUserOnPreferences()
         {
             const string cpf = "123.456.789-10";
-            _authenticationService.ShouldReturnUseWithCpf(cpf);
             _signInViewModel.CPF = cpf;
 
             _signInViewModel.GoFowardCommand.Execute();
@@ -70,7 +70,6 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenSigningInShouldNavigateToTokenPage()
         {
             const string cpf = "123.456.789-10";
-            _authenticationService.ShouldReturnUseWithCpf(cpf);
             _signInViewModel.CPF = cpf;
             var expectedParameters = new NavigationParameters
             {

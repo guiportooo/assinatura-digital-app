@@ -17,7 +17,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
         private Mock<IPreferences> _preferencesMock;
-        private ContractService _contractService;
+        private ContractsServiceFake _contractService;
 
         private ContractListViewModel _vm;
 
@@ -26,7 +26,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
-            _contractService = new ContractService();
+            _contractService = new ContractsServiceFake();
             _preferencesMock = new Mock<IPreferences>();
 
             _vm = new ContractListViewModel(_navigationService, _pageDialogService, _contractService, _preferencesMock.Object);
@@ -99,7 +99,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _vm.OnNavigatedTo(null);
 
             _vm.FiltreContracts(false);
-           
+
             _vm.ReloadContractList("aaaaa");
 
             _vm.Contracts.Should().BeEquivalentTo(expectedContracts);
@@ -131,22 +131,23 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void OpenContractDetailsShouldSendContractIdentificationAndNavigateToContractDetailsPage()
+        public void OpenContractDetailsShouldSendContractAndNavigateToContractDetailsPage()
         {
+            var contractIdentifier = "Identificação 03";
+            var contract = _contractService
+              .Contracts
+              .FirstOrDefault(x => x.Identification == contractIdentifier);
+
             var expectedParameters = new NavigationParameters
             {
-                { AppConstants.ContractIdentification, "Identificação 03" }
+                { AppConstants.Contract, contract }
             };
 
             _vm.OnNavigatedTo(null);
-            _vm.OpenContractDetailsCommand.Execute("Identificação 03");
-            
-            _navigationService.Name.Should().Be(nameof(ContractDetailPage));
-            _navigationService
-            .Parameters
-            .Should()
-            .Contain(expectedParameters);
+            _vm.OpenContractDetailsCommand.Execute(contractIdentifier);
 
+            _navigationService.Name.Should().Be(nameof(ContractDetailPage));
+            _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
         }
     }
 }

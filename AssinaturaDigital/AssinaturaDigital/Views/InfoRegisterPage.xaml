@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:AssinaturaDigital.Converters"
+             xmlns:views="clr-namespace:AssinaturaDigital.Views"
              Visual="Material"
              NavigationPage.HasNavigationBar="false"
-             xmlns:views="clr-namespace:AssinaturaDigital.Views"
              x:Class="AssinaturaDigital.Views.InfoRegisterPage">
     <ContentPage.Content>
         <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">

@@ -13,23 +13,10 @@ namespace AssinaturaDigital.Services.Fakes
         private bool _shouldDelay;
         private bool _shouldFail;
         private bool _shouldValidateExistingCpf;
+        private bool _shouldNotReturnUserWithCpf;
 
         public SignUpInformation SignUpInformation { get; private set; }
         public User ReturningUser { get; private set; }
-
-        public void ShouldReturnUseWithCpf(string cpf) => ReturningUser = new User(1,
-                "FullName",
-                cpf,
-                "(11) 11111-111",
-                "email@email.com");
-
-        public Task<AuthenticationResponse> GetByCPF(string cpf)
-        {
-            if (_shouldFail)
-                throw new Exception("Failed to GetByCPF.");
-
-            return Task.FromResult(new AuthenticationResponse(ReturningUser));
-        }
 
         public void ShouldDelay(bool shouldDelay) => _shouldDelay = shouldDelay;
 
@@ -37,6 +24,8 @@ namespace AssinaturaDigital.Services.Fakes
 
         public void ShouldValidateExistingCpf(bool shouldValidateExistingCpf)
             => _shouldValidateExistingCpf = shouldValidateExistingCpf;
+
+        public void ShouldNotReturnUserWithCpf() => _shouldNotReturnUserWithCpf = true;
 
         public async Task<AuthenticationResponse> SignUp(SignUpInformation signUpInformation)
         {
@@ -64,6 +53,21 @@ namespace AssinaturaDigital.Services.Fakes
                 signUpInformation.Email);
 
             return new AuthenticationResponse(ReturningUser);
+        }
+
+        public Task<AuthenticationResponse> GetByCPF(string cpf)
+        {
+            if (_shouldFail)
+                throw new Exception("Failed to GetByCPF.");
+
+            if(!_shouldNotReturnUserWithCpf)
+                ReturningUser = ReturningUser = new User(1,
+                    "FullName",
+                    cpf,
+                    "(11) 11111-111",
+                    "email@email.com");
+
+            return Task.FromResult(new AuthenticationResponse(ReturningUser));
         }
     }
 }

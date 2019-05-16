@@ -8,7 +8,6 @@ using Moq;
 using NUnit.Framework;
 using Prism.Events;
 using Prism.Navigation;
-using System;
 using System.Linq;
 using Xamarin.Essentials.Interfaces;
 
@@ -20,7 +19,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private PageDialogServiceMock _pageDialogService;
         private Mock<IPreferences> _preferencesMock;
         private IEventAggregator _eventAggregator;
-        private ContractService _contractService;
+        private ContractsServiceFake _contractService;
 
 
         private ContractDetailViewModel _vm;
@@ -30,7 +29,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
-            _contractService = new ContractService();
+            _contractService = new ContractsServiceFake();
             _preferencesMock = new Mock<IPreferences>();
             _eventAggregator = new EventAggregator();
 
@@ -43,44 +42,48 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             var contractIdentifier = "Identificação 01";
             var expectedContract = _contractService.Contracts.FirstOrDefault(x => x.Identification == contractIdentifier);
 
-            var parameters = new NavigationParameters();
-            parameters.Add(AppConstants.ContractIdentification, contractIdentifier);
+            var parameters = new NavigationParameters
+            {
+                { AppConstants.Contract, expectedContract }
+            };
             _vm.OnNavigatedTo(parameters);
-            
+
             _vm.Contract.Should().BeEquivalentTo(expectedContract);
         }
 
         [Test]
-        public void OnNavigatedIfDontHasTheContractIdentifierShouldBackToContractListPage()
+        public void OnNavigatedIfDontHasTheContractShouldBackToContractListPage()
         {
             var parameters = new NavigationParameters();
-            parameters.Add(AppConstants.IdUser, 0);
 
             _vm.OnNavigatedTo(parameters);
 
-            _navigationService.Name.Should().Be(nameof(ContractListPage));
-            _navigationService.Parameters.Should().BeEquivalentTo(parameters);
+            _navigationService.WentBack.Should().BeTrue();
         }
 
         [Test]
         public void GoFowardShouldNavigateIfAgreeContractIsTrue()
         {
             var contractIdentifier = "Identificação 01";
-            var parameters = new NavigationParameters();
-            parameters.Add(AppConstants.ContractIdentification, contractIdentifier);
+            var contract = _contractService.Contracts.FirstOrDefault(x => x.Identification == contractIdentifier);
+            var parameters = new NavigationParameters
+            {
+                { AppConstants.Contract, contract }
+            };
             _vm.OnNavigatedTo(parameters);
 
             _vm.AgreeContract = true;
             _vm.GoFowardCommand.Execute();
 
-            var parameters2 = new NavigationParameters();
-            parameters2.Add(AppConstants.SigningContract, true);
-            parameters2.Add(AppConstants.Registered, true);
-            parameters2.Add(AppConstants.Contract, _vm.Contract);
+            var parameters2 = new NavigationParameters
+            {
+                { AppConstants.SigningContract, true },
+                { AppConstants.Registered, true },
+                { AppConstants.Contract, _vm.Contract }
+            };
 
             _navigationService.Name.Should().Be(nameof(InfoSelfiePage));
             _navigationService.Parameters.Should().BeEquivalentTo(parameters2);
-
         }
 
         [Test]
@@ -88,32 +91,21 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _vm.AgreeContract = false;
             _vm.GoFowardCommand.Execute();
-
             _pageDialogService.Message.Should().Be("Necessário aceitar o termo de uso para prosseguir.");
-
         }
 
         [Test]
         public void GoHomeCommandShouldNavigateToHomePage()
         {
             _vm.GoHomeCommand.Execute();
-
             _navigationService.Name.Should().Be(nameof(HomePage));
-
         }
 
         [Test]
         public void GoContractListCommandShouldNavigateToContractListPage()
         {
             _vm.GoContractListCommand.Execute();
-
-            var parameters = new NavigationParameters();
-            parameters.Add(AppConstants.IdUser, 0);
-
             _navigationService.Name.Should().Be(nameof(ContractListPage));
-            _navigationService.Parameters.Should().BeEquivalentTo(parameters);
-
         }
-
     }
 }

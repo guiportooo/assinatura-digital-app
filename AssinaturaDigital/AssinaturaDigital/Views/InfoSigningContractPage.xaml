@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage x:Class="AssinaturaDigital.Views.InfoSigningContractPage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:converters="clr-namespace:AssinaturaDigital.Converters"
+             xmlns:views="clr-namespace:AssinaturaDigital.Views"
+             ios:Page.UseSafeArea="true"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <StackLayout IsVisible="{Binding Signed}">
+                    <StackLayout Margin="15,20,15,10">
+                        <Label FontAttributes="Bold"
+                               FontSize="Large"
+                               Text="{Binding Title}"
+                               TextColor="Black" />
+                        <StackLayout Margin="0,10,0,5" Orientation="Horizontal">
+                            <Label FontSize="50"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource regularIconSpan}"
+                                   Text="&#xf15c;"
+                                   TextColor="Gray"
+                                   VerticalTextAlignment="Start" />
+                            <StackLayout Margin="10,0,0,0" HorizontalOptions="FillAndExpand">
+                                <Label FontAttributes="Bold"
+                                       FontSize="Medium"
+                                       Text="{Binding Contract.Identification}"
+                                       TextColor="Gray" />
+                                <Label Text="{Binding Contract.CPF}" />
+
+                            </StackLayout>
+                        </StackLayout>
+                        <StackLayout>
+                            <Button Padding="5"
+                                    BackgroundColor="White"
+                                    BorderColor="Gray"
+                                    BorderWidth="1"
+                                    FontSize="Small"
+                                    Text="VISUALIZAR CONTRATO"
+                                    TextColor="Gray"
+                                    Command="{Binding GoContractDetailCommand}"/>
+                            <Button Style="{StaticResource greenButton}"
+                                    Text="ASSINAR CONTRATOS"
+                                    Command="{Binding GoContractListCommand}"/>
+                            <Button Style="{StaticResource greenButton}"
+                                    Text="IR PARA HOME"
+                                    Command="{Binding GoHomeCommand}"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <Frame Padding="0"
+                           HeightRequest="1"
+                           BackgroundColor="Gray"
+                           CornerRadius="0"
+                           HorizontalOptions="FillAndExpand" />
+                    <StackLayout Margin="15,20,15,0"
+                                 Orientation="Horizontal"
+                                 Spacing="20">
+                        <StackLayout>
+                            <Frame Padding="5"
+                                   WidthRequest="70"
+                                   HeightRequest="70"
+                                   BackgroundColor="{StaticResource green}"
+                                   BorderColor="{StaticResource green}"
+                                   CornerRadius="40"
+                                   HasShadow="False">
+                                <Label FontSize="30"
+                                       HorizontalTextAlignment="Center"
+                                       Style="{StaticResource regularIconSpan}"
+                                       Text="&#xf15C;"
+                                       TextColor="White"
+                                       VerticalTextAlignment="Center" />
+                            </Frame>
+                            <Label HorizontalTextAlignment="Center" Text="CONTRATOS" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoContractListCommand}" />
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <StackLayout>
+                            <Frame Padding="5"
+                                   WidthRequest="70"
+                                   HeightRequest="70"
+                                   BackgroundColor="{StaticResource green}"
+                                   BorderColor="{StaticResource green}"
+                                   CornerRadius="40"
+                                   HasShadow="False">
+                                <Label FontSize="30"
+                                       HorizontalTextAlignment="Center"
+                                       Style="{StaticResource regularIconSpan}"
+                                       Text="&#xf007;"
+                                       TextColor="White"
+                                       VerticalTextAlignment="Center" />
+                            </Frame>
+                            <Label HorizontalTextAlignment="Center" Text="PERFIL" />
+                        </StackLayout>
+
+                        <StackLayout>
+                            <Frame Padding="5"
+                                   WidthRequest="70"
+                                   HeightRequest="70"
+                                   BackgroundColor="{StaticResource green}"
+                                   BorderColor="{StaticResource green}"
+                                   CornerRadius="40"
+                                   HasShadow="False">
+                                <Label FontSize="30"
+                                       HorizontalTextAlignment="Center"
+                                       Style="{StaticResource regularIconSpan}"
+                                       Text="&#xf27a;"
+                                       TextColor="White"
+                                       VerticalTextAlignment="Center" />
+                            </Frame>
+                            <Label HorizontalTextAlignment="Center" Text="AJUDA" />
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout HorizontalOptions="CenterAndExpand"
+                             Margin="20"
+                             IsVisible="{Binding Signed, Converter={converters:InverseBoolConverter}}">
+                    <Label Text="{Binding Message}" Margin="0,10" />
+                    <StackLayout HorizontalOptions="CenterAndExpand">
+                        <Label Text="&#xf057;"
+                               Style="{StaticResource regularIcon}"
+                               FontSize="Large" 
+                               TextColor="{StaticResource green}"
+                               Margin="0,0,0,10">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <views:LoadingView IsVisible="{Binding IsBusy}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>
+

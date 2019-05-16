@@ -1,13 +1,12 @@
 using AssinaturaDigital.Events;
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Contracts;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.ViewModels
@@ -16,9 +15,12 @@ namespace AssinaturaDigital.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
-        private readonly IContractService _contractService;
+        private readonly IContractsService _contractsService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IPreferences _preferences;
+
+        public DelegateCommand GoHomeCommand { get; }
+        public DelegateCommand GoContractListCommand { get; }
 
         private ContractData _contract;
         public ContractData Contract
@@ -41,79 +43,91 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _readTerms, value);
         }
 
-        public DelegateCommand GoHomeCommand { get; }
-        public DelegateCommand GoContractListCommand { get; }
-
         public ContractDetailViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
-            IContractService contractService,
+            IContractsService contractsService,
             IEventAggregator eventAggregator,
             IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
-            _contractService = contractService;
+            _contractsService = contractsService;
             _eventAggregator = eventAggregator;
             _preferences = preferences;
 
-            GoHomeCommand = new DelegateCommand(async () =>
-            {
-                await _navigationService.NavigateAsync(nameof(HomePage));
-            });
+            Title = "Detalhes do contrato";
 
-            GoContractListCommand = new DelegateCommand(async () =>
-            {
-                await _navigationService.NavigateAsync(nameof(ContractListPage),
-                        new NavigationParameters
-                        {
-                            { AppConstants.IdUser, _preferences.Get(AppConstants.IdUser, 0) }
-                        });
-            });
+            GoHomeCommand = new DelegateCommand(GoHome).ObservesProperty(() => IsBusy);
+            GoContractListCommand = new DelegateCommand(GoToContractsList).ObservesProperty(() => IsBusy);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
+            => _eventAggregator.GetEvent<ScrolledToBottomEvent>().Unsubscribe(EndOfScroll);
+
+        public void OnNavigatedTo(INavigationParameters parameters)
         {
-            _eventAggregator.GetEvent<ScrolledToBottomEvent>().Unsubscribe(EndOfScroll);
+            if (!ParametersAreValid(parameters))
+            {
+                GoBack();
+                return;
+            }
+
+            Contract = parameters.GetValue<ContractData>(AppConstants.Contract);
+
+            _eventAggregator.GetEvent<ScrolledToBottomEvent>().Subscribe(EndOfScroll);
         }
 
-        public async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            if (parameters.ContainsKey(AppConstants.ContractIdentification))
-            {
-                var idContract = parameters.GetValue<string>(AppConstants.ContractIdentification);
-                Contract = _contractService.GetContract(idContract);
-            }
-            else
-            {
-                await _navigationService.NavigateAsync(nameof(ContractListPage),
-                        new NavigationParameters
-                        {
-                            { AppConstants.IdUser, _preferences.Get(AppConstants.IdUser, 0) }
-                        });
-            }
+        bool ParametersAreValid(INavigationParameters parameters)
+            => parameters != null
+            && parameters[AppConstants.Contract] != null;
 
-           _eventAggregator.GetEvent<ScrolledToBottomEvent>().Subscribe(EndOfScroll);
+        void EndOfScroll() =>
+            ReadTerms = true;
+
+        private async void GoToContractsList()
+        {
+            try
+            {
+                IsBusy = true;
+                await _navigationService.NavigateAsync(nameof(ContractListPage));
+            }
+            catch
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao navegar para listagem de contratos.", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         protected override async void GoFoward()
         {
-            base.GoFoward();
+            try
+            {
+                IsBusy = true;
 
-            if (AgreeContract)
-            {
-                var parameters = new NavigationParameters();
-                parameters.Add(AppConstants.SigningContract, true);
-                parameters.Add(AppConstants.Registered, true);
-                parameters.Add(AppConstants.Contract, Contract);
-                await _navigationService.NavigateAsync(nameof(InfoSelfiePage), parameters);
+                if (AgreeContract)
+                {
+                    var parameters = new NavigationParameters
+                    {
+                        { AppConstants.SigningContract, true },
+                        { AppConstants.Registered, true },
+                        { AppConstants.Contract, Contract }
+                    };
+                    await _navigationService.NavigateAsync(nameof(InfoSelfiePage), parameters);
+                }
+                else
+                    await _pageDialogService.DisplayAlertAsync(Title, "Necessário aceitar o termo de uso para prosseguir.", "OK");
             }
-            else
+            catch
             {
-                await _pageDialogService.DisplayAlertAsync("Acetar o contrato", "Necessário aceitar o termo de uso para prosseguir.", "Ok");
+                await _pageDialogService.DisplayAlertAsync(Title, "", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
-
-        void EndOfScroll() =>
-            ReadTerms = true;
     }
 }

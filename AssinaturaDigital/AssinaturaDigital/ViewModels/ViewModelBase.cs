@@ -1,3 +1,4 @@
+using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -77,8 +78,27 @@ namespace AssinaturaDigital.ViewModels
 
         protected virtual void GoFoward() { }
 
+        protected async void GoHome()
+        {
+            try
+            {
+                IsBusy = true;
+                await _navigationService.NavigateAsync(nameof(HomePage));
+            }
+            catch (Exception ex)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
         protected virtual bool CanGoBack() => !IsBusy;
 
         protected virtual bool CanGoFoward() => !IsBusy;
+
+        protected virtual bool CanGoHome() => !IsBusy;
     }
 }
