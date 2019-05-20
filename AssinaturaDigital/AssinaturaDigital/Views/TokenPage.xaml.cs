@@ -13,8 +13,10 @@ namespace AssinaturaDigital.Views
         void TokenDigit_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (string.IsNullOrEmpty(e.NewTextValue))
+            {
+                FocusPreviousNotEmptyTokenDigit();
                 return;
-
+            }
             FocusNextEmptyTokenDigit();
         }
 
@@ -29,6 +31,19 @@ namespace AssinaturaDigital.Views
                 return;
 
             nextEmptyTokenDigit.Focus();
+        }
+
+        void FocusPreviousNotEmptyTokenDigit()
+        {
+            var previousNotEmptyTokenDigit = tokenDigits
+                .Children
+                .ToList()
+                .LastOrDefault(x => !string.IsNullOrEmpty(((Entry)x).Text));
+
+            if (previousNotEmptyTokenDigit == null)
+                return;
+
+            previousNotEmptyTokenDigit.Focus();
         }
     }
 }

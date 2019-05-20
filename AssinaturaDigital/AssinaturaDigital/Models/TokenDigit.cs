@@ -10,6 +10,9 @@ namespace AssinaturaDigital.Models
             {
                 SetProperty(ref _digit, value);
                 _commandToNotify?.RaiseCanExecuteChanged();
+
+                if(!string.IsNullOrEmpty(value))
+                    _commandToNotify.Execute();
             }
         }
 

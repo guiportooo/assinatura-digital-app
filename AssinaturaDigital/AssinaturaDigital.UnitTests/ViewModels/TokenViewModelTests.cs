@@ -256,6 +256,15 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenRaisingAnExceptionOnValidatingTokenShouldDisplayErrorMessage()
         {
+            SetTokenDigits(new ObservableCollection<TokenDigit>
+            {
+                new TokenDigit("1"),
+                new TokenDigit("2"),
+                new TokenDigit("3"),
+                new TokenDigit("4"),
+                new TokenDigit("5"),
+                new TokenDigit("6")
+            });
             const string exceptionMessage = "Falha ao validar token.";
             _tokenService.ShouldRaiseException(new Exception(exceptionMessage));
 
