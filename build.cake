@@ -13,7 +13,7 @@ var iOSPlistPath = "AssinaturaDigital/AssinaturaDigital.iOS/Info.plist";
 var configurationFilePath = Argument("configurationFilePath", "");
 var iOSAppCenterSecret = Argument("iOSAppCenterSecret", "");
 var androidAppCenterSecret = Argument("androidAppCenterSecret", "");
-var secondsToGenerateToken = Argument("secondsToGenerateToken", "60");
+var secondsToGenerateToken = Argument("secondsToGenerateToken", "20");
 var urlApi = Argument("urlApi", "");
 
 Task("Hot-Reload")
