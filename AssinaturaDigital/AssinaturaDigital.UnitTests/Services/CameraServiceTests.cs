@@ -35,12 +35,12 @@ namespace AssinaturaDigital.UnitTests.Services
             var expectedOptions = new StoreCameraMediaOptions
             {
                 SaveToAlbum = false,
-                AllowCropping = true,
-                RotateImage = false,
+                AllowCropping = false,
+                RotateImage = true,
                 Name = fileName,
                 DefaultCamera = camera,
                 PhotoSize = PhotoSize.Medium,
-                CompressionQuality = 80
+                CompressionQuality = 92
             };
 
             var mediaMock = new MediaMock(true, true);

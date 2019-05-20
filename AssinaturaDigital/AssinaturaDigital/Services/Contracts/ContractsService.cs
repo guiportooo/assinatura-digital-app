@@ -1,4 +1,5 @@
 using AssinaturaDigital.Configuration;
+using AssinaturaDigital.Extensions;
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Utilities;
 using Flurl;
@@ -9,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.Services.Contracts
 {
@@ -16,10 +18,14 @@ namespace AssinaturaDigital.Services.Contracts
     {
         private readonly string _urlApi;
         private readonly IErrorHandler _errorHandler;
+        private readonly IDeviceInfo _deviceInfo;
 
-        public ContractsService(IConfigurationManager configurationManager, IErrorHandler errorHandler)
+        public ContractsService(IConfigurationManager configurationManager, 
+            IErrorHandler errorHandler,
+            IDeviceInfo deviceInfo)
         {
             _errorHandler = errorHandler;
+            _deviceInfo = deviceInfo;
 
             var config = configurationManager.Get();
             _urlApi = config.UrlApi;
@@ -48,11 +54,11 @@ namespace AssinaturaDigital.Services.Contracts
         {
             try
             {
-                using (var photoStream = photo.GetStream())
+                using (var photoStream = photo.GetStreamWithCorrectRotation(_deviceInfo))
                 {
                     var content = new CapturedMultipartContent();
                     content.AddStringParts(new { id });
-                    content.AddFile("photo", photoStream, $"{idUser}_{id}_Selfie.JPG");
+                    content.AddFile("photo", photoStream, $"{idUser}_{id}_Selfie.PNG");
 
                     var response = await _urlApi
                         .AppendPathSegment("users")

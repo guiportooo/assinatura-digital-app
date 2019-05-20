@@ -16,10 +16,9 @@ namespace AssinaturaDigital.Services
             _options = new StoreCameraMediaOptions
             {
                 SaveToAlbum = false,
-                AllowCropping = true,
-                RotateImage = false,
+                AllowCropping = false,
                 PhotoSize = PhotoSize.Medium,
-                CompressionQuality = 80
+                CompressionQuality = 92
             };
         }
 

@@ -71,6 +71,7 @@ namespace AssinaturaDigital.Views
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
 
             containerRegistry.RegisterInstance<IPreferences>(new PreferencesImplementation());
+            containerRegistry.RegisterInstance<IDeviceInfo>(new DeviceInfoImplementation());
 
             if (_useFakes)
             {
