@@ -29,6 +29,9 @@
                                     <Span Text="&#xf05a;" Style="{StaticResource solidIconSpan}" TextColor="{StaticResource green}" />
                                 </FormattedString>
                             </Label.FormattedText>
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShowInfoCommand}" />
+                            </Label.GestureRecognizers>
                         </Label>
                         <Label Text="Você receberá um token via SMS para autenticação." Margin="0,10" />
                         <FlexLayout JustifyContent="SpaceEvenly" 

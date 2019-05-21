@@ -71,8 +71,8 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _infoRegisterViewModel.OnNavigatingTo(parameters);
 
-            _infoRegisterViewModel.Title.Should().Be("Imagem inválida!");
-            _infoRegisterViewModel.Message.Should().Be("Você será redirecionado para uma nova selfie.");
+            _infoRegisterViewModel.Title.Should().Be("Cadastro não finalizado!");
+            _infoRegisterViewModel.Message.Should().Be("Seu cadastro não pôde ser finalizado por divergências de verificação nas imagens enviadas. O problema pode ter ocorrido:\n\n- Nas imagens do documento (RG ou CNH)\n\n- Na imagem da selfie\n\nPor favor, repita o processo de envio de imagens para que uma nova validação seja realizada.");
         }
 
         [Test]

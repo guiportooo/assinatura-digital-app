@@ -87,6 +87,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
+        public void WhenExecuteInfoSelfieCommandShouldGetInfosSelfie()
+        {
+            var expectedInfos = "Para maior segurança de acesso, um token de 6 dígitos será enviado para sua autenticação.";
+            _tokenViewModel.ShowInfoCommand.Execute();
+            _pageDialogService.Message.Should().Be(expectedInfos);
+        }
+
+        [Test]
         public void WhenNavigatingToPageShouldSetSecondsToGenerateTokenAndStartTheTimer()
         {
             var expectedSecondsToGenerateToken = _configurationManager.Get().SecondsToGenerateToken;

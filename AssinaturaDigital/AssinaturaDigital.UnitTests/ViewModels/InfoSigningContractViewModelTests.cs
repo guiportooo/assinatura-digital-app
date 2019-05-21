@@ -47,7 +47,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldSetSignedMessageIfContractWasSigned()
+        public void WhenNavigatingToPageShouldSetSignContractAndSignedMessageIfContractWasApproved()
         {
             const int idContract = 1;
             var contract = new ContractData(idContract, "", "", "", false);
@@ -60,13 +60,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _infoSigningContractViewModel.OnNavigatingTo(parameters);
 
+            _infoSigningContractViewModel.Contract.IsSigned.Should().BeTrue();
             _infoSigningContractViewModel.Title.Should().Be("Contrato assinado!");
             _infoSigningContractViewModel.Signed.Should().BeTrue();
             _infoSigningContractViewModel.Message.Should().BeNullOrEmpty();
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldSetNotSignedMessageIfContractWasNotSigned()
+        public void WhenNavigatingToPageShouldSetNotSignedMessageIfContractWasNotApproved()
         {
             const int idContract = 1;
             var contract = new ContractData(idContract, "", "", "", false);

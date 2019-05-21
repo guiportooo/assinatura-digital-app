@@ -73,6 +73,7 @@ namespace AssinaturaDigital.ViewModels
             }
 
             Contract = parameters.GetValue<ContractData>(AppConstants.Contract);
+            HasFowardNavigation = !Contract.IsSigned;
 
             _eventAggregator.GetEvent<ScrolledToBottomEvent>().Subscribe(EndOfScroll);
         }

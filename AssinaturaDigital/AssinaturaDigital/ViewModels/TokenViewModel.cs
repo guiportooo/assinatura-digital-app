@@ -26,6 +26,7 @@ namespace AssinaturaDigital.ViewModels
         private readonly IPreferences _preferences;
         private int _idUser;
 
+        public DelegateCommand ShowInfoCommand { get; }
         public DelegateCommand GenerateTokenCommand { get; }
 
         private int _secondsToGenerateToken;
@@ -84,6 +85,7 @@ namespace AssinaturaDigital.ViewModels
             _deviceTimer = deviceTimer;
             _preferences = preferences;
 
+            ShowInfoCommand = new DelegateCommand(ShowInfo);
             GenerateTokenCommand = new DelegateCommand(async () => await GenerateToken(), CanGenerateToken)
                 .ObservesProperty(() => IsBusy)
                 .ObservesProperty(() => SecondsToGenerateToken);
@@ -143,6 +145,11 @@ namespace AssinaturaDigital.ViewModels
             }
             await GenerateToken();
         }
+
+        async void ShowInfo() 
+            => await _pageDialogService.DisplayAlertAsync(Title, 
+                "Para maior segurança de acesso, um token de 6 dígitos será enviado para sua autenticação.", 
+                "OK");
 
         async Task GenerateToken()
         {

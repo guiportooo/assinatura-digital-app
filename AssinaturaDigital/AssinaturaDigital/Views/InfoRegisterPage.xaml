@@ -38,7 +38,7 @@
                                    TextColor="{StaticResource green}"
                                    Margin="0,0,0,10">
                                 <Label.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                                    <TapGestureRecognizer Command="{Binding NavigateToDocumentsPageCommand}" />
                                 </Label.GestureRecognizers>
                             </Label>
                         </StackLayout>

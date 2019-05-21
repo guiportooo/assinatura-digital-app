@@ -20,6 +20,7 @@ namespace AssinaturaDigital.ViewModels
 
         public DelegateCommand NavigateToHomeCommand { get; }
         public DelegateCommand LogoutCommand { get; }
+        public DelegateCommand NavigateToDocumentsPageCommand { get; }
 
         private bool _approved;
         public bool Approved
@@ -45,11 +46,14 @@ namespace AssinaturaDigital.ViewModels
             _selfiesService = selfiesService;
             _preferences = preferences;
 
+            HasBackNavigation = false;
             HasFowardNavigation = false;
 
             NavigateToHomeCommand = new DelegateCommand(NavigateToHome, CanNavigate)
                 .ObservesProperty(() => IsBusy);
             LogoutCommand = new DelegateCommand(Logout, CanNavigate)
+                .ObservesProperty(() => IsBusy);
+            NavigateToDocumentsPageCommand = new DelegateCommand(NavigateToDocumentsPage, CanNavigate)
                 .ObservesProperty(() => IsBusy);
         }
 
@@ -91,8 +95,8 @@ namespace AssinaturaDigital.ViewModels
                 }
                 else
                 {
-                    Title = "Imagem inválida!";
-                    Message = "Você será redirecionado para uma nova selfie.";
+                    Title = "Cadastro não finalizado!";
+                    Message = "Seu cadastro não pôde ser finalizado por divergências de verificação nas imagens enviadas. O problema pode ter ocorrido:\n\n- Nas imagens do documento (RG ou CNH)\n\n- Na imagem da selfie\n\nPor favor, repita o processo de envio de imagens para que uma nova validação seja realizada.";
                 }
             }
             catch
@@ -130,6 +134,23 @@ namespace AssinaturaDigital.ViewModels
             {
                 IsBusy = true;
                 await _navigationService.NavigateAsync(nameof(MainPage));
+            }
+            catch (Exception ex)
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        async void NavigateToDocumentsPage()
+        {
+            try
+            {
+                IsBusy = true;
+                await _navigationService.NavigateAsync(nameof(DocumentsSelectionPage));
             }
             catch (Exception ex)
             {

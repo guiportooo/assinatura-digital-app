@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Visual="Material"
-             NavigationPage.HasNavigationBar="false"
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             Visual="Material" 
+             NavigationPage.HasNavigationBar="false" 
+             xmlns:views="clr-namespace:AssinaturaDigital.Views" 
              x:Class="AssinaturaDigital.Views.DocumentPage">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="StartAndExpand" Margin="20">
-            <Label Style="{StaticResource title}" Text="{Binding Title}" />
-        </StackLayout>
+        <AbsoluteLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="StartAndExpand" Margin="20" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+                <Label Style="{StaticResource title}" Text="{Binding Title}" />
+            </StackLayout>
+            <views:LoadingView IsVisible="{Binding IsBusy}" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1" />
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

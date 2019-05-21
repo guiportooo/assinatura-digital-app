@@ -94,6 +94,7 @@ namespace AssinaturaDigital.ViewModels
 
                 if (Signed)
                 {
+                    Contract.Sign();
                     Title = "Contrato assinado!";
                     Message = "";
                     await _pageDialogService.DisplayAlertAsync("Contrato assinado", "Contrato assinado com sucesso!!", "Ok");

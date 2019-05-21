@@ -75,6 +75,8 @@ namespace AssinaturaDigital.ViewModels
         {
             try
             {
+                IsBusy = true;
+
                 if (!await GrantedCameraPermission())
                 {
                     await _pageDialogService.DisplayAlertAsync(Title, "Câmera negada.", "OK");
@@ -91,6 +93,10 @@ namespace AssinaturaDigital.ViewModels
             {
                 await _pageDialogService.DisplayAlertAsync(Title, ex.Message, "OK");
                 await _navigationService.GoBackAsync();
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
 

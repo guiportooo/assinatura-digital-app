@@ -37,6 +37,23 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
+        public void AfterNavigatedShouldNotHaveFowardNavigationIfContractIsSigned()
+        {
+            var contractIdentifier = "Identificação 01";
+            var contract = _contractService.Contracts.FirstOrDefault(x => x.Identification == contractIdentifier);
+            contract.Sign();
+
+            var parameters = new NavigationParameters
+            {
+                { AppConstants.Contract, contract }
+            };
+
+            _vm.OnNavigatedTo(parameters);
+
+            _vm.HasFowardNavigation.Should().BeFalse();
+        }
+
+        [Test]
         public void OnNavigatedShouldGetCorrectContractFromService()
         {
             var contractIdentifier = "Identificação 01";
