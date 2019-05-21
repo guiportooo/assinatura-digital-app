@@ -139,6 +139,26 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\Logo.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\Logo.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\Logo.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Selfie.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\RGFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\RGVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\RGFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\RGVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Selfie.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Selfie.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\RGVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\RGFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\RGFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\RGVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\Selfie.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\CNHFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\CNHFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\CNHFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\CNHFrente.jpg" />
+    <AndroidResource Include="Resources\drawable-hdpi\CNHVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xhdpi\CNHVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\CNHVerso.jpg" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\CNHVerso.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />

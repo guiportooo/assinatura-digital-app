@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AssinaturaDigital.Views.SelfieOrientationPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Row="0">
+                    <Label Text="&#xf00d;" 
+                           Style="{StaticResource solidIcon}"
+                           TextColor="{StaticResource green}"
+                           HorizontalTextAlignment="End" 
+                           Margin="20,40,20,0" 
+                           FontSize="30">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CloseModalCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+                <StackLayout Grid.Row="1">
+                    <StackLayout Margin="20,0">
+                        <Label Margin="0,0,0,40">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="{Binding Title} " Style="{StaticResource titleSpan}" />
+                                    <Span Text=" " />
+                                    <Span Text="&#xf030;" Style="{StaticResource solidIconSpan}" TextColor="{StaticResource green}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Margin="0,0,0,10">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Posicione o aparelho " Style="{StaticResource greenLabel}" />
+                                    <Span Text="sempre na posição vertical" Style="{StaticResource greenLabel}" FontAttributes="Bold" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label Text="Certifique-se que a foto esteja com boa nitidez e luminosidade adequada" Style="{StaticResource greenLabel}" Margin="0,0,0,10" />
+                        <Label Text="Não tire a foto com objetos que possam prejudicar sua identificação (ex: óculos de sol, lenços cobrindo o rosto)" Style="{StaticResource greenLabel}" Margin="0,0,0,10" />
+                    </StackLayout>
+                    <StackLayout>
+                        <Label Style="{StaticResource title}" Text="SELFIE EXEMPLO" HorizontalTextAlignment="Center" />
+                        <Image Source="Selfie"  
+                               Aspect="AspectFit"
+                               HeightRequest="200" />
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
+

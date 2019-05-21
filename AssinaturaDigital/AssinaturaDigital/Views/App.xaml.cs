@@ -67,6 +67,9 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<ContractListPage, ContractListViewModel>();
             containerRegistry.RegisterForNavigation<ContractDetailPage, ContractDetailViewModel>();
             containerRegistry.RegisterForNavigation<InfoSigningContractPage, InfoSigningContractViewModel>();
+            containerRegistry.RegisterForNavigation<CNHOrientationPage, CNHOrientationViewModel>();
+            containerRegistry.RegisterForNavigation<RGOrientationPage, RGOrientationViewModel>();
+            containerRegistry.RegisterForNavigation<SelfieOrientationPage, SelfieOrientationViewModel>();
 
             containerRegistry.Register<ITermsOfUseServices, TermsOfUseServiceFake>();
 

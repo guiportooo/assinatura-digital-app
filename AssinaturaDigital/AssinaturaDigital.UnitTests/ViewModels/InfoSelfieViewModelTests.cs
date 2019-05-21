@@ -50,7 +50,9 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void SelfieCommandShouldNavigateToSelfiePage()
         {
             _infoSelfieViewModel.GoFowardCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(SelfiePage));
+            _navigationService.Name.Should().Be(nameof(SelfieOrientationPage));
+            _navigationService.UseModalNavigation.Should().BeTrue();
+            _navigationService.Animated.Should().BeTrue();
         }
 
         [Test]

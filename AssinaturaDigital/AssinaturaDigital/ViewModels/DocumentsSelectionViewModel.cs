@@ -1,12 +1,10 @@
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 
 namespace AssinaturaDigital.ViewModels
 {
@@ -15,6 +13,7 @@ namespace AssinaturaDigital.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
 
+        public DelegateCommand ShowInfoCommand { get; }
         public DelegateCommand ChooseRGPictureCommand { get; }
         public DelegateCommand ChooseCNHPictureCommand { get; }
 
@@ -38,6 +37,7 @@ namespace AssinaturaDigital.ViewModels
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
 
+            ShowInfoCommand = new DelegateCommand(ShowInfo);
             ChooseRGPictureCommand = new DelegateCommand(ChooseRGPicture, CanChooseDocument)
                 .ObservesProperty(() => IsBusy);
             ChooseCNHPictureCommand = new DelegateCommand(ChooseCNHPicture, CanChooseDocument)
@@ -61,6 +61,11 @@ namespace AssinaturaDigital.ViewModels
             };
         }
 
+        async void ShowInfo() 
+            => await _pageDialogService.DisplayAlertAsync(Title, 
+                "Selecione o documento de sua preferência para a validação do seu cadastro.\nLembre-se de tirar 2 fotos: frente e verso do documento, sempre na orientação vertical.", 
+                "OK");
+
         bool CanChooseDocument() => !IsBusy;
 
         async void ChooseCNHPicture()
@@ -68,7 +73,7 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await NavigateToDocumentPage(DocumentType.CNH);
+                await _navigationService.NavigateAsync(nameof(CNHOrientationPage), useModalNavigation: true, animated: true);
             }
             catch (Exception ex)
             {
@@ -85,7 +90,7 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                await NavigateToDocumentPage(DocumentType.RG);
+                await _navigationService.NavigateAsync(nameof(RGOrientationPage), useModalNavigation: true, animated: true);
             }
             catch (Exception ex)
             {
@@ -96,12 +101,5 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = false;
             }
         }
-
-        async Task NavigateToDocumentPage(DocumentType documentType)
-            => await _navigationService.NavigateAsync(nameof(DocumentPage), 
-                new NavigationParameters
-                {
-                    { AppConstants.DocumentType, documentType }
-                });
     }
 }

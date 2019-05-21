@@ -129,6 +129,26 @@
     <ImageAsset Include="Assets.xcassets\Logo.imageset\logo.png" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%402x.png" />
     <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%403x.png" />
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie.jpg" />
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%402x.jpg" />
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%403x.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente.jpg" />
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%402x.jpg" />
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%403x.jpg" />
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso.jpg" />
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%402x.jpg" />
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%403x.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%402x.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%403x.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%402x.jpg" />
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%403x.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -168,6 +188,11 @@
     <Folder Include="Assets\" />
     <Folder Include="Configuration\" />
     <Folder Include="Assets.xcassets\Logo.imageset\" />
+    <Folder Include="Assets.xcassets\Selfie.imageset\" />
+    <Folder Include="Assets.xcassets\CNHFrente.imageset\" />
+    <Folder Include="Assets.xcassets\CNHVerso.imageset\" />
+    <Folder Include="Assets.xcassets\RGFrente.imageset\" />
+    <Folder Include="Assets.xcassets\RGVerso.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Assets\config.json">

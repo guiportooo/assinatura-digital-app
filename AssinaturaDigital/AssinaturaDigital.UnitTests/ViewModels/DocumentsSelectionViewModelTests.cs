@@ -42,17 +42,29 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
+        public void WhenExecuteInfoSelfieCommandShouldGetInfosSelfie()
+        {
+            var expectedInfos = "Selecione o documento de sua preferência para a validação do seu cadastro.\nLembre-se de tirar 2 fotos: frente e verso do documento, sempre na orientação vertical.";
+            _documentsSelectionViewModel.ShowInfoCommand.Execute();
+            _pageDialogService.Message.Should().Be(expectedInfos);
+        }
+
+        [Test]
         public void WhenChooseRGShouldNavigateToRGPage()
         {
             _documentsSelectionViewModel.ChooseRGPictureCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(DocumentPage));
+            _navigationService.Name.Should().Be(nameof(RGOrientationPage));
+            _navigationService.UseModalNavigation.Should().BeTrue();
+            _navigationService.Animated.Should().BeTrue();
         }
 
         [Test]
         public void WhenChooseCNHShouldNavigateToCNHPage()
         {
             _documentsSelectionViewModel.ChooseCNHPictureCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(DocumentPage));
+            _navigationService.Name.Should().Be(nameof(CNHOrientationPage));
+            _navigationService.UseModalNavigation.Should().BeTrue();
+            _navigationService.Animated.Should().BeTrue();
         }
     }
 }

@@ -93,6 +93,18 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="greenLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{StaticResource green}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style x:Key="contract" TargetType="Label">
                 <Setter Property="FontSize" Value="Medium" />
                  <Setter Property="HorizontalOptions" Value="Start" />

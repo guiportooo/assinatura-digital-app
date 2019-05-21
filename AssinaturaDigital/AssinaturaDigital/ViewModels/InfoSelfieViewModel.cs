@@ -116,14 +116,16 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = true;
 
                 if (_isSigningContract)
-                    await _navigationService.NavigateAsync(nameof(SelfiePage),
+                    await _navigationService.NavigateAsync(nameof(SelfieOrientationPage),
                         new NavigationParameters
                         {
                             { AppConstants.Contract, Contract },
                             { AppConstants.SigningContract, _isSigningContract }
-                        });
+                        },
+                        useModalNavigation: true,
+                        animated: true);
                 else
-                    await _navigationService.NavigateAsync(nameof(SelfiePage));
+                    await _navigationService.NavigateAsync(nameof(SelfieOrientationPage), useModalNavigation: true, animated: true);
             }
             catch
             {
