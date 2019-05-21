@@ -59,7 +59,7 @@ namespace AssinaturaDigital.ViewModels
                 .ObservesProperty(() => IsBusy);
         }
 
-        protected async void GoBack()
+        protected virtual async void GoBack()
         {
             try
             {

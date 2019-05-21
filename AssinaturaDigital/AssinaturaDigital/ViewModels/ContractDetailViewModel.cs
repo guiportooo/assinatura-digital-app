@@ -130,5 +130,23 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = false;
             }
         }
+        
+        protected override async void GoBack()
+        {
+            try
+            {
+                IsBusy = true;
+
+                await _navigationService.NavigateAsync(nameof(ContractListPage));
+            }
+            catch
+            {
+                await _pageDialogService.DisplayAlertAsync(Title, "", "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
     }
 }

@@ -74,7 +74,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _vm.OnNavigatedTo(parameters);
 
-            _navigationService.WentBack.Should().BeTrue();
+            _navigationService.Name.Should().Be(nameof(ContractListPage));
         }
 
         [Test]
