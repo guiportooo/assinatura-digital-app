@@ -1,11 +1,13 @@
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Contracts;
+using AssinaturaDigital.Services.Manifest;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Plugin.Media.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
+using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials.Interfaces;
 
@@ -16,6 +18,7 @@ namespace AssinaturaDigital.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
         private readonly IContractsService _contractsService;
+        private readonly IManifestService _manifestService;
         private readonly IPreferences _preferences;
 
         public DelegateCommand GoHomeCommand { get; }
@@ -46,11 +49,13 @@ namespace AssinaturaDigital.ViewModels
         public InfoSigningContractViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
             IContractsService contractsService,
+            IManifestService manifestService,
             IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
             _contractsService = contractsService;
+            _manifestService = manifestService;
             _preferences = preferences;
 
             GoHomeCommand = new DelegateCommand(GoHome).ObservesProperty(() => IsBusy);
@@ -90,7 +95,8 @@ namespace AssinaturaDigital.ViewModels
             try
             {
                 IsBusy = true;
-                Signed = await _contractsService.SignContract(Contract.Id, idUser, photo);
+                var manifestInfos = await _manifestService.Get();
+                Signed = await _contractsService.SignContract(Contract.Id, idUser, photo, manifestInfos);
 
                 if (Signed)
                 {
@@ -107,7 +113,7 @@ namespace AssinaturaDigital.ViewModels
             }
             catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao validar selfie.", "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao assinar contrato, tente novamente.", "OK");
             }
             finally
             {

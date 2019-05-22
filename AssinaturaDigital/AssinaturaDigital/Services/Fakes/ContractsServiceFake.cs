@@ -1,5 +1,6 @@
 using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Contracts;
+using AssinaturaDigital.Services.Manifest;
 using Plugin.Media.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace AssinaturaDigital.Services.Fakes
         public ContractData GetContract(string identification)
             => Contracts.FirstOrDefault(x => x.Identification == identification);
 
-        public Task<bool> SignContract(int id, int idUser, MediaFile photo)
+        public Task<bool> SignContract(int id, int idUser, MediaFile photo, ManifestInfos manifestInfos)
         {
             try
             {

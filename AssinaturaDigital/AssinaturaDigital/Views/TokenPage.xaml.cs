@@ -30,11 +30,13 @@ namespace AssinaturaDigital.Views
             if (nextEmptyTokenDigit == null)
                 return;
 
-            if(actualTokenDigit.Text.Length > 1)
+            var actualTokenDigitText = actualTokenDigit.Text;
+
+            if(actualTokenDigitText.Length > 1)
             {
-                actualTokenDigit.Text = actualTokenDigit.Text.Substring(0, 1);
-                nextEmptyTokenDigit.Text = actualTokenDigit.Text.Substring(1, 1);
                 nextEmptyTokenDigit.Focus();
+                actualTokenDigit.Text = actualTokenDigitText.Substring(0, 1);
+                nextEmptyTokenDigit.Text = actualTokenDigitText.Substring(1, 1);
             }
         }
 

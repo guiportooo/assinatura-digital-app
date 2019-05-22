@@ -4,6 +4,7 @@ using AssinaturaDigital.Models;
 using AssinaturaDigital.Utilities;
 using Flurl;
 using Flurl.Http;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Essentials.Interfaces;
 

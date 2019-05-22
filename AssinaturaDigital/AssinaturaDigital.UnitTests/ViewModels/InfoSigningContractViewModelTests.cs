@@ -8,7 +8,6 @@ using Moq;
 using NUnit.Framework;
 using Plugin.Media.Abstractions;
 using Prism.Navigation;
-using System;
 using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
@@ -20,6 +19,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
         private ContractsServiceFake _contractsService;
+        private ManifestServiceFake _manifestService;
         private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
@@ -29,6 +29,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _pageDialogService = new PageDialogServiceMock();
             _contractsService = new ContractsServiceFake();
             _preferencesMock = new Mock<IPreferences>();
+            _manifestService = new ManifestServiceFake();
 
             _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
 
@@ -36,6 +37,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 _navigationService,
                 _pageDialogService,
                 _contractsService,
+                _manifestService,
                 _preferencesMock.Object);
         }
 

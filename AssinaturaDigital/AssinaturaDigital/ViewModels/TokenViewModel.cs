@@ -206,7 +206,7 @@ namespace AssinaturaDigital.ViewModels
 
                 IsBusy = true;
 
-                var token = string.Join(string.Empty, TokenDigits.Items.Select(x => x.Digit));
+                var token = string.Join(string.Empty, TokenDigits.Items.Select(x => x.Digit)).Substring(0,TokenDigits.Items.Count);
                 var tokenIsValid = await _tokenService.ValidateToken(_idUser, token);
 
                 if (!tokenIsValid)

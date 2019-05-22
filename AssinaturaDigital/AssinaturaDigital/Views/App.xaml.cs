@@ -5,6 +5,7 @@ using AssinaturaDigital.Services.Contracts;
 using AssinaturaDigital.Services.Documents;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
+using AssinaturaDigital.Services.Manifest;
 using AssinaturaDigital.Services.Selfies;
 using AssinaturaDigital.Services.Token;
 using AssinaturaDigital.Utilities;
@@ -75,6 +76,7 @@ namespace AssinaturaDigital.Views
 
             containerRegistry.RegisterInstance<IPreferences>(new PreferencesImplementation());
             containerRegistry.RegisterInstance<IDeviceInfo>(new DeviceInfoImplementation());
+            containerRegistry.RegisterInstance<IGeolocation>(new GeolocationImplementation());
 
             if (_useFakes)
             {
@@ -91,6 +93,7 @@ namespace AssinaturaDigital.Views
                 containerRegistry.Register<ISelfiesService, SelfiesService>();
                 containerRegistry.Register<IDocumentsService, DocumentsService>();
                 containerRegistry.Register<IContractsService, ContractsService>();
+                containerRegistry.Register<IManifestService, ManifestService>();
             }
         }
 

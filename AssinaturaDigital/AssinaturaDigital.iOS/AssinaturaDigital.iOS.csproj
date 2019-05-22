@@ -113,42 +113,114 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen.png" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x.png" />
-    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%402x.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%403x.png" />
-    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie.jpg" />
-    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%402x.jpg" />
-    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%403x.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente.jpg" />
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%402x.jpg" />
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%403x.jpg" />
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso.jpg" />
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%402x.jpg" />
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%403x.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%402x.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%403x.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%402x.jpg" />
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%403x.jpg" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Image.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Image.imageset\splashscreen%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%402x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\logo%403x.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%402x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%403x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%402x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%403x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%402x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%403x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%402x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%403x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%402x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%403x.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

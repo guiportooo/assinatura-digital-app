@@ -1,6 +1,7 @@
 using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Extensions;
 using AssinaturaDigital.Models;
+using AssinaturaDigital.Services.Manifest;
 using AssinaturaDigital.Utilities;
 using Flurl;
 using Flurl.Http;
@@ -50,15 +51,17 @@ namespace AssinaturaDigital.Services.Contracts
             }
         }
 
-        public async Task<bool> SignContract(int id, int idUser, MediaFile photo)
+        public async Task<bool> SignContract(int id, int idUser, MediaFile photo, ManifestInfos manifestInfos)
         {
             try
             {
                 using (var photoStream = photo.GetStreamWithCorrectRotation(_deviceInfo))
                 {
+                    var signatureDate = manifestInfos.SignatureDate.ToLongDateString();
                     var content = new CapturedMultipartContent();
-                    content.AddStringParts(new { id });
+
                     content.AddFile("photo", photoStream, $"{idUser}_{id}_Selfie.PNG");
+                    content.AddStringParts(new {manifestInfos.GeoLocation, signatureDate });
 
                     var response = await _urlApi
                         .AppendPathSegment("users")
