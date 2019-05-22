@@ -17,12 +17,12 @@ namespace AssinaturaDigital.Views
                 FocusPreviousNotEmptyTokenDigit();
                 return;
             }
-            FocusNextEmptyTokenDigit();
+            FocusNextEmptyTokenDigit((Entry)sender);
         }
 
-        void FocusNextEmptyTokenDigit()
+        void FocusNextEmptyTokenDigit(Entry actualTokenDigit)
         {
-            var nextEmptyTokenDigit = tokenDigits
+            var nextEmptyTokenDigit = (Entry)tokenDigits
                 .Children
                 .ToList()
                 .FirstOrDefault(x => string.IsNullOrEmpty(((Entry)x).Text));
@@ -30,7 +30,12 @@ namespace AssinaturaDigital.Views
             if (nextEmptyTokenDigit == null)
                 return;
 
-            nextEmptyTokenDigit.Focus();
+            if(actualTokenDigit.Text.Length > 1)
+            {
+                actualTokenDigit.Text = actualTokenDigit.Text.Substring(0, 1);
+                nextEmptyTokenDigit.Text = actualTokenDigit.Text.Substring(1, 1);
+                nextEmptyTokenDigit.Focus();
+            }
         }
 
         void FocusPreviousNotEmptyTokenDigit()

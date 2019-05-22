@@ -193,7 +193,7 @@ namespace AssinaturaDigital.ViewModels
 
         bool CanGenerateToken() => !IsBusy && SecondsToGenerateToken == 0;
 
-        bool AllDigitsWereInformed() => !TokenDigits.Items.Any(x => string.IsNullOrEmpty(x.Digit));
+        bool AllDigitsWereInformed() => !TokenDigits.Items.Any(x => string.IsNullOrEmpty(x.Digit.Trim()));
 
         protected override bool CanGoFoward() => !IsBusy && AllDigitsWereInformed();
 
@@ -201,10 +201,10 @@ namespace AssinaturaDigital.ViewModels
         {
             try
             {
-                IsBusy = true;
-
-                if (!AllDigitsWereInformed())
+                if (!CanGoFoward())
                     return;
+
+                IsBusy = true;
 
                 var token = string.Join(string.Empty, TokenDigits.Items.Select(x => x.Digit));
                 var tokenIsValid = await _tokenService.ValidateToken(_idUser, token);
