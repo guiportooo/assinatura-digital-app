@@ -118,6 +118,10 @@
                 <StackLayout HorizontalOptions="CenterAndExpand"
                              Margin="20"
                              IsVisible="{Binding Signed, Converter={converters:InverseBoolConverter}}">
+                    <Label FontAttributes="Bold"
+                           FontSize="Large"
+                           Text="{Binding Title}"
+                           TextColor="{StaticResource green}" />
                     <Label Text="{Binding Message}" Margin="0,10" />
                     <StackLayout HorizontalOptions="CenterAndExpand">
                         <Label Text="&#xf057;"

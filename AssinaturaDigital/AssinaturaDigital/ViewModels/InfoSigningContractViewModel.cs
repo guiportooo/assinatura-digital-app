@@ -101,8 +101,8 @@ namespace AssinaturaDigital.ViewModels
                 }
                 else
                 {
-                    Title = "Alerta";
-                    Message = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nNulla convallis ut nunc at ornare. Quisque sed ultrices urna, at pretium turpis.\nSuspendisse ultricies et ex a blandit. Phasellus facilisis sem eget nunc dictum congue.";
+                    Title = "Assinatura não realizada!";
+                    Message = "Sua Imagem não está compatível com o cadastro.\nPor favor, tire uma nova selfie para assinatura.";
                 }
             }
             catch
