@@ -1,6 +1,6 @@
 {
     "AndroidAppCenterSecret": "07470ad8-b179-4e9f-89e5-15e87b8788c7",
-    "SecondsToGenerateToken": "10",
+    "SecondsToGenerateToken": "20",
     "UseFakes": false,
     "UrlApi":  "https://assinatura-digital-api.azurewebsites.net/api/"
 }

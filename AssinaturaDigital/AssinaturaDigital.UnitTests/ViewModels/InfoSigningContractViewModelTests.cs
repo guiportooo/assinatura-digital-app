@@ -20,6 +20,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private PageDialogServiceMock _pageDialogService;
         private ContractsServiceFake _contractsService;
         private ManifestServiceFake _manifestService;
+        private PermissionsServiceMock _permissionsService;
         private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
@@ -30,6 +31,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _contractsService = new ContractsServiceFake();
             _preferencesMock = new Mock<IPreferences>();
             _manifestService = new ManifestServiceFake();
+            _permissionsService = new PermissionsServiceMock();
 
             _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
 
@@ -38,6 +40,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 _pageDialogService,
                 _contractsService,
                 _manifestService,
+                _permissionsService,
                 _preferencesMock.Object);
         }
 
@@ -59,6 +62,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 { AppConstants.Selfie, new MediaFile("Selfie", null) },
                 { AppConstants.Contract, contract }
             };
+            _permissionsService.GrantedPermissionBeforeRequest();
 
             _infoSigningContractViewModel.OnNavigatingTo(parameters);
 
@@ -81,6 +85,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             };
 
             _contractsService.ShouldNotSignContract();
+            _permissionsService.GrantedPermissionBeforeRequest();
 
             _infoSigningContractViewModel.OnNavigatingTo(parameters);
 
