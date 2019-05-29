@@ -39,7 +39,11 @@
                        Style="{StaticResource solidIconSpan}"
                        Text="&#xf030;"
                        TextColor="{StaticResource green}"
-                       HorizontalOptions="CenterAndExpand" />
+                       HorizontalOptions="CenterAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding GoFowardCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
             </StackLayout>
             <StackLayout Grid.Row="1" VerticalOptions="End">
                 <views:RegistrationStepsView IsVisible="{Binding Registred, Converter={StaticResource inverseBoolConverter}}" />
