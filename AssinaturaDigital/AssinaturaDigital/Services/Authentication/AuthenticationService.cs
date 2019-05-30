@@ -3,6 +3,7 @@ using AssinaturaDigital.Models;
 using AssinaturaDigital.Utilities;
 using Flurl;
 using Flurl.Http;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AssinaturaDigital.Services.Authentication
@@ -35,16 +36,16 @@ namespace AssinaturaDigital.Services.Authentication
                     .PostJsonAsync(user)
                     .ReceiveJson<User>();
 
-                return new AuthenticationResponse(createdUser);
+                return new AuthenticationResponse(createdUser, (int)HttpStatusCode.OK);
             }
             catch (FlurlHttpException ex)
             {
                 _errorHandler.HandleError(ex);
-                return await ex.GetResponseJsonAsync<AuthenticationResponse>();
+                return new AuthenticationResponse(null, (int)ex.Call.HttpStatus);
             }
         }
 
-        public async Task<AuthenticationResponse> GetByCPF(string cpf)
+        public async Task<AuthenticationResponse> SignIn(string cpf)
         {
             try
             {
@@ -54,12 +55,12 @@ namespace AssinaturaDigital.Services.Authentication
                     .AppendPathSegment(cpf)
                     .GetJsonAsync<User>();
 
-                return new AuthenticationResponse(createdUser);
+                return new AuthenticationResponse(createdUser, (int)HttpStatusCode.OK);
             }
             catch (FlurlHttpException ex)
             {
                 _errorHandler.HandleError(ex);
-                return await ex.GetResponseJsonAsync<AuthenticationResponse>();
+               return new AuthenticationResponse(null, (int)ex.Call.HttpStatus);
             }
         }
     }

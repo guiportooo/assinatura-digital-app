@@ -42,6 +42,20 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
+        public void ShouldDisplayErrorMessageWhenUserInterruptedSignUp()
+        {
+            const string message = "Verificamos que você não finalizou o cadastro. Para prosseguir, acesse “1º acesso” e realize o processo de cadastro até o final.";
+            const string cancelButton = "OK";
+            _authenticationService.ShouldInformInterruptedSignUp();
+
+            _signInViewModel.GoFowardCommand.Execute();
+
+            _pageDialogService.Title.Should().Be(_signInViewModel.Title);
+            _pageDialogService.Message.Should().Be(message);
+            _pageDialogService.CancelButton.Should().Be(cancelButton);
+        }
+
+        [Test]
         public void ShouldDisplayErrorMessageWhenCanNotGetUserByCpf()
         {
             const string message = "CPF não cadastrado. Por favor, acesse a página inicial e clique em 1º acesso.";

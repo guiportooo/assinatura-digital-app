@@ -41,11 +41,12 @@ namespace AssinaturaDigital.ViewModels
             {
                 IsBusy = true;
 
-                var response = await _authenticationService.GetByCPF(CPF);
+                var response = await _authenticationService.SignIn(CPF);
 
                 if (!response.Succeeded)
                 {
-                    await _pageDialogService.DisplayAlertAsync(Title, "CPF não cadastrado. Por favor, acesse a página inicial e clique em 1º acesso.", "OK");
+                    var errorMessage = GetErrorMessage(response);
+                    await _pageDialogService.DisplayAlertAsync(Title, errorMessage, "OK");
                     return;
                 }
 
@@ -67,5 +68,10 @@ namespace AssinaturaDigital.ViewModels
                 IsBusy = false;
             }
         }
+
+        private string GetErrorMessage(AuthenticationResponse response)
+            => response.UserInterruptedSignUp
+            ? "Verificamos que você não finalizou o cadastro. Para prosseguir, acesse “1º acesso” e realize o processo de cadastro até o final."
+            : "CPF não cadastrado. Por favor, acesse a página inicial e clique em 1º acesso.";
     }
 }

@@ -7,14 +7,16 @@ namespace AssinaturaDigital.Services.Authentication
     {
         public SignUpInformation SignUpInformation { get; set; }
 
+        public bool UserInterruptedSignUp => Status == (int)HttpStatusCode.Forbidden;
+
         public AuthenticationResponse() { }
 
-        public AuthenticationResponse(User user)
+        public AuthenticationResponse(User user, int status)
         {
+            Status = status;
+
             if (user == null)
                 return;
-
-            Status = (int)HttpStatusCode.OK;
 
             SignUpInformation = new SignUpInformation(user.Id,
                 user.FullName,

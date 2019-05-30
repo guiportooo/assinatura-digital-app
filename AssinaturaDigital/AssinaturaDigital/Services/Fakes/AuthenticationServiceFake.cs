@@ -2,6 +2,7 @@ using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Authentication;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace AssinaturaDigital.Services.Fakes
@@ -14,6 +15,7 @@ namespace AssinaturaDigital.Services.Fakes
         private bool _shouldFail;
         private bool _shouldValidateExistingCpf;
         private bool _shouldNotReturnUserWithCpf;
+        private bool _shouldInformInterruptedSignUp;
 
         public SignUpInformation SignUpInformation { get; private set; }
         public User ReturningUser { get; private set; }
@@ -26,6 +28,8 @@ namespace AssinaturaDigital.Services.Fakes
             => _shouldValidateExistingCpf = shouldValidateExistingCpf;
 
         public void ShouldNotReturnUserWithCpf() => _shouldNotReturnUserWithCpf = true;
+
+        public void ShouldInformInterruptedSignUp() => _shouldInformInterruptedSignUp = true;
 
         public async Task<AuthenticationResponse> SignUp(SignUpInformation signUpInformation)
         {
@@ -52,22 +56,31 @@ namespace AssinaturaDigital.Services.Fakes
                 signUpInformation.CellPhoneNumber,
                 signUpInformation.Email);
 
-            return new AuthenticationResponse(ReturningUser);
+            return new AuthenticationResponse(ReturningUser, (int)HttpStatusCode.OK);
         }
 
-        public Task<AuthenticationResponse> GetByCPF(string cpf)
+        public Task<AuthenticationResponse> SignIn(string cpf)
         {
-            if (_shouldFail)
-                throw new Exception("Failed to GetByCPF.");
+            var status = 0;
 
-            if(!_shouldNotReturnUserWithCpf)
+            if (_shouldFail)
+                throw new Exception("Failed to sign in.");
+
+            if (!_shouldNotReturnUserWithCpf)
+            {
                 ReturningUser = ReturningUser = new User(1,
                     "FullName",
                     cpf,
                     "(11) 11111-111",
                     "email@email.com");
 
-            return Task.FromResult(new AuthenticationResponse(ReturningUser));
+                status = (int)HttpStatusCode.OK;
+            }
+
+            if (_shouldInformInterruptedSignUp)
+                status = (int)HttpStatusCode.Forbidden;
+
+            return Task.FromResult(new AuthenticationResponse(ReturningUser, status));
         }
     }
 }

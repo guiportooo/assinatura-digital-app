@@ -7,6 +7,6 @@ namespace AssinaturaDigital.Services.Authentication
     {
         Task<AuthenticationResponse> SignUp(SignUpInformation signUpInformation);
 
-        Task<AuthenticationResponse> GetByCPF(string cpf);
+        Task<AuthenticationResponse> SignIn(string cpf);
     }
 }
