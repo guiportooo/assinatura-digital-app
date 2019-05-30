@@ -33,12 +33,12 @@
                            FontSize="40"
                            Margin="0,10"/>
                     <StackLayout Margin="10" VerticalOptions="CenterAndExpand">
-                        <Button Text="ENVIAR FOTO DO RG" 
-                                Style="{StaticResource whiteButton}"
-                                Command="{Binding ChooseRGPictureCommand}" />
                         <Button Text="ENVIAR FOTO DA CNH"
                                 Style="{StaticResource whiteButton}"
                                 Command="{Binding ChooseCNHPictureCommand}" />
+                        <Button Text="ENVIAR FOTO DO RG" 
+                                Style="{StaticResource whiteButton}"
+                                Command="{Binding ChooseRGPictureCommand}" />
                     </StackLayout>
                 </StackLayout>
                 <StackLayout Grid.Row="1" VerticalOptions="End">
