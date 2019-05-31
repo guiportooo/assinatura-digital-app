@@ -14,10 +14,10 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 {
     public class SignUpViewModelTests
     {
-        const string fullName = "Test User";
-        const string cpf = "222.222.222-22";
-        const string cellPhoneNumber = "987654321";
-        const string email = "test.user@appsign.com";
+        private readonly string _fullName = "Test User";
+        private readonly string _cpf = "222.222.222-22";
+        private readonly string _cellPhoneNumber = "987654321";
+        private readonly string _email = "test.user@appsign.com";
 
         private SignUpViewModel _signUpViewModel;
         private NavigationServiceMock _navigationService;
@@ -57,21 +57,42 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [TestCase(true, false)]
         public void WhenPageIsBusyShouldNotBeAbleToSignUp(bool pageIsBusy, bool canSignUp)
         {
+            _signUpViewModel.FullName = _fullName;
+            _signUpViewModel.CPF = _cpf;
+            _signUpViewModel.CellPhoneNumber = _cellPhoneNumber;
+            _signUpViewModel.Email = _email;
+
             _signUpViewModel.IsBusy = pageIsBusy;
-            _signUpViewModel.GoFowardCommand.CanExecute().Should().Be(canSignUp);
+            _signUpViewModel.SignUpCommand.CanExecute().Should().Be(canSignUp);
+        }
+
+        [TestCase("", "", "", "", false)]
+        [TestCase("FullName", "", "", "", false)]
+        [TestCase("FullName", "CPF", "", "", false)]
+        [TestCase("FullName", "CPF", "CellPhoneNumber", "", false)]
+        [TestCase("FullName", "CPF", "CellPhoneNumber", "Email", true)]
+        public void WhenDidNotFilledUpFormShouldNotBeAbleToSignUp(string fullName, string cpf, string cellPhoneNumber, string email, bool canSignUp)
+        {
+            _signUpViewModel.IsBusy = false;
+
+            _signUpViewModel.FullName = fullName;
+            _signUpViewModel.CPF = cpf;
+            _signUpViewModel.CellPhoneNumber = cellPhoneNumber;
+            _signUpViewModel.Email = email;
+            _signUpViewModel.SignUpCommand.CanExecute().Should().Be(canSignUp);
         }
 
         [Test]
         public void WhenSigningUpShouldSendInformationToTheService()
         {
-            _signUpViewModel.FullName = fullName;
-            _signUpViewModel.CPF = cpf;
-            _signUpViewModel.CellPhoneNumber = cellPhoneNumber;
-            _signUpViewModel.Email = email;
+            _signUpViewModel.FullName = _fullName;
+            _signUpViewModel.CPF = _cpf;
+            _signUpViewModel.CellPhoneNumber = _cellPhoneNumber;
+            _signUpViewModel.Email = _email;
 
-            var expectedSignUpInformation = new SignUpInformation(fullName, cpf, cellPhoneNumber, email);
+            var expectedSignUpInformation = new SignUpInformation(_fullName, _cpf, _cellPhoneNumber, _email);
 
-            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.SignUpCommand.Execute();
 
             _authenticationService.SignUpInformation.Should().BeEquivalentTo(expectedSignUpInformation);
         }
@@ -79,7 +100,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void WhenSigningUpShouldSaveIdUserOnPreferences()
         {
-            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.SignUpCommand.Execute();
             _preferencesMock.Verify(x => x.Set(AppConstants.IdUser, _authenticationService.ReturningUser.Id));
         }
 
@@ -91,7 +112,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
                 { AppConstants.Registered, false }
             };
 
-            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.SignUpCommand.Execute();
             _navigationService.Name.Should().Be(nameof(TokenPage));
             _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
         }
@@ -99,7 +120,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void AfterSigningUpShouldSetIsBusyToFalse()
         {
-            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.SignUpCommand.Execute();
             _signUpViewModel.IsBusy.Should().BeFalse();
         }
 
@@ -109,14 +130,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             const string message = "CPF já cadastrado.";
             const string cancelButton = "OK";
 
-            _signUpViewModel.FullName = fullName;
-            _signUpViewModel.CPF = cpf;
-            _signUpViewModel.CellPhoneNumber = cellPhoneNumber;
-            _signUpViewModel.Email = email;
+            _signUpViewModel.FullName = _fullName;
+            _signUpViewModel.CPF = _cpf;
+            _signUpViewModel.CellPhoneNumber = _cellPhoneNumber;
+            _signUpViewModel.Email = _email;
 
             _authenticationService.ShouldValidateExistingCpf(true);
 
-            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.SignUpCommand.Execute();
 
             _pageDialogService.Title.Should().Be(_signUpViewModel.Title);
             _pageDialogService.Message.Should().Be(message);
@@ -131,7 +152,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             _authenticationService.ShouldFail(true);
 
-            _signUpViewModel.GoFowardCommand.Execute();
+            _signUpViewModel.SignUpCommand.Execute();
 
             _pageDialogService.Title.Should().Be(_signUpViewModel.Title);
             _pageDialogService.Message.Should().Be(message);

@@ -2,6 +2,7 @@ using AssinaturaDigital.Models;
 using AssinaturaDigital.Services.Authentication;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
+using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
 using System;
@@ -16,6 +17,8 @@ namespace AssinaturaDigital.ViewModels
         private readonly IPageDialogService _pageDialogService;
         private readonly IAuthenticationService _authenticationService;
         private readonly IPreferences _preferences;
+
+        public DelegateCommand SignUpCommand { get; }
 
         private string _fullName;
         public string FullName
@@ -59,6 +62,11 @@ namespace AssinaturaDigital.ViewModels
             set => SetProperty(ref _currentStep, value);
         }
 
+        private bool FilledUpForm() => !string.IsNullOrEmpty(FullName)
+            && !string.IsNullOrEmpty(CPF)
+            && !string.IsNullOrEmpty(CellPhoneNumber)
+            && !string.IsNullOrEmpty(Email);
+
         public SignUpViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
             IAuthenticationService authenticationService,
@@ -73,6 +81,15 @@ namespace AssinaturaDigital.ViewModels
             InitializeSteps();
 
             Title = "Cadastro";
+
+            HasFowardNavigation = false;
+
+            SignUpCommand = new DelegateCommand(SignUp, CanSignUp)
+                .ObservesProperty(() => IsBusy)
+                .ObservesProperty(() => FullName)
+                .ObservesProperty(() => CPF)
+                .ObservesProperty(() => CellPhoneNumber)
+                .ObservesProperty(() => Email);
         }
 
         void InitializeSteps()
@@ -87,7 +104,9 @@ namespace AssinaturaDigital.ViewModels
             };
         }
 
-        protected override async void GoFoward()
+        bool CanSignUp() => !IsBusy && FilledUpForm();
+
+        protected async void SignUp()
         {
             try
             {
