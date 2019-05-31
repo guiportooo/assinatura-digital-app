@@ -23,9 +23,9 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenCloseModalShouldNavigateToSelfiePage()
+        public void WhenGoingFowardShouldNavigateToSelfiePage()
         {
-            _selfieOrientationViewModel.CloseModalCommand.Execute();
+            _selfieOrientationViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(SelfiePage));
         }
     }

@@ -1,68 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:views="clr-namespace:AssinaturaDigital.Views" 
+             xmlns:views="clr-namespace:AssinaturaDigital.Views"
+             NavigationPage.HasNavigationBar="false"
              x:Class="AssinaturaDigital.Views.CNHOrientationPage">
     <ContentPage.Content>
-        <ScrollView>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
-                </Grid.RowDefinitions>
-                <StackLayout Grid.Row="0">
-                    <Label Text="&#xf00d;" 
-                           Style="{StaticResource solidIcon}"
-                           TextColor="{StaticResource green}"
-                           HorizontalTextAlignment="End" 
-                           Margin="20,40,20,0" 
-                           FontSize="30">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding CloseModalCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </StackLayout>
-                <StackLayout Grid.Row="1">
-                    <StackLayout Margin="20,0">
-                        <Label Margin="0,0,0,40">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding Title} " Style="{StaticResource titleSpan}" />
-                                    <Span Text=" " />
-                                    <Span Text="&#xf030;" Style="{StaticResource solidIconSpan}" TextColor="{StaticResource green}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Text="Tire 2 fotos do documento (frente e verso)" Style="{StaticResource greenLabel}" Margin="0,0,0,10" />
-                        <Label Margin="0,0,0,10">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="Posicione o aparelho " Style="{StaticResource greenLabel}" />
-                                    <Span Text="sempre na posição vertical" Style="{StaticResource greenLabel}" FontAttributes="Bold" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>
-                        <Label Text="Certifique-se que a foto esteja com boa nitidez e luminosidade adequada" Style="{StaticResource greenLabel}" Margin="0,0,0,10" />
-                    </StackLayout>
-                    <FlexLayout JustifyContent="SpaceEvenly" 
-                                AlignItems="Start"
-                                Wrap="Wrap"
-                                Margin="0,20,0,0">
-                        <StackLayout>
-                            <Label Style="{StaticResource title}" Text="Frente" HorizontalTextAlignment="Center" />
-                            <Image Source="CNHFrente"  
-                                   Aspect="AspectFit"
-                                   HeightRequest="120" />
-                        </StackLayout>
-                        <StackLayout HeightRequest="100">
-                            <Label Style="{StaticResource title}" Text="Verso" HorizontalTextAlignment="Center" />
-                            <Image Source="CNHVerso"  
-                                   Aspect="AspectFit"
-                                   HeightRequest="120" />
-                        </StackLayout>
-                    </FlexLayout>
-                </StackLayout>
-            </Grid>
-        </ScrollView>
+        <StackLayout>
+            <StackLayout Margin="20,40">
+                <Label Margin="0,0,0,40" 
+                       Text="{Binding Title}" 
+                       Style="{StaticResource title}" />
+                <Label Margin="0,0,0,20" 
+                       Text="Tire 2 fotos do documento (frente e verso)" 
+                       Style="{StaticResource mediumLabel}" />
+                <Label Margin="0,0,0,20" 
+                       Text="O aparelho e o documento devem estar sempre na mesma orientação no momento da foto (seja na vertical ou na horizontal)" 
+                       Style="{StaticResource mediumLabel}" />
+                <Label Margin="0,0,0,40" 
+                       Text="Certifique-se que a foto esteja com boa nitidez e luminosidade adequada" 
+                       Style="{StaticResource mediumLabel}" />
+                <Button Text="OK! ENTENDI!" 
+                        Command="{Binding GoFowardCommand}" 
+                        Style="{StaticResource greenButton}" />
+            </StackLayout>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

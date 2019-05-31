@@ -24,14 +24,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenCloseModalShouldNavigateToRGPage()
+        public void WhenGoingFowardShouldNavigateToRGPage()
         {
             var expectedParameters = new NavigationParameters
             {
                 { AppConstants.DocumentType, DocumentType.RG }
             };
 
-            _rgOrientationViewModel.CloseModalCommand.Execute();
+            _rgOrientationViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(DocumentPage));
             _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
         }

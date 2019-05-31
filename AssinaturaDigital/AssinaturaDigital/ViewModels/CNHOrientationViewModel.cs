@@ -20,14 +20,12 @@ namespace AssinaturaDigital.ViewModels
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
-            Title = "Orientações Importantes";
+            Title = "Orientações";
             HasBackNavigation = false;
             HasFowardNavigation = false;
-            CloseModalCommand = new DelegateCommand(CloseModal, () => !IsBusy)
-                .ObservesProperty(() => IsBusy);
         }
 
-        private async void CloseModal()
+        protected override async void GoFoward()
         {
             try
             {

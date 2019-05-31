@@ -93,6 +93,18 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <Style x:Key="mediumLabel" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <Style x:Key="greenLabel" TargetType="Label">
                 <Setter Property="FontSize" Value="Medium" />
                 <Setter Property="TextColor" Value="{StaticResource green}" />
@@ -107,7 +119,7 @@
             </Style>
             <Style x:Key="contract" TargetType="Label">
                 <Setter Property="FontSize" Value="Medium" />
-                 <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="TextColor" Value="{StaticResource black}" />
                 <Setter Property="FontFamily">
                     <Setter.Value>
@@ -159,6 +171,18 @@
             </Style>
             <Style TargetType="Span">
                 <Setter Property="FontSize" Value="Small" />
+                <Setter Property="TextColor" Value="{StaticResource black}" />
+                <Setter Property="FontFamily">
+                    <Setter.Value>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS">Roboto-Medium_1</On>
+                            <On Platform="Android">Fonts/Roboto-Medium_1.ttf#Roboto-Medium_1</On>
+                        </OnPlatform>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="mediumSpan" TargetType="Span">
+                <Setter Property="FontSize" Value="Medium" />
                 <Setter Property="TextColor" Value="{StaticResource black}" />
                 <Setter Property="FontFamily">
                     <Setter.Value>

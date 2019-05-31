@@ -24,14 +24,14 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenCloseModalShouldNavigateToCNHPage()
+        public void WhenGoingFowardShouldNavigateToCNHPage()
         {
             var expectedParameters = new NavigationParameters
             {
                 { AppConstants.DocumentType, DocumentType.CNH }
             };
 
-            _cnhOrientationViewModel.CloseModalCommand.Execute();
+            _cnhOrientationViewModel.GoFowardCommand.Execute();
             _navigationService.Name.Should().Be(nameof(DocumentPage));
             _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
         }
