@@ -92,6 +92,7 @@
     <BundleResource Include="Resources\Fonts\HurmeGeometricSans3.otf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <Compile Include="Renderers\GreenBorderEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -265,6 +266,7 @@
     <Folder Include="Assets.xcassets\CNHVerso.imageset\" />
     <Folder Include="Assets.xcassets\RGFrente.imageset\" />
     <Folder Include="Assets.xcassets\RGVerso.imageset\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Assets\config.json">

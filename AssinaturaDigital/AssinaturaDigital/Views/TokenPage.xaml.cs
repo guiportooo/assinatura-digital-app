@@ -32,7 +32,7 @@ namespace AssinaturaDigital.Views
 
             var actualTokenDigitText = actualTokenDigit.Text;
 
-            if(actualTokenDigitText.Length > 1)
+            if (actualTokenDigitText.Length > 1)
             {
                 nextEmptyTokenDigit.Focus();
                 actualTokenDigit.Text = actualTokenDigitText.Substring(0, 1);

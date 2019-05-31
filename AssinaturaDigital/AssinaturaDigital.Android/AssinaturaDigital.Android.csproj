@@ -86,6 +86,7 @@
     <Compile Include="Configuration\AndroidConfigurationStreamProviderFactory.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="MainApplication.cs" />
+    <Compile Include="Renderers\GreenBorderEntryRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\Font Awesome 5 Brands-Regular-400.otf">
@@ -159,6 +160,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\CNHVerso.jpg" />
     <AndroidResource Include="Resources\drawable-xxhdpi\CNHVerso.jpg" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\CNHVerso.jpg" />
+    <AndroidResource Include="Resources\drawable\green_border_entry.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable-hdpi\" />
@@ -166,6 +168,7 @@
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AssinaturaDigital\AssinaturaDigital.csproj">
