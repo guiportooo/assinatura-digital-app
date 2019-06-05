@@ -93,6 +93,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
     <Compile Include="Renderers\GreenBorderEntryRenderer.cs" />
+    <Compile Include="Services\CameraOverlayProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -174,54 +175,22 @@
     <ImageAsset Include="Assets.xcassets\Selfie.imageset\Selfie%403x.jpg">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%402x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGFrente.imageset\RGFrente%403x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%402x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\RGVerso.imageset\RGVerso%403x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%402x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHFrente.imageset\CNHFrente%403x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%402x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\CNHVerso.imageset\CNHVerso%403x.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-back-1.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-back%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-back%403x-1.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente%402x.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente%403x.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso%402x.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso%403x.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente%402x.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -267,6 +236,11 @@
     <Folder Include="Assets.xcassets\RGFrente.imageset\" />
     <Folder Include="Assets.xcassets\RGVerso.imageset\" />
     <Folder Include="Renderers\" />
+    <Folder Include="Services\" />
+    <Folder Include="Assets.xcassets\CNH_Front.imageset\" />
+    <Folder Include="Assets.xcassets\CNH_Back.imageset\" />
+    <Folder Include="Assets.xcassets\RG_Front.imageset\" />
+    <Folder Include="Assets.xcassets\RG_Back.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Assets\config.json">

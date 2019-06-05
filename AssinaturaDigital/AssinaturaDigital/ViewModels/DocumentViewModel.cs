@@ -125,7 +125,7 @@ namespace AssinaturaDigital.ViewModels
             if (!_cameraService.CanTakePhoto())
                 throw new InvalidOperationException("Nenhuma câmera detectada.");
 
-            var photo = await _cameraService.TakePhoto(fileName, CameraDevice.Rear);
+            var photo = await _cameraService.TakePhoto(fileName, CameraDevice.Rear, fileName);
 
             if (photo == null)
                 throw new NullReferenceException("Não foi possível armazenar a foto.");

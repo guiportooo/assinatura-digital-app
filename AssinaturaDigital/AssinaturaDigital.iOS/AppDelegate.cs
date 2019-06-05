@@ -1,5 +1,7 @@
 ﻿using AssinaturaDigital.Configuration;
 using AssinaturaDigital.iOS.Configuration;
+using AssinaturaDigital.iOS.Services;
+using AssinaturaDigital.Services.Interfaces;
 using Foundation;
 using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Prism;
@@ -29,6 +31,9 @@ namespace AssinaturaDigital.iOS
     public class IOSInitializer : IPlatformInitializer
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
-            => containerRegistry.Register<IConfigurationStreamProviderFactory, IOSConfigurationStreamProviderFactory>();
+        {
+            containerRegistry.Register<IConfigurationStreamProviderFactory, IOSConfigurationStreamProviderFactory>();
+            containerRegistry.Register<ICameraOverlayProvider, CameraOverlayProvider>();
+        }
     }
 }

@@ -6,6 +6,6 @@ namespace AssinaturaDigital.Services.Interfaces
     public interface ICameraService
     {
         bool CanTakePhoto();
-        Task<MediaFile> TakePhoto(string fileName, CameraDevice camera);
+        Task<MediaFile> TakePhoto(string fileName, CameraDevice camera, string overlayImageName = null);
     }
 }

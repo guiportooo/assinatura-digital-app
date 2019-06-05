@@ -30,7 +30,7 @@ namespace AssinaturaDigital.UnitTests.Mocks
 
         public bool CanTakePhoto() => _canTakePhoto;
 
-        public Task<MediaFile> TakePhoto(string fileName, CameraDevice camera)
+        public Task<MediaFile> TakePhoto(string fileName, CameraDevice camera, string overlayImageName = null)
         {
             FileNames.Add(fileName);
             Cameras.Add(camera);

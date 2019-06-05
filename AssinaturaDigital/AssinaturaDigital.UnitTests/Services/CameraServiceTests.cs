@@ -12,6 +12,10 @@ namespace AssinaturaDigital.UnitTests.Services
     public class CameraServiceTests
     {
         private ICameraService _cameraService;
+        private CameraOverlayProviderMock _cameraOverlayProvider;
+
+        [SetUp]
+        public void Setup() => _cameraOverlayProvider = new CameraOverlayProviderMock();
 
         [TestCase(true, true, true)]
         [TestCase(true, false, false)]
@@ -21,7 +25,7 @@ namespace AssinaturaDigital.UnitTests.Services
         {
             var mediaMock = new MediaMock(isCameraAvailable, isTakePhotoSupported);
             Media.Instance = mediaMock;
-            _cameraService = new CameraService();
+            _cameraService = new CameraService(_cameraOverlayProvider);
 
             _cameraService.CanTakePhoto().Should().Be(canTakePhoto);
         }
@@ -45,7 +49,7 @@ namespace AssinaturaDigital.UnitTests.Services
 
             var mediaMock = new MediaMock(true, true);
             Media.Instance = mediaMock;
-            _cameraService = new CameraService();
+            _cameraService = new CameraService(_cameraOverlayProvider);
 
             var photo = await _cameraService.TakePhoto(fileName, camera);
 
@@ -61,11 +65,31 @@ namespace AssinaturaDigital.UnitTests.Services
 
             var mediaMock = new MediaMock(false, false);
             Media.Instance = mediaMock;
-            _cameraService = new CameraService();
+            _cameraService = new CameraService(_cameraOverlayProvider);
 
             var photo = await _cameraService.TakePhoto(fileName, camera);
 
             photo.Should().BeNull();
+        }
+
+        [Test]
+        public async Task ShouldAddOverlayWhenProviderExistsAndOverlayImageNameIsInformed()
+        {
+            const string fileName = "Test";
+            var camera = CameraDevice.Rear;
+            const string overlayImageName = "Overlay Image";
+            const string overlayProvider = "Overlay Provider";
+
+            _cameraOverlayProvider.SetProvider(() => overlayProvider);
+
+            var mediaMock = new MediaMock(true, true);
+            Media.Instance = mediaMock;
+            _cameraService = new CameraService(_cameraOverlayProvider);
+
+            await _cameraService.TakePhoto(fileName, camera, overlayImageName);
+            mediaMock.Options.OverlayViewProvider.Invoke().Should().BeEquivalentTo(overlayProvider);
+            _cameraOverlayProvider.ImageName.Should().Be(overlayImageName);
+            _cameraOverlayProvider.Provider.Invoke().Should().Be(overlayProvider);
         }
     }
 }
