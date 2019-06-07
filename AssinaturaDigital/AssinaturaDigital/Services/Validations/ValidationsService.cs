@@ -39,7 +39,7 @@ namespace AssinaturaDigital.Services.Validations
                     .AppendPathSegment("validations")
                     .PostMultipartAsync(x => x
                         .AddFile("video", videoStream, $"{idUser}_Video.mp4")
-                        .AddFile("selfie", selfieStream, $"{idUser}_Selfie.png"));
+                        .AddFile("selfie", selfieStream, $"{idUser}_Selfie.jpeg"));
                 }
 
                 return true;

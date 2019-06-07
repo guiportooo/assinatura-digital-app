@@ -61,7 +61,7 @@ namespace AssinaturaDigital.Services.Contracts
                     var content = new CapturedMultipartContent();
 
                     content.AddFile("video", videoStream, $"{idUser}_{id}_Video.mp4");
-                    content.AddFile("selfie", selfieStream, $"{idUser}_{id}_Selfie.png");
+                    content.AddFile("selfie", selfieStream, $"{idUser}_{id}_Selfie.jpeg");
                     content.AddStringParts(new { manifestInfos.GeoLocation, signatureDate });
 
                     var response = await _urlApi

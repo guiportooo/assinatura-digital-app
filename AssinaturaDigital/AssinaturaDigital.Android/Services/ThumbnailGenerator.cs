@@ -25,7 +25,7 @@ namespace AssinaturaDigital.Droid.Services
                     return null;
 
                 var stream = new MemoryStream();
-                bitmap.Compress(Bitmap.CompressFormat.Png, 0, stream);
+                bitmap.Compress(Bitmap.CompressFormat.Jpeg, 75, stream);
                 var bitmapData = stream.ToArray();
                 return new MemoryStream(bitmapData);
             }

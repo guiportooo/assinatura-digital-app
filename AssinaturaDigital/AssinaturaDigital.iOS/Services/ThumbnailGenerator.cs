@@ -18,7 +18,7 @@ namespace AssinaturaDigital.iOS.Services
 
             var cgImage = imageGenerator.CopyCGImageAtTime(new CMTime(usecond, 1000000), out var actualTime, out var error);
 
-            return new UIImage(cgImage).AsPNG().AsStream();
+            return new UIImage(cgImage).AsJPEG().AsStream();
         }
     }
 }
