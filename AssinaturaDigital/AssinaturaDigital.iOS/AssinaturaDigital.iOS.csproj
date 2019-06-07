@@ -180,18 +180,18 @@
     <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\RG_Front.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\RG_Back.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-back-1.png" />
-    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-back%402x-1.png" />
-    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-back%403x-1.png" />
-    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente.png" />
-    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente%402x.png" />
-    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente%403x.png" />
-    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso.png" />
-    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso%402x.png" />
-    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso%403x.png" />
-    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente.png" />
-    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente%402x.png" />
-    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente%403x.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-verso.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-verso%402x.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Back.imageset\cnh-verso%403x.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente-1.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\CNH_Front.imageset\cnh-frente%403x-1.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso-1.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Back.imageset\rg-verso%403x-1.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente-1.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente%402x-1.png" />
+    <ImageAsset Include="Assets.xcassets\RG_Front.imageset\rg-frente%403x-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
