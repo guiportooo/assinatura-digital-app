@@ -15,6 +15,8 @@ namespace AssinaturaDigital.iOS.Services
         const string retakeEvent = "_UIImagePickerControllerUserDidRejectItem";
         const string cameraSessionStopEvent = "AVCaptureSessionDidStopRunningNotification";
 
+        public bool CanSetOverlay() => true;
+
         public Func<object> GetImage(string imageName)
         {
             var screen = UIScreen.MainScreen.Bounds;

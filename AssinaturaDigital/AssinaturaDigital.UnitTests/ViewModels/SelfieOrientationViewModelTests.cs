@@ -26,7 +26,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void WhenGoingFowardShouldNavigateToSelfiePage()
         {
             _selfieOrientationViewModel.GoFowardCommand.Execute();
-            _navigationService.Name.Should().Be(nameof(SelfiePage));
+            _navigationService.Name.Should().Be(nameof(VideoPage));
         }
     }
 }

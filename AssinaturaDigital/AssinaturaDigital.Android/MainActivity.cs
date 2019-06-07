@@ -4,11 +4,13 @@ using Android.OS;
 using Android.Runtime;
 using AssinaturaDigital.Configuration;
 using AssinaturaDigital.Droid.Configuration;
+using AssinaturaDigital.Droid.Services;
+using AssinaturaDigital.Services.Interfaces;
+using Plugin.Media;
+using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
 using Xamarin.Forms;
-using Plugin.Media;
-using Plugin.Permissions;
 
 namespace AssinaturaDigital.Droid
 {
@@ -43,7 +45,11 @@ namespace AssinaturaDigital.Droid
         public class AndroidInitializer : IPlatformInitializer
         {
             public void RegisterTypes(IContainerRegistry containerRegistry)
-                => containerRegistry.Register<IConfigurationStreamProviderFactory, AndroidConfigurationStreamProviderFactory>();
+            {
+                containerRegistry.Register<IConfigurationStreamProviderFactory, AndroidConfigurationStreamProviderFactory>();
+                containerRegistry.Register<ICameraOverlayProvider, CameraOverlayProvider>();
+                containerRegistry.Register<IThumbnailGenerator, ThumbnailGenerator>();
+            }
         }
     }
 }

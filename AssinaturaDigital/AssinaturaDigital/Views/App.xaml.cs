@@ -6,8 +6,8 @@ using AssinaturaDigital.Services.Documents;
 using AssinaturaDigital.Services.Fakes;
 using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Services.Manifest;
-using AssinaturaDigital.Services.Selfies;
 using AssinaturaDigital.Services.Token;
+using AssinaturaDigital.Services.Validations;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.ViewModels;
 using Microsoft.AppCenter;
@@ -61,7 +61,7 @@ namespace AssinaturaDigital.Views
             containerRegistry.RegisterForNavigation<DocumentsSelectionPage, DocumentsSelectionViewModel>();
             containerRegistry.RegisterForNavigation<DocumentPage, DocumentViewModel>();
             containerRegistry.RegisterForNavigation<InfoSelfiePage, InfoSelfieViewModel>();
-            containerRegistry.RegisterForNavigation<SelfiePage, SelfieViewModel>();
+            containerRegistry.RegisterForNavigation<VideoPage, VideoViewModel>();
             containerRegistry.RegisterForNavigation<InfoRegisterPage, InfoRegisterViewModel>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomeViewModel>();
@@ -82,7 +82,7 @@ namespace AssinaturaDigital.Views
             {
                 containerRegistry.Register<IAuthenticationService, AuthenticationServiceFake>();
                 containerRegistry.Register<ITokenService, TokenServiceFake>();
-                containerRegistry.Register<ISelfiesService, SelfiesServiceFake>();
+                containerRegistry.Register<IValidationsService, ValidationsServiceFake>();
                 containerRegistry.Register<IDocumentsService, DocumentsServiceFake>();
                 containerRegistry.Register<IContractsService, ContractsServiceFake>();
             }
@@ -90,7 +90,7 @@ namespace AssinaturaDigital.Views
             {
                 containerRegistry.Register<IAuthenticationService, AuthenticationService>();
                 containerRegistry.Register<ITokenService, TokenService>();
-                containerRegistry.Register<ISelfiesService, SelfiesService>();
+                containerRegistry.Register<IValidationsService, ValidationsService>();
                 containerRegistry.Register<IDocumentsService, DocumentsService>();
                 containerRegistry.Register<IContractsService, ContractsService>();
                 containerRegistry.Register<IManifestService, ManifestService>();

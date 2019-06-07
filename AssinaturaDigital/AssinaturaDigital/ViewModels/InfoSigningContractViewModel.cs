@@ -9,7 +9,6 @@ using Plugin.Permissions.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using Prism.Services;
-using System;
 using System.Threading.Tasks;
 using Xamarin.Essentials.Interfaces;
 
@@ -85,17 +84,17 @@ namespace AssinaturaDigital.ViewModels
                 return;
             }
 
-            var selfie = parameters.GetValue<MediaFile>(AppConstants.Selfie);
+            var video = parameters.GetValue<MediaFile>(AppConstants.Video);
             Contract = parameters.GetValue<ContractData>(AppConstants.Contract);
-            await Initialize(idUser, selfie);
+            await Initialize(idUser, video);
         }
 
         bool ParametersAreValid(INavigationParameters parameters)
             => parameters != null
-            && parameters[AppConstants.Selfie] != null
+            && parameters[AppConstants.Video] != null
             && parameters[AppConstants.Contract] != null;
 
-        async Task Initialize(int idUser, MediaFile photo)
+        async Task Initialize(int idUser, MediaFile video)
         {
             try
             {
@@ -109,7 +108,7 @@ namespace AssinaturaDigital.ViewModels
                 }
 
                 var manifestInfos = await _manifestService.Get();
-                Signed = await _contractsService.SignContract(Contract.Id, idUser, photo, manifestInfos);
+                Signed = await _contractsService.SignContract(Contract.Id, idUser, video, manifestInfos);
 
                 if (Signed)
                 {
@@ -121,7 +120,7 @@ namespace AssinaturaDigital.ViewModels
                 else
                 {
                     Title = "Assinatura não realizada!";
-                    Message = "Sua Imagem não está compatível com o cadastro.\nPor favor, tire uma nova selfie para assinatura.";
+                    Message = "Seu vídeo não está compatível com o cadastro.\nPor favor, grave um novo vídeo para assinatura.";
                 }
             }
             catch

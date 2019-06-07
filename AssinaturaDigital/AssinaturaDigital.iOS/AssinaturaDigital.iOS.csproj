@@ -94,6 +94,7 @@
     </BundleResource>
     <Compile Include="Renderers\GreenBorderEntryRenderer.cs" />
     <Compile Include="Services\CameraOverlayProvider.cs" />
+    <Compile Include="Services\ThumbnailGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

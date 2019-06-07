@@ -10,10 +10,10 @@ using Prism.Navigation;
 
 namespace AssinaturaDigital.UnitTests.ViewModels
 {
-    public class SelfieViewModelTests
+    public class VideoViewModelTests
     {
-        private const string pageTitle = "Selfie";
-        private SelfieViewModel _selfieViewModel;
+        private const string pageTitle = "Video";
+        private VideoViewModel _videoViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
         private PermissionsServiceMock _permissionsService;
@@ -29,7 +29,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _cameraService = new CameraServiceMock();
             _errorHandler = new ErrorHandlerMock();
 
-            _selfieViewModel = new SelfieViewModel(_navigationService,
+            _videoViewModel = new VideoViewModel(_navigationService,
                 _pageDialogService,
                 _permissionsService,
                 _cameraService,
@@ -37,20 +37,20 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenCreatingViewModelShouldPopulateTitle() => _selfieViewModel.Title.Should().Be(pageTitle);
+        public void WhenCreatingViewModelShouldPopulateTitle() => _videoViewModel.Title.Should().Be(pageTitle);
 
         [Test]
-        public void ShouldNavigateToInfoRegisterPageAfterTakingPhoto()
+        public void ShouldNavigateToInfoRegisterPageAfterTakingVideo()
         {
             var expectedParameters = new NavigationParameters
             {
-                { AppConstants.Selfie, new MediaFile("Selfie", null) }
+                { AppConstants.Video, new MediaFile("Video", null) }
             };
 
             _permissionsService.GrantedPermissionBeforeRequest();
-            _cameraService.ShouldTakePhoto();
+            _cameraService.ShouldTakeVideo();
 
-            _selfieViewModel.OnNavigatedTo(null);
+            _videoViewModel.OnNavigatedTo(null);
 
             _navigationService.Name.Should().Be(nameof(InfoRegisterPage));
             _navigationService.Parameters.Should().BeEquivalentTo(expectedParameters);
@@ -60,9 +60,9 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         public void ShouldDisplayRequestingMessageForCameraPermission()
         {
             _permissionsService.GrantedPermissionAfterRequest();
-            _cameraService.ShouldTakePhoto();
+            _cameraService.ShouldTakeVideo();
 
-            _selfieViewModel.OnNavigatedTo(null);
+            _videoViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Permissão necessária para a câmera.");
         }
@@ -70,45 +70,45 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         [Test]
         public void ShouldDisplayErrorMessageAndGoBackIfPermissionToCameraIsNotGranted()
         {
-            _selfieViewModel.OnNavigatedTo(null);
+            _videoViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Câmera negada.");
             _navigationService.WentBack.Should().BeTrue();
         }
 
         [Test]
-        public void ShouldTakePhotoIfCameraPermissionIsGranted()
+        public void ShouldTakeVideoIfCameraPermissionIsGranted()
         {
-            var expectedPhoto = new MediaFile("Selfie", null);
+            var expectedVideo = new MediaFile("Video", null);
 
             _permissionsService.GrantedPermissionBeforeRequest();
-            _cameraService.ShouldTakePhoto();
+            _cameraService.ShouldTakeVideo();
 
-            _selfieViewModel.OnNavigatedTo(null);
+            _videoViewModel.OnNavigatedTo(null);
 
             _permissionsService.Permission.Should().Be(Permission.Camera);
             _cameraService.Cameras[0].Should().Be(CameraDevice.Front);
-            _cameraService.Photos[0].Should().BeEquivalentTo(expectedPhoto);
+            _cameraService.Videos[0].Should().BeEquivalentTo(expectedVideo);
         }
 
         [Test]
-        public void ShouldDisplayErrorMessageAndGoBackIfPhotoIsNull()
+        public void ShouldDisplayErrorMessageAndGoBackIfVideoIsNull()
         {
             _permissionsService.GrantedPermissionBeforeRequest();
-            _cameraService.ShouldReturnNullPhoto();
+            _cameraService.ShouldReturnNullVideo();
 
-            _selfieViewModel.OnNavigatedTo(null);
+            _videoViewModel.OnNavigatedTo(null);
 
-            _pageDialogService.Message.Should().Be("Não foi possível armazenar a foto.");
+            _pageDialogService.Message.Should().Be("Não foi possível capturar o vídeo.");
             _navigationService.WentBack.Should().BeTrue();
         }
 
         [Test]
-        public void ShouldDisplayErrorMessageAndGoBackIfCannotTakePhoto()
+        public void ShouldDisplayErrorMessageAndGoBackIfCannotTakeVideo()
         {
             _permissionsService.GrantedPermissionBeforeRequest();
 
-            _selfieViewModel.OnNavigatedTo(null);
+            _videoViewModel.OnNavigatedTo(null);
 
             _pageDialogService.Message.Should().Be("Nenhuma câmera detectada.");
             _navigationService.WentBack.Should().BeTrue();

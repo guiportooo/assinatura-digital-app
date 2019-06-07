@@ -87,6 +87,8 @@
     <Compile Include="SplashActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Renderers\GreenBorderEntryRenderer.cs" />
+    <Compile Include="Services\ThumbnailGenerator.cs" />
+    <Compile Include="Services\CameraOverlayProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\Fonts\Font Awesome 5 Brands-Regular-400.otf">
@@ -169,6 +171,7 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
     <Folder Include="Resources\drawable\" />
     <Folder Include="Renderers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AssinaturaDigital\AssinaturaDigital.csproj">

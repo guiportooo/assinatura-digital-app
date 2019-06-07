@@ -80,6 +80,7 @@ namespace AssinaturaDigital.UnitTests.Services
             const string overlayImageName = "Overlay Image";
             const string overlayProvider = "Overlay Provider";
 
+            _cameraOverlayProvider.ShouldSetOverlay(true);
             _cameraOverlayProvider.SetProvider(() => overlayProvider);
 
             var mediaMock = new MediaMock(true, true);

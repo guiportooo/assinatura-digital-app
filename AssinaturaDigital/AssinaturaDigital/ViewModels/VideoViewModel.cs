@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AssinaturaDigital.ViewModels
 {
-    public class SelfieViewModel : ViewModelBase, INavigatedAware
+    public class VideoViewModel : ViewModelBase, INavigatedAware
     {
         private bool _isSigningContract;
         private ContractData _contract;
@@ -23,7 +23,7 @@ namespace AssinaturaDigital.ViewModels
         private readonly ICameraService _cameraService;
         private readonly IErrorHandler _errorHandler;
 
-        public SelfieViewModel(INavigationService navigationService,
+        public VideoViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
             IPermissionsService permissionsService,
             ICameraService cameraService,
@@ -35,7 +35,7 @@ namespace AssinaturaDigital.ViewModels
             _cameraService = cameraService;
             _errorHandler = errorHandler;
 
-            Title = "Selfie";
+            Title = "Video";
         }
 
         public void OnNavigatedTo(INavigationParameters parameters)
@@ -49,13 +49,13 @@ namespace AssinaturaDigital.ViewModels
                     _contract = parameters.GetValue<ContractData>(AppConstants.Contract);
             }
 
-            TakeSelfie().FireAndForget(_errorHandler);
+            TakeVideo().FireAndForget(_errorHandler);
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
-            => _navigationService.RemoveLastViewWithName(nameof(SelfiePage));
+            => _navigationService.RemoveLastViewWithName(nameof(VideoPage));
 
-        async Task TakeSelfie()
+        async Task TakeVideo()
         {
             try
             {
@@ -66,8 +66,8 @@ namespace AssinaturaDigital.ViewModels
                     return;
                 }
 
-                var selfie = await TakePhoto("Selfie");
-                await NavigateToNextPage(selfie);
+                var video = await TakeVideo("Video");
+                await NavigateToNextPage(video);
             }
             catch (Exception ex)
             {
@@ -89,17 +89,17 @@ namespace AssinaturaDigital.ViewModels
             return await _permissionsService.RequestPermissionTo(cameraPermission);
         }
 
-        async Task<MediaFile> TakePhoto(string fileName)
+        async Task<MediaFile> TakeVideo(string fileName)
         {
-            if (!_cameraService.CanTakePhoto())
+            if (!_cameraService.CanTakeVideo())
                 throw new InvalidOperationException("Nenhuma câmera detectada.");
 
-            var photo = await _cameraService.TakePhoto(fileName, CameraDevice.Front);
+            var video = await _cameraService.TakeVideo(fileName, CameraDevice.Front);
 
-            if (photo == null)
-                throw new NullReferenceException("Não foi possível armazenar a foto.");
+            if (video == null)
+                throw new NullReferenceException("Não foi possível capturar o vídeo.");
 
-            return photo;
+            return video;
         }
 
         async Task NavigateToNextPage(MediaFile selfie)
@@ -110,7 +110,7 @@ namespace AssinaturaDigital.ViewModels
                     new NavigationParameters
                     {
                         { AppConstants.Contract, _contract },
-                        { AppConstants.Selfie, selfie }
+                        { AppConstants.Video, selfie }
                     });
             }
             else
@@ -118,7 +118,7 @@ namespace AssinaturaDigital.ViewModels
                 await _navigationService.NavigateAsync(nameof(InfoRegisterPage),
                     new NavigationParameters
                     {
-                        { AppConstants.Selfie, selfie }
+                        { AppConstants.Video, selfie }
                     });
             }
         }

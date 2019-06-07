@@ -3,7 +3,7 @@ namespace AssinaturaDigital.Utilities
     public static class AppConstants
     {
         public const string DocumentType = "DocumentType";
-        public const string Selfie = "Selfie";
+        public const string Video = "Video";
         public const string IdUser = "IdUser";
         public const string Registered = "Registered";
         public const string CPF = "CPF";

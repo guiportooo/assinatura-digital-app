@@ -1,7 +1,6 @@
 using AssinaturaDigital.Configuration;
-using AssinaturaDigital.Extensions;
 using AssinaturaDigital.Models;
-using AssinaturaDigital.Services.Manifest;
+using AssinaturaDigital.Services.Interfaces;
 using AssinaturaDigital.Utilities;
 using Flurl;
 using Flurl.Http;
@@ -11,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Xamarin.Essentials.Interfaces;
 
 namespace AssinaturaDigital.Services.Contracts
 {
@@ -19,14 +17,14 @@ namespace AssinaturaDigital.Services.Contracts
     {
         private readonly string _urlApi;
         private readonly IErrorHandler _errorHandler;
-        private readonly IDeviceInfo _deviceInfo;
+        private readonly IThumbnailGenerator _thumbnailGenerator;
 
-        public ContractsService(IConfigurationManager configurationManager, 
+        public ContractsService(IConfigurationManager configurationManager,
             IErrorHandler errorHandler,
-            IDeviceInfo deviceInfo)
+            IThumbnailGenerator thumbnailGenerator)
         {
             _errorHandler = errorHandler;
-            _deviceInfo = deviceInfo;
+            _thumbnailGenerator = thumbnailGenerator;
 
             var config = configurationManager.Get();
             _urlApi = config.UrlApi;
@@ -51,17 +49,20 @@ namespace AssinaturaDigital.Services.Contracts
             }
         }
 
-        public async Task<bool> SignContract(int id, int idUser, MediaFile photo, ManifestInfos manifestInfos)
+        public async Task<bool> SignContract(int id, int idUser, MediaFile video, ManifestInfos manifestInfos)
         {
             try
             {
-                using (var photoStream = photo.GetStreamWithCorrectRotation(_deviceInfo))
+                using (var videoStream = video.GetStream())
                 {
+                    var selfieStream = _thumbnailGenerator.GenerateThumbImage(video.AlbumPath, 1);
+
                     var signatureDate = manifestInfos.SignatureDate.ToLongDateString();
                     var content = new CapturedMultipartContent();
 
-                    content.AddFile("photo", photoStream, $"{idUser}_{id}_Selfie.PNG");
-                    content.AddStringParts(new {manifestInfos.GeoLocation, signatureDate });
+                    content.AddFile("video", videoStream, $"{idUser}_{id}_Video.mp4");
+                    content.AddFile("selfie", selfieStream, $"{idUser}_{id}_Selfie.png");
+                    content.AddStringParts(new { manifestInfos.GeoLocation, signatureDate });
 
                     var response = await _urlApi
                         .AppendPathSegment("users")

@@ -1,4 +1,4 @@
-using AssinaturaDigital.Services.Selfies;
+using AssinaturaDigital.Services.Validations;
 using AssinaturaDigital.Utilities;
 using AssinaturaDigital.Views;
 using Plugin.Media.Abstractions;
@@ -15,7 +15,7 @@ namespace AssinaturaDigital.ViewModels
     {
         private readonly INavigationService _navigationService;
         private readonly IPageDialogService _pageDialogService;
-        private readonly ISelfiesService _selfiesService;
+        private readonly IValidationsService _validationsService;
         private readonly IPreferences _preferences;
 
         public DelegateCommand NavigateToHomeCommand { get; }
@@ -38,12 +38,12 @@ namespace AssinaturaDigital.ViewModels
 
         public InfoRegisterViewModel(INavigationService navigationService,
             IPageDialogService pageDialogService,
-            ISelfiesService selfiesService,
+            IValidationsService validationsService,
             IPreferences preferences) : base(navigationService, pageDialogService)
         {
             _navigationService = navigationService;
             _pageDialogService = pageDialogService;
-            _selfiesService = selfiesService;
+            _validationsService = validationsService;
             _preferences = preferences;
 
             HasBackNavigation = false;
@@ -74,19 +74,19 @@ namespace AssinaturaDigital.ViewModels
                 return;
             }
 
-            var photo = parameters.GetValue<MediaFile>(AppConstants.Selfie);
-            await Initialize(idUser, photo);
+            var video = parameters.GetValue<MediaFile>(AppConstants.Video);
+            await Initialize(idUser, video);
         }
 
         bool ParametersAreValid(INavigationParameters parameters)
-            => parameters != null && parameters[AppConstants.Selfie] != null;
+            => parameters != null && parameters[AppConstants.Video] != null;
 
-        async Task Initialize(int idUser, MediaFile photo)
+        async Task Initialize(int idUser, MediaFile video)
         {
             try
             {
                 IsBusy = true;
-                Approved = await _selfiesService.SaveSelfie(idUser, photo);
+                Approved = await _validationsService.ValidateUser(idUser, video);
 
                 if (Approved)
                 {
@@ -96,12 +96,12 @@ namespace AssinaturaDigital.ViewModels
                 else
                 {
                     Title = "Cadastro não finalizado!";
-                    Message = "Seu cadastro não pôde ser finalizado por divergências de verificação nas imagens enviadas. O problema pode ter ocorrido:\n\n- Nas imagens do documento (RG ou CNH)\n\n- Na imagem da selfie\n\nPor favor, repita o processo de envio de imagens para que uma nova validação seja realizada.";
+                    Message = "Seu cadastro não pôde ser finalizado por divergências de verificação nas imagens e vídeo enviados. O problema pode ter ocorrido:\n\n- Nas imagens do documento (RG ou CNH)\n\n- No vídeo\n\nPor favor, repita o processo de envio de imagens e vídeo para que uma nova validação seja realizada.";
                 }
             }
             catch
             {
-                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao validar selfie.", "OK");
+                await _pageDialogService.DisplayAlertAsync(Title, "Falha ao validar vídeo.", "OK");
             }
             finally
             {

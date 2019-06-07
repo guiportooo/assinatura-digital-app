@@ -45,7 +45,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldGoBackToSelfiePageIfParametersAreInvalid()
+        public void WhenNavigatingToPageShouldGoBackToVideoPageIfParametersAreInvalid()
         {
             _infoSigningContractViewModel.OnNavigatingTo(null);
             _navigationService.WentBack.Should().BeTrue();
@@ -59,7 +59,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             var parameters = new NavigationParameters
             {
-                { AppConstants.Selfie, new MediaFile("Selfie", null) },
+                { AppConstants.Video, new MediaFile("Video", null) },
                 { AppConstants.Contract, contract }
             };
             _permissionsService.GrantedPermissionBeforeRequest();
@@ -80,7 +80,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
 
             var parameters = new NavigationParameters
             {
-                { AppConstants.Selfie, new MediaFile("Selfie", null) },
+                { AppConstants.Video, new MediaFile("Video", null) },
                 { AppConstants.Contract, contract }
             };
 
@@ -90,7 +90,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _infoSigningContractViewModel.OnNavigatingTo(parameters);
 
             _infoSigningContractViewModel.Title.Should().Be("Assinatura não realizada!");
-            _infoSigningContractViewModel.Message.Should().Be("Sua Imagem não está compatível com o cadastro.\nPor favor, tire uma nova selfie para assinatura.");
+            _infoSigningContractViewModel.Message.Should().Be("Seu vídeo não está compatível com o cadastro.\nPor favor, grave um novo vídeo para assinatura.");
             _infoSigningContractViewModel.Signed.Should().BeFalse();
         }
     }

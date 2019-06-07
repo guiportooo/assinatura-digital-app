@@ -34,6 +34,7 @@ namespace AssinaturaDigital.iOS
         {
             containerRegistry.Register<IConfigurationStreamProviderFactory, IOSConfigurationStreamProviderFactory>();
             containerRegistry.Register<ICameraOverlayProvider, CameraOverlayProvider>();
+            containerRegistry.Register<IThumbnailGenerator, ThumbnailGenerator>();
         }
     }
 }

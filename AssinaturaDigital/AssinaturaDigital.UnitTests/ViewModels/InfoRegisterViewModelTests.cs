@@ -18,7 +18,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         private InfoRegisterViewModel _infoRegisterViewModel;
         private NavigationServiceMock _navigationService;
         private PageDialogServiceMock _pageDialogService;
-        private SelfiesServiceFake _selfiesService;
+        private ValidationsServiceFake _validationsServiceFake;
         private Mock<IPreferences> _preferencesMock;
 
         [SetUp]
@@ -26,7 +26,7 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         {
             _navigationService = new NavigationServiceMock();
             _pageDialogService = new PageDialogServiceMock();
-            _selfiesService = new SelfiesServiceFake();
+            _validationsServiceFake = new ValidationsServiceFake();
             _preferencesMock = new Mock<IPreferences>();
 
             _preferencesMock.Setup(x => x.Get(AppConstants.IdUser, 0)).Returns(_idUser);
@@ -34,23 +34,23 @@ namespace AssinaturaDigital.UnitTests.ViewModels
             _infoRegisterViewModel = new InfoRegisterViewModel(
                 _navigationService,
                 _pageDialogService,
-                _selfiesService,
+                _validationsServiceFake,
                 _preferencesMock.Object);
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldGoBackToSelfiePageIfParametersAreInvalid()
+        public void WhenNavigatingToPageShouldGoBackToVideoPageIfParametersAreInvalid()
         {
             _infoRegisterViewModel.OnNavigatingTo(null);
             _navigationService.WentBack.Should().BeTrue();
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldSetApprovedMessageIfSelfieIsValid()
+        public void WhenNavigatingToPageShouldSetApprovedMessageIfVideoIsValid()
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.Selfie, new MediaFile("Selfie", null) }
+                { AppConstants.Video, new MediaFile("Video", null) }
             };
 
             _infoRegisterViewModel.OnNavigatingTo(parameters);
@@ -60,19 +60,19 @@ namespace AssinaturaDigital.UnitTests.ViewModels
         }
 
         [Test]
-        public void WhenNavigatingToPageShouldSetNotApprovedMessageIfSelfieIsNotValid()
+        public void WhenNavigatingToPageShouldSetNotApprovedMessageIfVideoIsNotValid()
         {
             var parameters = new NavigationParameters
             {
-                { AppConstants.Selfie, new MediaFile("Selfie", null) }
+                { AppConstants.Video, new MediaFile("Video", null) }
             };
 
-            _selfiesService.ShouldNotBeValid();
+            _validationsServiceFake.ShouldNotBeValid();
 
             _infoRegisterViewModel.OnNavigatingTo(parameters);
 
             _infoRegisterViewModel.Title.Should().Be("Cadastro não finalizado!");
-            _infoRegisterViewModel.Message.Should().Be("Seu cadastro não pôde ser finalizado por divergências de verificação nas imagens enviadas. O problema pode ter ocorrido:\n\n- Nas imagens do documento (RG ou CNH)\n\n- Na imagem da selfie\n\nPor favor, repita o processo de envio de imagens para que uma nova validação seja realizada.");
+            _infoRegisterViewModel.Message.Should().Be("Seu cadastro não pôde ser finalizado por divergências de verificação nas imagens e vídeo enviados. O problema pode ter ocorrido:\n\n- Nas imagens do documento (RG ou CNH)\n\n- No vídeo\n\nPor favor, repita o processo de envio de imagens e vídeo para que uma nova validação seja realizada.");
         }
 
         [Test]
